@@ -1,0 +1,47 @@
+Config { font = "xft:FiraMono Nerd Font:pixelsize=30:antialias=true:hinting=true"
+       , additionalFonts = [ "xft:Noto Color Emoji:pixelsize=30" ]
+       , bgColor         = "#181818"
+       , alpha           = 230 
+       , fgColor         = "#eeeeee"
+       , position        = TopW L 120
+       , commands        = [ Run Uptime ["-t", "<days>d:<hours>h:<minutes>m"] 36000
+                           , Run Date "%H:%M" "time" 600
+			   , Run Date "%d-%m-%Y(%a)" "date" 864000
+			   , Run DiskU [("/", "<free>")] [] 60
+                           , Run StdinReader
+                           , Run Com "/bin/bash" ["-c", "~/.local/bin/weather.sh"]  "myweather" 18000 
+                           , Run Com "/bin/bash" ["-c", "~/.local/bin/cpu.sh"]  "mycpu" 10 
+			   , Run Com "/bin/bash" ["-c", "~/.local/bin/pacupd.sh"] "pacupd" 36000
+                           , Run Com "/bin/bash" ["-c", "~/.local/bin/memory.sh"]  "mymemory" 10 
+                           , Run Kbd [ ("latam" , "<fc=#f0008b>ES</fc>")
+                                     , ("ara"   , "<fc=#8b00f0>AR</fc>")
+                                     ]
+                           , Run DynNetwork [ "--template" , "<fc=#00ff00>\xf0ab <rx>kB/s</fc> <fc=#ff0000>\xf0aa <tx>kB/s</fc>"
+                                            , "--Low"      , "1000"       -- units: B/s
+                                            , "--High"     , "5000"       -- units: B/s
+                                            ] 10
+		           , Run CoreTemp [ "--template" , " <core0>°C"
+                                          , "--Low"      , "70"        -- units: °C
+                                          , "--High"     , "80"        -- units: °C
+                                          , "--low"      , "green"
+                                          , "--normal"   , "orange"
+                                          , "--high"     , "red"
+                                          ] 50
+                           , Run   Weather "SAZS"
+                                          ["-t", "<skyCondition> <tempC> °C"
+                                          , "-L","10", "-H", "25", "--normal", "black"
+                                          , "--high", "#ff0000", "--low", "#00bdff"]
+                                          18000
+                           , Run BatteryP ["BAT0"]
+                                        ["-t", "<acstatus>"
+                                        , "-L", "10", "-H", "80"
+                                        , "-l", "red", "-h", "white"
+                                        , "--", "-O", "<fc=orange> <left>%</fc>", "-i", " <left>%"
+					, "-o", "  <left>%"]
+                                        10
+                           , Run Com "/bin/bash" ["-c", "~/.local/bin/volMon.sh"]  "myvol" 10 
+                           ]
+       , sepChar = "%"
+       , alignSep = "}{"
+       , template = "<icon=/home/hisham/.config/xmobar/xmonad_xpm_haskell_20.xpm/> %StdinReader%}{%SAZS%|%dynnetwork%|%coretemp%|<fc=#00bdff> </fc>%disku%|<fc=#00f0ff> </fc>%mymemory%|<fc=#ff0070> </fc>%mycpu%|<fc=#1eb715> </fc>%date%|<fc=#ffff00> ⏳ </fc>%uptime%|<fc=#19f6ff> </fc>%time%| %kbd%  %myvol% "
+       }

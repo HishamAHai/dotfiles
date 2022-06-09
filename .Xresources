@@ -1,0 +1,40 @@
+Xft.dpi:       144
+Xcursor.theme: Adwaita
+Xft.antialias: true
+Xft.hinting:   true
+Xft.autohint:  false
+Xft.hintstyle: hintslight
+Xft.lcdfilter: lcddefault
+Xft.rgba:      rgb
+
+
+!Define colors (dark mode)
+#define back #121212
+#define fore #bbbbbb
+
+#define base00 #121212
+#define base08 #545454
+
+#define base01 #fa2573
+#define base09 #f5669c
+
+#define base02 #97e123
+#define base10 #b0e05e
+
+#define base03 #dfd460
+#define base11 #fef26c
+
+#define base04 #0f7fcf
+#define base12 #00afff
+
+#define base05 #8700ff
+#define base13 #af87ff
+
+#define base06 #42a7cf
+#define base14 #50cdfe
+
+#define base07 #bbbbbb
+#define base15 #ffffff
+
+*.foreground: fore
+*.background: back

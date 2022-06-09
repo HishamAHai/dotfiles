@@ -1,0 +1,636 @@
+#+TITLE: Emacs Main Configuration File
+#+PROPERTY: header-args :tangle init.el
+* Table Of Content :TOC_2:
+- [[#ui-tweaks-and-customization][UI tweaks and customization]]
+  - [[#clean-frame-with-no-unnecessary-elements][clean frame with no unnecessary elements]]
+  - [[#no-splash-screen-or-scratch-buffer][No splash screen or scratch buffer]]
+  - [[#visual-line-mode][Visual line mode]]
+  - [[#lines-numbers][Lines Numbers]]
+  - [[#transparent-emacs][Transparent /Emacs/]]
+  - [[#indentation-markers][Indentation markers]]
+- [[#useful--settings][Useful  Settings]]
+- [[#package-management][Package Management]]
+  - [[#installing-and-inizilaing-the-packages][Installing and Inizilaing the packages]]
+  - [[#dashboard][Dashboard]]
+  - [[#dired][Dired]]
+  - [[#dired-single][Dired-Single]]
+  - [[#helpful][Helpful]]
+  - [[#neotree][Neotree]]
+  - [[#language-specific-modes][Language Specific Modes]]
+  - [[#estitic-packages][Estitic Packages]]
+  - [[#which-key][Which-key]]
+  - [[#command-log-mode][Command Log Mode]]
+  - [[#completion-packages][Completion Packages]]
+  - [[#key-chord][Key-chord]]
+  - [[#general][General]]
+  - [[#undo-tree][Undo-tree]]
+  - [[#evil-mode][Evil Mode]]
+  - [[#language-servers][Language Servers]]
+- [[#org-mode][Org Mode]]
+  - [[#general-configuration][General Configuration]]
+  - [[#configuring-rtl-in-org-mode][Configuring RTL in Org-mode]]
+  - [[#installing-the-latest-version-of-org][Installing the latest version of Org]]
+  - [[#bullets][Bullets]]
+  - [[#centering-the-text][Centering the text]]
+  - [[#org-babel][Org Babel]]
+  - [[#org-toc][Org TOC]]
+
+* UI tweaks and customization
+In this section we'll remove some of the UI elements to make it cleaner.
+** clean frame with no unnecessary elements
+  The menu bar, tools bar, scroll bar and tab bar are distructing and unnecessary.
+  In the case of scroll and tab bars we define a custom function to disable them for each new frame.
+  And since we'll be using the dashboard package, we'll add a hook to disable the highlighting and cursor blinking in the dashboard.
+#+begin_src emacs-lisp
+  (menu-bar-mode -1)
+  (tool-bar-mode -1)
+  (column-number-mode t)
+  ;; Hightlight the current line
+  (global-hl-line-mode t)
+  ;; Disable the line highlighting and cursor blinking in dashboard mode
+  (add-hook 'dashboard-mode-hook (lambda () (setq-local global-hl-line-mode nil)
+				   (setq-local blink-cursor-mode nil)))
+  ;; Remove scroll bars and tab bar in all windows and frames
+  (scroll-bar-mode -1)
+  (defun nt/clean_ui (frame)
+    (modify-frame-parameters frame
+			     '((vertical-scroll-bars . nil)
+			       (horizontal-scroll-bars . nil)
+			       (tab-bar-show . nil))))
+  (add-hook 'after-make-frame-functions 'nt/clean_ui)
+#+end_src
+** No splash screen or scratch buffer
+  Start a clean and empty new buffer
+#+begin_src emacs-lisp
+  (setq inhibit-startup-message t) 
+  (setq initial-scratch-message nil)
+#+end_src
+** Visual line mode
+By default, /Emacs/ does not wrap the text when you reach the end of screen while writing a long line, we can change this behaviour by enabling the visual-line-mode.
+#+begin_src emacs-lisp
+  (visual-line-mode t)
+  (global-visual-line-mode)
+#+end_src
+** Lines Numbers
+#+begin_src emacs-lisp
+  (defcustom display-line-numbers-exempt-modes
+    '(org-mode vterm-mode eshell-mode shell-mode term-mode ansi-term-mode dashboard-mode)
+    "Major modes on which to disable line numbers."
+    :group 'display-line-numbers
+    :type 'list
+    :version "green")
+
+  (global-display-line-numbers-mode t)
+  ;; Line numbers for specific modes
+  (defun display-line-numbers--turn-on ()
+    "Turn on line numbers except for certain major modes.
+  Exempt major modes are defined in `display-line-numbers-exempt-modes'."
+    (unless (or (minibufferp)
+		(member major-mode display-line-numbers-exempt-modes))
+      (display-line-numbers-mode)
+    (setq display-line-numbers-type 'relative)
+  ))
+#+end_src
+** Transparent /Emacs/
+This snippet is for setting the transparecy and also defining a keybindig to enable and disable it
+#+begin_src emacs-lisp
+   (defun nt/toggle-transparency ()
+     (interactive)
+     (let ((alpha (frame-parameter nil 'alpha)))
+       (set-frame-parameter
+	nil 'alpha
+	(if (eql (cond ((numberp alpha) alpha)
+		       ((numberp (cdr alpha)) (cdr alpha))
+		       ;; Also handle undocumented (<active> <inactive>) form.
+		       ((numberp (cadr alpha)) (cadr alpha)))
+		 100)
+	    '(95 . 50) '(100 . 100)))))
+   (global-set-key (kbd "C-c t") 'nt/toggle-transparency)
+#+end_src
+** Indentation markers
+#+begin_src emacs-lisp
+    (use-package highlight-indent-guides
+    :custom ((highlight-indent-guides-method 'character)
+	     (highlight-indent-guides-responsive 'stack))
+    :hook (prog-mode . highlight-indent-guides-mode))
+#+end_src
+* Useful  Settings
+This setting is extremely useful in case of literate programming in org mode to tangle all the source blocks automatically after saving the Org file
+#+begin_src emacs-lisp
+  (defun tangle-on-save-org-mode-file()
+    (when (string= (message "%s" major-mode) "org-mode")
+      (org-babel-tangle)))
+  (add-hook 'after-save-hook 'tangle-on-save-org-mode-file)
+#+end_src
+Remembering recently edited files
+#+begin_src emacs-lisp
+  (recentf-mode 1)
+  (global-set-key (kbd "C-c C-r") 'recentf-open-files)
+#+end_src
+Save what you enter into minibuffer prompts
+#+begin_src emacs-lisp
+  (setq history-length 25)
+  (savehist-mode 1)
+#+end_src
+ Remember and restore the last cursor location of opened files
+#+begin_src emacs-lisp
+  (save-place-mode 1)
+#+end_src
+Move customization variables to a separate file and load it
+#+begin_src emacs-lisp
+  (setq custom-file (locate-user-emacs-file "custom-vars.el"))
+  (load custom-file 'noerror 'nomessage)
+#+end_src
+Don't pop up UI dialogs when prompting
+#+begin_src emacs-lisp
+  (setq use-dialog-box nil)
+#+end_src
+Revert buffers when the underlying file has changed
+#+begin_src emacs-lisp
+  (global-auto-revert-mode 1)
+#+end_src
+Don't center screen when the cursor reachs the last line
+#+begin_src emacs-lisp
+  (setq scroll-conservatively 101)
+#+end_src
+Use y for yes and n for no
+#+begin_src emacs-lisp
+  (defalias 'yes-or-no-p 'y-or-n-p)
+#+end_src
+bind Esc to keyboard-escape-quit
+#+begin_src emacs-lisp
+  (global-set-key (kbd "<escape>")      'keyboard-escape-quit)
+#+end_src
+Stop /Emacs/ from creating backup files
+#+begin_src emacs-lisp
+(setq make-backup-files nil)
+#+end_src
+* Package Management
+** Installing and Inizilaing the packages
+To be able to install community and third party packages.
+#+begin_src emacs-lisp
+  ;; Installing packages from melpa
+  (require 'package)
+  (add-to-list 'package-archives
+	       '("melpa" . "https://melpa.org/packages/")
+	       '("elpa" . "https://elpa.gnu.org/packages/"))
+
+  (package-initialize)
+  (unless package-archive-contents
+    (package-refresh-contents))
+#+end_src
+User created modules are to be located at this path
+#+begin_src emacs-lisp
+  (add-to-list 'load-path "~/.config/emacs/lisp")
+#+end_src
+use-package allows us to customize the packages either the built-in ones or the community ones.
+#+begin_src emacs-lisp
+  (require 'use-package)
+;; This snippet ommits the need to set (:ensure t) each time we add a new package
+  (setq use-package-always-ensure t)
+#+end_src
+*** Checking package version
+#+begin_src emacs-lisp
+(use-package pkg-info)
+#+end_src
+*** Auto-updating packages
+#+begin_src emacs-lisp
+(use-package auto-package-update
+   :ensure t
+   :config
+   (setq auto-package-update-delete-old-versions t
+         auto-package-update-interval 4)
+   (auto-package-update-maybe))
+#+end_src
+** Dashboard
+A nice dashboard from Spacemacs
+#+begin_src emacs-lisp
+  (use-package dashboard
+    :config
+    (dashboard-setup-startup-hook)
+    (setq initial-buffer-choice (lambda () (get-buffer "*dashboard*")))
+    (setq dashboard-banner-logo-title "I use Emacs, which might be thought of as a thermonuclear word processor!!!")
+    (setq dashboard-startup-banner 'logo)
+    (setq dashboard-set-navigator t)
+    (setq dashboard-set-heading-icons t)
+    (setq dashboard-items '((recents  . 15)
+			    (bookmarks . 5)))
+    (setq dashboard-set-file-icons t))
+#+end_src
+** Dired
+The built-in directory editor in /Emacs/.
+#+begin_src emacs-lisp
+(use-package dired
+  :ensure nil
+  :commands (dired dired-jump)
+  :bind (("C-x C-j" . dired-jump))
+  :custom ((dired-listing-switches "-Agho --group-directories-first"))
+  :config
+  (evil-collection-define-key 'normal 'dired-mode-map
+    "h" 'dired-single-up-directory
+    "l" 'dired-single-buffer))
+#+end_src
+** Dired-Single
+#+begin_src emacs-lisp
+  (use-package dired-single)
+
+  (defun my-dired-init ()
+    "Bunch of stuff to run for dired, either immediately or when it's
+     loaded."
+    ;; <add other stuff here>
+    (define-key dired-mode-map [remap dired-find-file]
+      'dired-single-buffer)
+    (define-key dired-mode-map [remap dired-mouse-find-file-other-window]
+      'dired-single-buffer-mouse)
+    (define-key dired-mode-map [remap dired-up-directory]
+      'dired-single-up-directory))
+
+  ;; if dired's already loaded, then the keymap will be bound
+  (if (boundp 'dired-mode-map)
+      ;; we're good to go; just add our bindings
+      (my-dired-init)
+    ;; it's not loaded yet, so add our bindings to the load-hook
+    (add-hook 'dired-load-hook 'my-dired-init))
+#+end_src
+** Helpful
+#+begin_src emacs-lisp
+  ;; A better *help* buffer
+  (use-package helpful
+    :commands (helpful-callable helpful-variable helpful-key)
+    :bind
+    ("C-h f" . helpful-callable)
+    ("C-h v" . helpful-variable)
+    ("C-h k" . helpful-key)
+    )
+#+end_src
+** Neotree
+#+begin_src emacs-lisp
+(use-package neotree)
+#+end_src
+** Language Specific Modes
+*** Yamel Mode
+#+begin_src emacs-lisp
+  (use-package yaml-mode)
+#+end_src
+*** Markdown Mode
+#+begin_src emacs-lisp
+  (use-package markdown-mode)
+#+end_src
+*** Vimrc
+#+begin_src emacs-lisp
+  (use-package vimrc-mode)
+#+end_src
+*** Haskell
+#+begin_src emacs-lisp
+  (use-package haskell-mode)
+#+end_src
+*** Lua mode
+I like the Awesome window manager which is writtin in lua.
+#+begin_src emacs-lisp
+      ;; This snippet eanbles lua-mode
+      (use-package lua-mode)
+      (autoload 'lua-mode "lua-mode" "Lua editing mode." t)
+      (add-to-list 'auto-mode-alist '("\\.lua$" . lua-mode))
+      (add-to-list 'interpreter-mode-alist '("lua" . lua-mode))
+#+end_src
+** Estitic Packages
+Yet functional
+*** Icons
+Make sure to run =M-x return all-the-icons-install-fonts return= to enable the icons in the modeline and dired buffer.
+#+begin_src emacs-lisp
+	;; Icons in the modeline
+	(use-package all-the-icons)
+	;; Icons in the dired buffer
+	(use-package all-the-icons-dired)
+	(add-hook 'dired-mode-hook 'all-the-icons-dired-mode)
+	(use-package all-the-icons-ivy-rich
+      :init (all-the-icons-ivy-rich-mode 1)
+    :config
+  (setq all-the-icons-ivy-rich-color-icon 1))
+#+end_src
+*** Doom Themes and Doom Modeline
+#+begin_src emacs-lisp
+  ;; Enable the fancy doom themes
+  (use-package doom-themes
+    :config
+    ;; Global settings (defaults)
+    (setq doom-themes-enable-bold t    ; if nil, bold is universally disabled
+	  doom-themes-enable-italic t) ; if nil, italics is universally disabled
+    (load-theme 'doom-one t)
+
+    ;; Enable flashing mode-line on errors
+    (doom-themes-visual-bell-config)
+    ;; Enable custom neotree theme (all-the-icons must be installed!)
+    (doom-themes-neotree-config)
+    ;; or for treemacs users
+    (setq doom-themes-treemacs-theme "doom-atom") ; use "doom-colors" for less minimal icon theme
+    (doom-themes-treemacs-config)
+    ;; Corrects (and improves) org-mode's native fontification.
+    (doom-themes-org-config))
+
+  (custom-set-faces
+   ;; custom-set-faces was added by Custom.
+   ;; If you edit it by hand, you could mess it up, so be careful.
+   ;; Your init file should contain only one such instance.
+   ;; If there is more than one, they won't work right.
+   '(font-lock-comment-face ((t (:slant italic)))))
+
+  ;; doom mode line 
+  (use-package doom-modeline
+    :ensure t
+    :hook (after-init . doom-modeline-mode)
+    :custom (doom-modeline-height 14))
+#+end_src
+*** Fonts
+#+begin_src emacs-lisp
+  ;; Set default font
+  (defun nt/set-font-faces()
+    (set-face-attribute 'default nil :font "FantasqueSansMono Nerd Font" :height 151)
+    (set-face-attribute 'fixed-pitch nil :font "FantasqueSansMono Nerd Font" :height 151)
+    (set-fontset-font t 'arabic "Geeza Pro")
+    (set-face-attribute 'variable-pitch nil :font "Open Sans" :height 151))
+  (if (daemonp)
+      (add-hook 'after-make-frame-functions
+		(lambda (frame)
+		  (with-selected-frame frame
+		    (nt/set-font-faces))))
+    (nt/set-font-faces))
+
+  ;; Set the default spacing between lines to not make them stuck to each other
+  (setq-default line-spacing 8)
+#+end_src
+*** Mixed Pitch Font Face
+In Org Mode I prefer to have a variable pitch font for non-code sections and a fixed pitch font for the source blocks.
+#+begin_src emacs-lisp
+  (use-package mixed-pitch
+    :hook
+    (org-mode . mixed-pitch-mode)
+    (markdown-mode . mixed-pitch-mode))
+#+end_src
+*** Smartparens
+ Parenthesis auto-closing 
+#+begin_src emacs-lisp
+  (use-package smartparens
+    :config (smartparens-global-mode 1))
+#+end_src
+*** Rainbow Delimiters
+highlights delimiters such as parentheses, brackets or braces according to their depth. Each successive level is highlighted in a different color. This makes it easy to spot matching delimiters, orient yourself in the code, and tell which statements are at a given depth.
+#+begin_src emacs-lisp
+  (use-package rainbow-delimiters
+    :hook
+    (emacs-lisp-mode . rainbow-delimiters-mode)
+    (lua-mode . rainbow-delimiters-mode))
+#+end_src
+*** Rainbow Mode
+This minor mode sets background color to strings that match color names, e.g. ~#0000ff~ is displayed in white with a blue background.
+/*Available from Elpa/
+#+begin_src emacs-lisp
+  (use-package rainbow-mode
+    :hook (org-mode
+	   emacs-lisp-mode
+	   lua-mode
+	   conf-mode))
+#+end_src
+** Which-key
+Minor mode for Emacs that displays the key bindings following your currently entered incomplete command (a prefix) in a popup. For example, after enabling the minor mode if you enter =C-x= and wait for the default of 1 second the minibuffer will expand with all of the available key bindings that follow =C-x=
+#+begin_src emacs-lisp
+  (use-package which-key
+    :init (which-key-mode)
+    :config
+    (setq which-key-idle-delay 0.2))
+#+end_src
+** Command Log Mode
+Show event history and command history of some or all buffers.
+#+begin_src emacs-lisp
+  (use-package command-log-mode)
+#+end_src
+** Completion Packages
+- Flexible, simple tools for minibuffer completion in /Emacs/
+- =Ivy=, a generic completion mechanism for Emacs.
+- =Counsel=, a collection of Ivy-enhanced versions of common Emacs commands.
+- =Swiper=, an Ivy-enhanced alternative to =Isearch=.
+- =Company= for text completion.
+*** Ivy
+#+begin_src emacs-lisp
+  (use-package ivy
+    :init (ivy-mode)
+    :bind (("C-s" . swiper)))
+#+end_src
+*** Counsel 
+#+begin_src emacs-lisp
+  (use-package counsel
+    :bind
+    ("M-x" . counsel-M-x)
+    ("C-x C-f" . counsel-find-file)
+    ("C-x d" . counsel-dired))
+#+end_src
+*** Ivy Rich
+This package comes with rich transformers for commands from =ivy= and =counsel=. It should be easy enough to define your own transformers too.
+#+begin_src emacs-lisp
+  (use-package ivy-rich
+    :init
+    (setq ivy-rich-path-style 'abbrev)
+    (ivy-rich-mode 1)
+    )
+#+end_src
+*** Ivy Posframe 
+Floating minibuffer at the center of the frame
+#+begin_src emacs-lisp
+  (use-package ivy-posframe
+    :init
+    (setq ivy-posframe-display-functions-alist '((t . ivy-posframe-display)))
+    (setq ivy-posframe-border-width 2)
+    (setq ivy-posframe-parameters
+	'((left-fringe . 16)
+	  (right-fringe . 16)))
+    :config
+    (ivy-posframe-mode 1))
+#+end_src
+*** Company Mode
+Company is a text completion framework for Emacs. The name stands for "complete anything". It uses pluggable back-ends and front-ends to retrieve and display completion candidates.
+#+begin_src  emacs-lisp
+  (use-package company
+    :init
+    (global-company-mode)
+    :bind ( :map company-active-map
+     ("<tab>" . company-complete-selection))
+    :config
+    (setq company-backends '((company-files
+		      company-capf
+		      company-dabbrev
+		      company-keywords)))
+    :custom
+    (company-minimum-prefix-length 1
+    (company-idle-delay 0.0)))
+#+end_src
+** Key-chord
+This package implements support for mapping a pair of simultaneously pressed keys to a command and for mapping the same key being pressed twice in quick succession to a command. Such bindings are called "key chords".
+Combined with ~general.el~ package it becomes very simple to manage all keybindings.
+#+begin_src emacs-lisp
+  (use-package key-chord
+    :after evil
+    :init
+    (setq key-chord-two-keys-delay 0.5)
+    :config
+    (key-chord-mode 1))
+#+end_src
+** General
+~general.el~ provides a more convenient method for binding keys in emacs (for both evil and non-evil users).
+#+begin_src emacs-lisp
+  (use-package general
+    :config
+    (general-define-key :keymaps 'evil-insert-state-map (general-chord "ii") 'evil-normal-state)
+    (general-define-key :keymaps 'normal (general-chord "SB") 'ivy-switch-buffer)
+    (general-define-key :keymaps 'normal (general-chord "QB") 'kill-buffer)
+    (general-define-key :keymaps 'normal (general-chord "FF") 'counsel-find-file))
+#+end_src
+** Undo-tree
+#+begin_src emacs-lisp
+;;  (use-package undo-tree
+;;    :config (global-undo-tree-mode 1))
+#+end_src
+** Evil Mode
+Evil is an extensible vi layer for Emacs. It emulates the main features of Vim, and provides facilities for writing custom extensions. 
+#+begin_src emacs-lisp
+  (use-package evil
+    :init
+    (setq evil-want-keybinding nil)
+    (setq evil-want-integration t)
+    (setq evil-undo-system 'undo-redo)
+    :config
+    (evil-mode 1)
+    (evil-global-set-key 'motion "j" 'evil-next-visual-line)
+    (evil-global-set-key 'motion "k" 'evil-previous-visual-line)
+    (evil-global-set-key 'normal (kbd "/") 'swiper)
+
+    ;; In the dashboard mode, the "r" key is binded to go directly to the recent files
+    ;; which conflicts with evil mode replace binding
+    (add-hook 'dashboard-mode-hook
+	      (lambda ()
+		(evil-local-set-key 'normal (kbd "r") 'dashboard-jump-to-recents)
+		(evil-local-set-key 'normal (kbd "p") 'dashboard-jump-to-projects)))
+
+    ;; Vertical splitted window to the right of the current one
+    (setq evil-vsplit-window-right t)
+    )
+
+  (use-package evil-collection
+    :after evil
+    :config
+    (evil-collection-init))
+
+  ;; Display visual hints when editing with evil. i.e. highlight lines or words when copied or pasted.
+  (use-package evil-goggles
+    :config 
+    (evil-goggles-mode))
+#+end_src
+** Language Servers
+This package will convert our /Emacs/ into real IDE with autocompletion and search within projects capabilities.
+#+begin_src emacs-lisp
+      (use-package lsp-mode
+	:commands (lsp lsp-deferred)
+	:init
+	(setq lsp-keymap-prefix "C-c l")
+	:config
+	(lsp-enable-which-key-integration t)
+#+end_src
+*** Lua
+#+begin_src emacs-lisp
+  ;; lua
+  ;; https://emacs-lsp.github.io/lsp-mode/page/lsp-lua-language-server/
+  (setq lsp-clients-lua-language-server-install-dir (f-join (getenv "HOME") ".local/share/lua-language-server/"); Default: ~/.emacs.d/.cache/lsp/lua-language-server/
+	  lsp-clients-lua-language-server-bin (f-join lsp-clients-lua-language-server-install-dir "bin/lua-language-server")
+	  lsp-clients-lua-language-server-main-location (f-join lsp-clients-lua-language-server-install-dir "main.lua")
+	  lsp-lua-workspace-max-preload 2048 ; Default: 300, Max preloaded files
+	  lsp-lua-workspace-preload-file-size 1024; Default: 100, Skip files larger than this value (KB) when preloading.
+	  )
+    :hook (lua-mode . lsp-deferred))
+#+end_src
+*** Python
+#+begin_src emacs-lisp
+(use-package lsp-pyright
+  :ensure t
+  :hook (python-mode . (lambda ()
+                          (require 'lsp-pyright)
+                          (lsp-deferred))))  ; or lsp-deferred
+#+end_src
+* Org Mode
+** General Configuration
+#+begin_src emacs-lisp
+  (defun nt/org-mode-setup()
+    (org-indent-mode)
+    (variable-pitch-mode 1)
+    (auto-fill-mode 1)
+    (visual-line-mode 1)
+    (setq evil-auto-indent nil))
+#+end_src
+** Configuring RTL in Org-mode
+#+begin_src emacs-lisp
+  (defun set-bidi-env ()
+   "interactive"
+   (setq bidi-paragraph-direction 'right-to-left))
+#+end_src
+** Installing the latest version of Org
+#+begin_src emacs-lisp
+  (use-package org
+    ;;:hook (org-mode . set-bidi-env)
+    :config
+    (setq org-ellipsis " ⯆"
+	  org-hide-emphasis-markers t))
+#+end_src
+** Bullets
+Replacing the default stars with something more eye catching
+#+begin_src emacs-lisp
+  (use-package org-bullets
+    :after org
+    :hook (org-mode . org-bullets-mode)
+    :custom
+    (org-bullets-bullet-list '("⦿" "⊙" "⦾" "⊚" "⊙" "⦾" )))
+#+end_src
+It is also possible to change the hyphen in lists to something like dot.
+#+begin_src emacs-lisp
+  ;; Replace list hyphen with dot
+  ;;(font-lock-add-keywords 'org-mode
+  ;;                        '(("^ *\\([-]\\) "
+  ;;                            (0 (prog1 () (compose-region (match-beginning 1) (match-end 1) "•"))))))
+#+end_src
+Make the font size of the headers (or levels as called in /Emacs/ bigger).
+Also use the variable pitch font as we are using the mixed-pitch package.
+#+begin_src emacs-lisp
+  (dolist (face '((org-level-1 . 1.3)
+		  (org-level-2 . 1.1)
+		  (org-level-3 . 1.05)
+		  (org-level-4 . 1.0)))
+    (set-face-attribute (car face) nil :font "Open Sans" :weight 'regular :height (cdr face)))
+#+end_src
+** Centering the text
+To not be looking to the left of the screen all the time, we center the text.
+#+begin_src emacs-lisp
+  (defun nt/org-mode-visual-fill ()
+    (setq visual-fill-column-width 150
+	  visual-fill-column-center-text t)
+    (visual-fill-column-mode 1))
+
+  (use-package visual-fill-column
+    :defer t
+    :hook (org-mode . nt/org-mode-visual-fill)
+	  (dashboard-mode . nt/org-mode-visual-fill))
+
+  ;; Make sure org-indent face is available
+  (require 'org-indent)
+#+end_src
+** Org Babel
+Add frequently used languages to the source block template. to Insert a new template use the =<= followd by the initials like =el= and then press =tab= on the keyboard.
+#+begin_src emacs-lisp
+  (require 'org-tempo)
+  (add-to-list 'org-structure-template-alist '("el" . "src emacs-lisp"))
+  (add-to-list 'org-structure-template-alist '("lu" . "src lua"))
+  (add-to-list 'org-structure-template-alist '("sh" . "src shell"))
+#+end_src
+** Org TOC
+Auto-generate table of contents when saving an org or markdown buffer
+#+begin_src emacs-lisp
+  (use-package toc-org
+  :hook (org-mode . toc-org-mode)
+        (markdown-mode . toc-org-mode))
+#+end_src
