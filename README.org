@@ -1,0 +1,31 @@
+* DOTFILES
+#+begin_example
+ ███╗   ██╗████████╗██████╗  ██████╗ ████████╗███████╗██╗██╗     ███████╗███████╗
+████╗  ██║╚══██╔══╝██╔══██╗██╔═══██╗╚══██╔══╝██╔════╝██║██║     ██╔════╝██╔════╝
+██╔██╗ ██║   ██║   ██║  ██║██║   ██║   ██║   █████╗  ██║██║     █████╗  ███████╗
+██║╚██╗██║   ██║   ██║  ██║██║   ██║   ██║   ██╔══╝  ██║██║     ██╔══╝  ╚════██║
+██║ ╚████║   ██║   ██████╔╝╚██████╔╝   ██║   ██║     ██║███████╗███████╗███████║
+╚═╝  ╚═══╝   ╚═╝   ╚═════╝  ╚═════╝    ╚═╝   ╚═╝     ╚═╝╚══════╝╚══════╝╚══════╝
+#+end_example
+In this repository I store and share my dotfiles of my main desktop and laptop machines. 
+The repo will grow in size and with time I'll organize it well
+** Dependencies
+I'm on Arch linux because it makes it really easy to install all the packages I need to build the system. This does not mean that other distros don't work or they are bad; but I prefer to keep it simple.
+| Dependency                     | Why it is needed                                              |
+|--------------------------------+---------------------------------------------------------------|
+| =Awesome=                        | This is the window manager of choice                          |
+| =picom-jonaburg-fix=             | Blur effect, transparancy and rounded corners of the windows  |
+| =Neovim=                         | Powerful text editor                                          |
+| =awesome-terminal-fonts=         | Font with unicode support                                     |
+| =kitty=                          | Modern, hackable, featureful, OpenGL-based terminal emulator  |
+| =nerd-fonts-fantasque-sans-mono= | Beautiful monospaced font                                     |
+| =nerd-fonts-ubuntu-mono=         | Patched ubuntu font                                           |
+| =ttf-joypixels=                  | Everyone uses and likes emojis                                |
+| =inter-font=                     | Beautiful variable width font                                 |
+| =ttf-opensans=                   | Beautiful variable width font                                 |
+| =noto-fonts=                     | Google Noto Fonts                                             |
+| =dunst=                          | notification-daemon replacement. "Not required for AwesomeWM" |
+| =xbacklight=                     | To control the screen brightness                              |
+| =ybacklight=                     | To control the screen brightness                              |
+| =playerctl=                      | Change songs backwards and forwards using the media keys      |
+I manage my dotfiles using a bare repository method provided by a gentelman called StreakyCobra on [[https://www.atlassian.com/git/tutorials/dotfiles][ATLASSIAN]]
