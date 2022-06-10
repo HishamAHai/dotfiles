@@ -8,9 +8,9 @@
 
 * Preface
 #+caption: Dark mode
-[[https://github.com/HishamAHai/dotfiles/blob/master/.screenshots/WindowManagerDark.png]]
+[[https://github.com/HishamAHai/dotfiles/blob/main/.screenshots/WindowManagerDark.png]]
 #+caption: Light mode
-[[https://github.com/HishamAHai/dotfiles/blob/master/.screenshots/WindowManagerLight.png]]
+[[https://github.com/HishamAHai/dotfiles/blob/main/.screenshots/WindowManagerLight.png]]
 Awesome window manager is with no doubt the most customizable and configurable WM use can use.It has a great and probably the best documentation and the selling point (figuratively) is the widgets system. But it does not stop at this point, since it uses the scripting language =lua=  to write the configuration file, you can extende it to do whatever you want.
 
 The main configuration file of lua is =rc.lua= which has to be located at =$XDG_CONFIG_HOME/awesome/rc.lua=. After installing AwesomeWM for the first time, this file has to be copied from =/etc/xdg/awesome/rc.lua=, and the other important file is the theme configuration file which has to be located at =$XDG_CONFIG_HOME/awesome/themes/theme.lua=.
