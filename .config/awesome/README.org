@@ -1,0 +1,33 @@
+#+title: AwesomeWM
+#+options: toc:2
+* Table Of Content
+- [[#preface][Preface]]
+  - [[#important-notes][Important notes]]
+  - [[#useful-keybindings-to-get-started][Useful keybindings to get started]]
+- [[#salat-prayer-widget][Salat (Prayer) widget]]
+
+* Preface
+#+caption: Dark mode
+[[https://github.com/HishamAHai/dotfiles/blob/master/.screenshots/WindowManagerDark.png]]
+#+caption: Light mode
+[[https://github.com/HishamAHai/dotfiles/blob/master/.screenshots/WindowManagerLight.png]]
+Awesome window manager is with no doubt the most customizable and configurable WM use can use.It has a great and probably the best documentation and the selling point (figuratively) is the widgets system. But it does not stop at this point, since it uses the scripting language =lua=  to write the configuration file, you can extende it to do whatever you want.
+
+The main configuration file of lua is =rc.lua= which has to be located at =$XDG_CONFIG_HOME/awesome/rc.lua=. After installing AwesomeWM for the first time, this file has to be copied from =/etc/xdg/awesome/rc.lua=, and the other important file is the theme configuration file which has to be located at =$XDG_CONFIG_HOME/awesome/themes/theme.lua=.
+
+My way of configuring AwesomeWM is by splitting the configuration into separte modules, each module is resposible for a certain function, to make it easier for trubleshooting and implementing new modules. My =rc.lua= has calls for each module being used.
+** Important notes
+- Note 1: keep in mind that the =Right alt= key works only for the *Spanish keyboard layout*. For other layouts you should assign a different key.
+- Note 2: I personally use =kitty terminal= since it's gpu accelerated and has a better Arabic support than others like =alacritty=.
+- Note 3: You can get a list of all keybindings in AwesomeWM by pressing =Super + s=.
+** Useful keybindings to get started
+| Key                | Function                  |
+|--------------------+---------------------------|
+| =Super + Enter=      | Open terminal             |
+| =Super + Shift + c=  | Close any open window     |
+| =Super + Shift + r=  | restart AwesomeWM         |
+| =Super + Shift + q=  | kill AwesomeWM            |
+| =Super + p=          | open dmenu launcher       |
+| =Super + c=          | open chromium browser     |
+| =Super + f=          | open pcmanfm file manager |
+| =Right alt + escape= | open power menu           |
