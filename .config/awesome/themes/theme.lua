@@ -14,7 +14,7 @@ theme.font          =   'Open Sans 11'
 
 -- Define 16 colors base
 local ColorScheme = {}
-for line in io.lines(colorschemes_dir .. 'Doom_One_Dark' .. '.conf') do 
+for line in io.lines(colorschemes_dir .. 'Material_Dark' .. '.conf') do 
     table.insert(ColorScheme, line)
 end
 
@@ -30,7 +30,7 @@ theme.color12                     =   ColorScheme[12]
 theme.color13                     =   ColorScheme[14]
 theme.color14                     =   ColorScheme[16]
 
-theme.bg_normal             =   ColorScheme[1] .. 'd0'
+theme.bg_normal             =   ColorScheme[1] --.. 'd0'
 theme.fg_normal             =   ColorScheme[2]
 theme.bg_empty              =   ColorScheme[18] .. '2f'
 theme.fg_urgent             =   ColorScheme[5]
