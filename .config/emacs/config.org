@@ -14,6 +14,7 @@
   - [[#dashboard][Dashboard]]
   - [[#dired][Dired]]
   - [[#dired-single][Dired-Single]]
+  - [[#magit][Magit]]
   - [[#helpful][Helpful]]
   - [[#neotree][Neotree]]
   - [[#language-specific-modes][Language Specific Modes]]
@@ -251,6 +252,10 @@ The built-in directory editor in /Emacs/.
       (my-dired-init)
     ;; it's not loaded yet, so add our bindings to the load-hook
     (add-hook 'dired-load-hook 'my-dired-init))
+#+end_src
+** Magit
+#+begin_src emacs-lisp
+  (use-package magit)
 #+end_src
 ** Helpful
 #+begin_src emacs-lisp
