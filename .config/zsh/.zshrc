@@ -87,6 +87,10 @@ uptime -p | sed "s/up\s/Elapsed Time: /;s/hours,\s/hs:/g;s/minutes/min/"
 # Autosuggestion and syntax highlighting
 source /usr/share/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh
 source /usr/share/zsh-autosuggestions/zsh-autosuggestions.zsh
+
+# clone the gitstatus repo
+# git clone "https://github.com/xylous/gitstatus.git" gitstatus
+#
 source $HOME/.config/zsh/gitstatus/gitstatus.plugin.zsh
 
 #eval "$(starship init zsh)"
