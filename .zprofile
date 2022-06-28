@@ -55,10 +55,12 @@ export VIDEO="mpv"
 #export LIBVA_DRIVER_NAME=radeonsi kdenlive obs mpv ffmpeg
 export VDPAU_DRIVER=radeonsi
 export MOZ_Z11_EGL=1
+export MOZ_GTK_TITLEBAR_DECORATION=client
 
 # Autostart useful programs
 #nextcloud &
 ~/.fehbg &
+#tint2 &
 lxpolkit &
 picom &
 emacs --daemon &
