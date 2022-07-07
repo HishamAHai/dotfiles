@@ -59,6 +59,7 @@ export MOZ_GTK_TITLEBAR_DECORATION=client
 
 # Autostart useful programs
 #nextcloud &
+nvidia-settings --assign CurrentMetaMode="nvidia-auto-select +0+0 {ForceFullCompositionPipeline=On}" &
 ~/.fehbg &
 #tint2 &
 lxpolkit &
