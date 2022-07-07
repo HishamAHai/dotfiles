@@ -8,7 +8,8 @@ local Gpu_temp_widget = {}
 screen_width = awful.screen.focused().geometry.width
 
 timeout = 5
-GPU_CMD = [[ bash -c "cat /sys/class/drm/card0/device/hwmon/hwmon?/temp1_input" ]]
+--GPU_CMD = [[ bash -c "cat /sys/class/drm/card0/device/hwmon/hwmon?/temp1_input" ]]
+GPU_CMD = [[ bash -c "nvidia-smi --query-gpu=temperature.gpu --format=csv,noheader" ]]
 
 gpu_temp_widget = wibox.widget {
     {
@@ -43,7 +44,8 @@ gpu_temp_widget:connect_signal('button::press', function (_,_,_,button)
         end)
 
 function Update_gpu_temp_widget(widget,stdout)
-    widget:get_children_by_id('temp')[1]:set_text(stdout / 1000 .. '°C')
+    --widget:get_children_by_id('temp')[1]:set_text(stdout / 1000 .. '°C')
+    widget:get_children_by_id('temp')[1]:set_text(stdout .. '°C')
 end
 
 watch(GPU_CMD,timout,Update_gpu_temp_widget,gpu_temp_widget)
