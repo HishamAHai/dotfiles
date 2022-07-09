@@ -35,7 +35,7 @@ export WGETRC="$XDG_CONFIG_HOME/wgetrc"
 export _JAVA_OPTIONS=-Djava.util.prefs.userRoot="$XDG_CONFIG_HOME"/java
 
 #Add .local/bin to the environment variables path
-export PATH=$HOME/.local/bin:/usr/local/bin:$HOME/tinyMediaManager:$HOME/Applications:$HOME/.local/share/flatpak/exports/bin:/var/lib/flatpak/exports/bin:$PATH
+export PATH=$HOME/.local/share/cargo/bin:$HOME/.local/bin:/usr/local/bin:$HOME/tinyMediaManager:$HOME/Applications:$HOME/.local/share/flatpak/exports/bin:/var/lib/flatpak/exports/bin:$PATH
 
 # Unify the gtk and qt5 themes
 export QT_QPA_PLATFORMTHEME="qt5ct"
