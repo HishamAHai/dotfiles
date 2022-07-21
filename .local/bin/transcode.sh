@@ -35,5 +35,5 @@ if [[ -d $1 ]]; then
        # Get the filename without extension
        file=$(basename -s .mov $1)
        # Do the transcoding process
-       ffmpeg -y -vsync 0 -hwaccel cuda -hwaccel_output_format cuda -i $1 -c:a aac -c:v hevc_nvenc -b:v 5M $file.mp4
+       ffmpeg -hide_banner -y -vsync 0 -hwaccel cuda -hwaccel_output_format cuda -i $1 -c:a aac -c:v hevc_nvenc -b:v 5M $file.mp4
 fi
