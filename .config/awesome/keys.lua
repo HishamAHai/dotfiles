@@ -132,11 +132,14 @@ globalkeys = gears.table.join(
     awful.key({ modkey , altkey}, 'k', function () awful.spawn('org.kde.kdenlive') end,
               {description = 'Launch kdenlive', group = 'productivity'}),
 
+    awful.key({ modkey , altkey}, 'd', function () awful.spawn('resolve') end,
+              {description = 'Launch Davinci Resolve', group = 'productivity'}),
+
     awful.key({ modkey , }, 'v', function () awful.spawn('virt-manager') end,
               {description = 'Launch virt-manager', group = 'productivity'}),
 
     awful.key({ modkey , raltkey}, 'g', function () awful.spawn('gimp3') end,
-              {description = 'Launch Virt Manager', group = 'productivity'}),
+              {description = 'Launch Gimp', group = 'productivity'}),
 
     awful.key({ modkey, altkey}, 'i', function () awful.spawn('org.inkscape.Inkscape') end,
               {description = 'Launch inkscape', group = 'productivity'}),
