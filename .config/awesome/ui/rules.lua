@@ -36,7 +36,7 @@ awful.rules.rules = {
                 'GParted', 'Timeshift-gtk', 'Virtualbox Machine', 'Virtualbox Manager', 'Xfce4-about',
                 'Xfce4-power-manager-settings', 'Songrec', 'Cadence', 'Catia', 'NoiseTorch', 'helvum',
                 'slickpicker', 'Gnome-sudoku','Psensor', 'org.kde.fancontrol.gui', 'corectrl', 'openrgb',
-                'Galculator','pavucontrol-qt','MediaElch', 'Gddccontrol', 'SimpleScreenRecorder', 'Solaar'
+                'Galculator','pavucontrol-qt','Nvidia-settings', 'Gddccontrol', 'SimpleScreenRecorder', 'Solaar'
             },
         role = {
             'GtkFileChooserDialog', 'pop-up'
@@ -103,6 +103,7 @@ awful.rules.rules = {
     },
     properties = {
         tag = screen[1].tags[5],
+        floating = true,
         switchtotag = true
     }
 },
