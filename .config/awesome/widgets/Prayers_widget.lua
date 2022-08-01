@@ -86,7 +86,7 @@ local function update_widget(widget,stdout)
         naughty.notify(
         {
             timeout     =   30,
-            font        =   'Geeza Pro 11',
+            --font        =   'Geeza Pro 11',
             icon        =   icons_dir .. 'mosque.svg',
             icon_size   =   dpi(48),
             text        =   'حان الآن موعد صلاة <span fgcolor="' .. bgcolor .. '"><b>' .. name .. '</b></span> حسب التوقيت المحلي لمدينة باريلوتشي',
