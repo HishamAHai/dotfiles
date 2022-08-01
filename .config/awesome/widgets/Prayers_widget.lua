@@ -105,7 +105,7 @@ for i=1,6 do
     table.insert(Texts, '۞ ' .. Prayer_names[i] .. '\t\t\t' .. Times[i]     .. ' ۞')
     widget:get_children_by_id(Prayer_bg_id[i])[1]:set_bg(beautiful.bg_empty)
     widget:get_children_by_id(Prayer_bg_id[i])[1]:set_shape(Wdt_shape)
-    widget:get_children_by_id(Prayer_id[i])[1]:set_font('Noto Kufi Arabic 9')
+    widget:get_children_by_id(Prayer_id[i])[1]:set_font('10')
 end
 
     if Current_time >= Times[1] and Current_time < Times[6] then
@@ -173,9 +173,10 @@ Prayers_widget = wibox.widget {
          {
              {
                  id      =   'Heading_widget',
-                 font    =   'Noto Kufi Arabic 9',
+                 font    =   '10',
                  widget  =   wibox.widget.textbox
              },
+             top = screen_width * 0.0020,
              right = screen_width * 0.0015,
              left = screen_width * 0.0015,
              widget = wibox.container.margin
@@ -186,48 +187,78 @@ Prayers_widget = wibox.widget {
      },
      { -- Fajr
          {
-             id      =   Prayer_id[1],
-             widget  =   wibox.widget.textbox
+	    {
+	       id      =   Prayer_id[1],
+	       widget  =   wibox.widget.textbox
+	    },
+	    left = screen_width * 0.0015,
+	    right = screen_width * 0.0015,
+	    widget = wibox.container.margin
          },
          id      =   Prayer_bg_id[1],
          widget = wibox.container.background
      },
      { -- Shuruq
          {
-             id      =   Prayer_id[2],
-             widget  =   wibox.widget.textbox
+	    {
+	       id      =   Prayer_id[2],
+	       widget  =   wibox.widget.textbox
+	    },
+	    left = screen_width * 0.0015,
+	    right = screen_width * 0.0015,
+	    widget = wibox.container.margin
          },
          id      =   Prayer_bg_id[2],
          widget = wibox.container.background
      },
      { -- Dhuhr
          {
-             id      =   Prayer_id[3],
-             widget  =   wibox.widget.textbox
+	    {
+	       id      =   Prayer_id[3],
+	       widget  =   wibox.widget.textbox
+	    },
+	    left = screen_width * 0.0015,
+	    right = screen_width * 0.0015,
+	    widget = wibox.container.margin
          },
          id = Prayer_bg_id[3],
          widget = wibox.container.background
      },
      { -- Asr
          {
-             id      =   Prayer_id[4],
-             widget  =   wibox.widget.textbox
+	    {
+	       id      =   Prayer_id[4],
+	       widget  =   wibox.widget.textbox
+	    },
+	    left = screen_width * 0.0015,
+	    right = screen_width * 0.0015,
+	    widget = wibox.container.margin
          },
          id      =   Prayer_bg_id[4],
          widget = wibox.container.background
      },
      { -- Maghrib
          {
-             id      =   Prayer_id[5],
-             widget  =   wibox.widget.textbox
+	    {
+	       id      =   Prayer_id[5],
+	       widget  =   wibox.widget.textbox
+	    },
+	    left = screen_width * 0.0015,
+	    right = screen_width * 0.0015,
+	    widget = wibox.container.margin
          },
          id      =   Prayer_bg_id[5],
          widget = wibox.container.background
      },
      { -- Isha
          {
-             id      =   Prayer_id[6],
-             widget  =   wibox.widget.textbox
+	    {
+	       id      =   Prayer_id[6],
+	       widget  =   wibox.widget.textbox
+	    },
+	    left = screen_width * 0.0015,
+	    right = screen_width * 0.0015,
+	    widget = wibox.container.margin
          },
          id      =   Prayer_bg_id[6],
          widget = wibox.container.background
@@ -235,10 +266,6 @@ Prayers_widget = wibox.widget {
      spacing = screen_height * 0.0022,
      layout = wibox.layout.fixed.vertical,
     },
-    --top = screen_height * 0.0015,
-    --bottom = screen_height * 0.0015,
-    --left = screen_width * 0.002,
-    --right = screen_width * 0.0005,
     widget = wibox.container.margin
 }
 
@@ -249,7 +276,7 @@ awful.screen.connect_for_each_screen(function(s)
     s.Prayers_widget = awful.wibar(
     {
         screen  =   s,
-        height  =   screen_height * 0.265,
+        height  =   screen_height * 0.24,
         width   =   screen_width * 0.078,
         bg      =   '#0000',
         shape   =   bar_wdt_shape

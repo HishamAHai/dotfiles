@@ -57,7 +57,7 @@ awful.screen.connect_for_each_screen(function(s)
     ----s.top_left.y                =   screen_height * 0.00
     screen[1].Prayers_widget.x  =   screen_width * 0.92
     --screen[2].Prayers_widget.x  =   screen_width * 1.867
-    s.Prayers_widget.y          =   screen_height * 0.250
+    s.Prayers_widget.y          =   screen_height * 0.275
     screen[1].WEATHER_WIDGET.x  =   screen_width * 0.92
     --screen[2].WEATHER_WIDGET.x  =   screen_width * 1.867
     s.WEATHER_WIDGET.y          =   screen_height * 0.5186
