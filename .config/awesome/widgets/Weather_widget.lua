@@ -101,7 +101,7 @@ WEATHER_WIDGET_BIG = wibox.widget {
                 align = 'center',
                 widget = wibox.container.place
             },
-            spacing = screen_height * 0.008,
+            spacing = screen_height * 0.011,
             layout = wibox.layout.fixed.vertical
         },
         shape = big_wdt_shape,
