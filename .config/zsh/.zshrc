@@ -61,7 +61,10 @@ HOSTNAME=$HOST
 bindkey -v
 
 # fast directory switching
+if command -v fasd &> /dev/null
+then
 eval "$(fasd --init auto)"
+fi
 
 # End of lines configured by zsh-newuser-install
 # Aliases
