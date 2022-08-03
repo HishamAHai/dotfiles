@@ -33,6 +33,7 @@ export TERMINFO_DIRS="$XDG_DATA_HOME"/terminfo:/usr/share/terminfo
 export WGETRC="$XDG_CONFIG_HOME/wgetrc"
 #export HISTFILE="$XDG_CACHE_HOME"/zsh/history
 export _JAVA_OPTIONS=-Djava.util.prefs.userRoot="$XDG_CONFIG_HOME"/java
+export INPUTRC="$XDG_CONFIG_HOME"/readline/inputrc
 
 #Add .local/bin to the environment variables path
 export PATH=$HOME/.local/share/cargo/bin:$HOME/.local/bin:/usr/local/bin:$HOME/Applications:$HOME/.local/share/flatpak/exports/bin:/var/lib/flatpak/exports/bin:/usr/local/cuda-11.7/bin:$PATH
