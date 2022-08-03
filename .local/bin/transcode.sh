@@ -11,7 +11,12 @@ if [[ -d $1 ]]; then
     for i in {*.mkv,*.MOV}
     do
 	# Get the filename without extension.
-    ouput=${i%.*}
+    #ouput=${i%.*}
+    if [[ $i == *.mkv ]]; then
+        output=$(basename -s .mkv $i)
+    elif [[ $i == *.MOV ]]; then
+        output=$(basename -s .MOV $i)
+    fi
 	#
 	# With ffmpeg command we transcode the clip to dnxhd codec
 	# dnxhd is the desired video codec
