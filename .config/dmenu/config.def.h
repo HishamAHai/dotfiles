@@ -9,7 +9,7 @@ static int fuzzy = 0;                      /* -F  option; if 0, dmenu doesn't us
 /* -fn option overrides fonts[0]; default X11 font or font set */
 static const char *fonts[] = {
 	"FantasqueSansMono Nerd Font:size=12",
-    "JoyPixels:size=11:antialias=true:hinting=true"
+    "Noto Color Emoji:size=11:antialias=true:hinting=true"
 };
 static const unsigned int fgalpha = OPAQUE;
 static const char *prompt      = NULL;      /* -p  option; prompt to the left of input field */
