@@ -1,4 +1,5 @@
-static const unsigned int bgalpha = 0xc8;
+static const unsigned int bgalpha = 0xf2;
+/*static const unsigned int bgalpha = 0xff;*/
 static const char *colors[SchemeLast][2] = {
 	/*     fg         bg       */
 	[SchemeNorm] = { "#e4e4e4", "#222221"},
