@@ -10,20 +10,14 @@ alias cres="sudo timeshift --create --comments"
 
 alias ls="exa --icons -lah --no-user --color=always --group-directories-first"
 alias diff="diff --color=always"
-alias mm="$HOME/.local/bin/mpvMovie.sh"
 alias v="nvim"
 #alias w="curl -H 'Accept-Language: es' wttr.in/bariloche"
 alias grep="grep --color=always"
 alias du="dust -r"
 alias df="df -h"
 alias duf="duf -hide-fs tmpfs,devtmpfs"
-alias ca="cd ~/.config/awesome"
 alias cb="cd ~/.local/bin"
 alias cc="cd ~/.config"
-alias cm="cd /media/MOVIES"
-alias cda="cd /media/DATA"
-alias cdo="cd ~/Downloads"
-alias cpi="cd ~/Pictures"
 alias wget="wget --hsts-file='$XDG_CACHE_HOME/wget-hsts'"
 alias config='/usr/bin/git --git-dir=$HOME/.cfg/ --work-tree=$HOME'
 alias pic='/usr/bin/git --git-dir=$HOME/Pictures/.cfg/ --work-tree=$HOME/Pictures'
@@ -36,6 +30,8 @@ alias list="watch -n 1 transmission-remote -l"
 alias myt="mpv --ytdl-format=\""
 alias ytls="yt-dlp --list-format"
 alias n="ncmpcpp"
+alias ffprobe="ffpbrobe -hide_banner"
+alias ffmpeg="ffmpeg -hide_banner"
 
 #typo mistakes
 alias eixt="exit"
@@ -53,7 +49,6 @@ alias osd="$HOME/.local/bin/OpenSubtitlesDownload.py --cli -l ara"
 alias reload="echo 'awesome.restart()' | awesome-client"
 
 #Preview images in kitty
-#Remember that this alias works only in kitty terminal
 alias prev="kitty +kitten icat" #Remember that this alias works only in kitty terminal
 
 #unimatrix with async and specific speed
