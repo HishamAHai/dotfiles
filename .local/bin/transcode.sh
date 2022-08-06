@@ -11,7 +11,6 @@ if [[ -d $1 ]]; then
     for i in {*.mkv,*.MOV}
     do
 	# Get the filename without extension.
-    #ouput=${i%.*}
     if [[ $i == *.mkv ]]; then
         output=$(basename -s .mkv $i)
     elif [[ $i == *.MOV ]]; then
@@ -24,7 +23,7 @@ if [[ -d $1 ]]; then
         # pcm_s16le is the audio codec supported by Davinci Resolve Free
         # yuv422p10 is the pixel format
         # The new file name will be the original file name but with a different extension
-	ffmpeg -hide_banner -loglevel quiet -stats -i $i -c:v dnxhd -vf "scale=1920:1080,fps=30000/1001,format=yuv422p10" -b:v 175M -c:a pcm_s16le $output.mov
+	ffmpeg -hide_banner -loglevel quiet -stats -i $i -map 0:v -map 0:a -c:v dnxhd -vf "scale=1920:1080,fps=30000/1001,format=yuv422p10" -b:v 175M -c:a pcm_s16le $output.mov
 	#
 	# The "for" loop is done
     done
@@ -38,5 +37,5 @@ elif [[ -f $1 ]]; then
     # Else, use the name of the original file and change the extension
 	file=$(basename -s .mov $1)
     fi
-    ffmpeg -hide_banner -loglevel quiet -stats -y -hwaccel cuda -hwaccel_output_format cuda -i $1 -c:a aac -c:v hevc_nvenc -b:v 8M -fps_mode cfr $(dirname $1)/$file.mp4
+    ffmpeg -hide_banner -loglevel quiet -stats -y -hwaccel cuda -hwaccel_output_format cuda -i $1 -c:a aac -c:v hevc_nvenc -b:v 8M $(dirname $1)/$file.mp4
 fi
