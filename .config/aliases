@@ -30,7 +30,7 @@ alias list="watch -n 1 transmission-remote -l"
 alias myt="mpv --ytdl-format=\""
 alias ytls="yt-dlp --list-format"
 alias n="ncmpcpp"
-alias ffprobe="ffpbrobe -hide_banner"
+alias ffprobe="ffprobe -hide_banner"
 alias ffmpeg="ffmpeg -hide_banner"
 
 #typo mistakes
