@@ -8,7 +8,7 @@ local dpi           =   xresources.apply_dpi
 --require('top_left')
 require('ui.top_bar')
 require('widgets.Prayers_widget')
-require('widgets.Media_widget')
+--require('widgets.Media_widget')
 require('widgets.Date_widget')
 require('widgets.Kernel_widget')
 require('widgets.Weather_widget')
@@ -80,11 +80,11 @@ awful.screen.connect_for_each_screen(function(s)
                                     text = 'Now Playing >>> ',
                                     widget = wibox.widget.textbox
                                 },
-                                {
-                                    Media_wdt,
-                                    fg = beautiful.color3,
-                                    widget = wibox.container.background
-                                },
+                                --{
+                                --    Media_wdt,
+                                --    fg = beautiful.color3,
+                                --    widget = wibox.container.background
+                                --},
                                 {
                                     text = ' <<<',
                                     widget = wibox.widget.textbox
