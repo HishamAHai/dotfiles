@@ -65,5 +65,6 @@ nvidia-settings --assign CurrentMetaMode="nvidia-auto-select +0+0 {ForceFullComp
 #tint2 &
 lxpolkit &
 picom &
+solaar -w hide &
 emacs --daemon &
 #exec awesome
