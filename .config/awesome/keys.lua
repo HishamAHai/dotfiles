@@ -132,7 +132,7 @@ globalkeys = gears.table.join(
     awful.key({ modkey , altkey}, 'k', function () awful.spawn('org.kde.kdenlive') end,
               {description = 'Launch kdenlive', group = 'productivity'}),
 
-    awful.key({ modkey , altkey}, 'd', function () awful.spawn('resolve') end,
+    awful.key({ modkey , 'Shift'}, 'd', function () awful.spawn('resolve') end,
               {description = 'Launch Davinci Resolve', group = 'productivity'}),
 
     awful.key({ modkey , }, 'v', function () awful.spawn('virt-manager') end,
@@ -148,9 +148,6 @@ globalkeys = gears.table.join(
               {description = 'Launch pulsemixer', group = 'hotkeys'}),
     awful.key({ modkey            }, 'f',     function () awesome.emit_signal("scratch::lf") end,
               {description = 'open lf with previews', group = 'launcher'}),
-
-    awful.key({ modkey , raltkey}, 's', function () awful.spawn('simplescreenrecorder') end,
-              {description = 'Launch SimpeScreenRecorder', group = 'productivity'}),
 
     awful.key({modkey,     'Shift'}, 'a',function () awful.spawn('alacritty') end,
               {description = 'open alacritty terminal', group = 'launcher'}),
@@ -255,9 +252,6 @@ awful.key({}, 'XF86MonBrightnessUp', function () brightness_widget:inc() end, {d
 
     awful.key({ altkey}, 's', function () awful.spawn('playerctl play-pause') end,
               {description = 'Play/Pause current song', group = 'hotkeys'}),
-
-    awful.key({ altkey, 'Control'}, 'm', function () awful.spawn.with_shell('mpv $(xclip -o -selection clipboard)') end,
-              {description = 'Play the copied link with mpv w/o caching', group = 'hotkeys'}),
 
     awful.key({ altkey, }, 'm', function () awful.spawn.with_shell('mpv --cache=yes $(xclip -o -selection clipboard)') end,
               {description = 'Play the copied link with mpv w caching', group = 'hotkeys'}),
