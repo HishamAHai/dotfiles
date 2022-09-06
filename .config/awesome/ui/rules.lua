@@ -35,7 +35,7 @@ awful.rules.rules = {
                 'Hardinfo', 'Kvantum Manager', 'Xarchiver', 'Nm-connection-editor', 'Pavucontrol',
                 'GParted', 'Timeshift-gtk', 'Virtualbox Machine', 'Virtualbox Manager', 'Xfce4-about',
                 'Xfce4-power-manager-settings', 'Songrec', 'Cadence', 'Catia', 'NoiseTorch', 'helvum',
-                'slickpicker', 'Gnome-sudoku','Psensor', 'org.kde.fancontrol.gui', 'corectrl', 'openrgb',
+                'slickpicker', 'Gnome-sudoku','Psensor', 'org.kde.fancontrol.gui', 'corectrl', 'openrgb', 'Fsearch', 
                 'Galculator','pavucontrol-qt','Nvidia-settings', 'Gddccontrol', 'SimpleScreenRecorder', 'Solaar'
             },
         role = {
