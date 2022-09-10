@@ -9,7 +9,8 @@ local bling = require('modules.bling')
 local tags = {}
 awful.screen.connect_for_each_screen(function(s)
     awful.tag.add('',{
-            name                = '⠚⠁⠧⠗⠊⠎', -- JARVIS
+            --name                = '⠚⠁⠧⠗⠊⠎',
+            name                = 'JAVRIS',
             id                  = '1',
 			layout              = awful.layout.suit.tile,
 			--layout			    = bling.layout.centered,
@@ -19,7 +20,8 @@ awful.screen.connect_for_each_screen(function(s)
 			}
 		)
     awful.tag.add('',{
-            name                = '⠞⠁⠗⠎', -- TARS
+            --name                = '⠞⠁⠗⠎',
+            name                = 'TARS',
             id                  = '2',
 			layout              = awful.layout.suit.tile,
             master_width_factor =   0.6,
@@ -28,7 +30,8 @@ awful.screen.connect_for_each_screen(function(s)
 			}
 		)
     awful.tag.add('',{
-            name                = '⠍⠕⠞⠓⠑⠗', -- MOTHER
+            --name                = '⠍⠕⠞⠓⠑⠗',
+            name                = 'MOTHER',
             id                  = '3',
 			layout			    = awful.layout.suit.tile,
 			gap_single_client	= true,
@@ -36,7 +39,8 @@ awful.screen.connect_for_each_screen(function(s)
 			}
 		)
     awful.tag.add('',{
-            name                = '⠓⠁⠇', -- HAL
+            --name                = '⠓⠁⠇',
+            name                = 'HAL',
             id                  = '4',
 			layout			    = awful.layout.suit.tile,
 			gap_single_client	= true,
@@ -44,7 +48,8 @@ awful.screen.connect_for_each_screen(function(s)
 			}
 		)
     awful.tag.add('',{
-            name                = '⠎⠅⠽⠝⠑⠞', -- SKYNET
+            --name                = '⠎⠅⠽⠝⠑⠞',
+            name                = 'SKYNET',
             id                  = '5',
 			layout			    = awful.layout.suit.tile,
 			gap_single_client	= true,
@@ -52,7 +57,8 @@ awful.screen.connect_for_each_screen(function(s)
 			}
 		)
     awful.tag.add('',{
-            name                = '⠋⠗⠊⠙⠁⠽', -- FRIDAY
+            --name                = '⠋⠗⠊⠙⠁⠽',
+            name                = 'FRIDAY',
             id                  = '6',
 			layout			    = awful.layout.suit.tile,
             master_width_factor =   0.75,
@@ -61,7 +67,8 @@ awful.screen.connect_for_each_screen(function(s)
 			}
 		)
     awful.tag.add('',{
-            name                = '⠧⠕⠽⠁⠛⠑⠗', --VOYAGER
+            --name                = '⠧⠕⠽⠁⠛⠑⠗',
+            name                = 'VOYAGER',
             id                  = '7',
 			layout			    = awful.layout.suit.tile,
 			gap_single_client	= true,
