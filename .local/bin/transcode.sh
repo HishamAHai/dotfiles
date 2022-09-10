@@ -8,17 +8,19 @@
 if [[ -d $1 ]]; then
     cd $1
     ## Organize files into separate directories to prevent conflict between extensions.
-    # Original files after being transcoded are stored here
-    [ ! -d "transcoded" ] && mkdir transcoded
-    # Completed project after being transcoded and ready to upload are stored here
-    [ ! -d "finalized" ] && mkdir finalized
-    # Completed project before being transcoded are stored here 
-    [ ! -d "project" ] && mkdir project
-    ##
-    # A "for" loop is used to loop through all the original files
+    # Original files after being transcoded are stored in "transcoded" directory
+    # Project file after being transcoded and ready to be uploded is stored in "finalized" directory
+    # Project file before being transcoded is stored in "project" directory
+    for dir in {"transcoded","finalized","project"}
+    do
+	if [[ ! -d $dir ]]; then
+	    mkdir $dir
+	fi
+    done
+##
+    # Get the filename without extension.
     for i in {*.mkv,*.MOV,*.mov}
     do
-    # Get the filename without extension.
     if [[ $i == *.mkv ]]; then
         output=$(basename -s .mkv $i)
     elif [[ $i == *.MOV ]]; then
