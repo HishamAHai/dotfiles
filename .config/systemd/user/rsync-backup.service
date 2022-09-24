@@ -1,0 +1,9 @@
+[Unit]
+Description=A job to backup the home directory
+
+[Service]
+Type=simple
+ExecStart=%h/.local/bin/rsync.sh
+
+[Install]
+WantedBy=default.target
