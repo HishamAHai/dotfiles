@@ -8,7 +8,8 @@ local icons_dir     =   os.getenv('HOME') .. '/.config/awesome/icons/'
 local Memory_widget = {}
 local screen_width = awful.screen.focused().geometry.width
 
-MEM_CMD = [[ bash -c "free -h | awk '/^Mem/ {print $3}' | sed 's/i//'" ]]
+--MEM_CMD = [[ bash -c "free -h | awk '/^Mem/ {print $3}' | sed 's/i//'" ]]
+MEM_CMD = [[ bash -c "memory.sh" ]]
 timeout = 10
 
 mem_widget = wibox.widget {
