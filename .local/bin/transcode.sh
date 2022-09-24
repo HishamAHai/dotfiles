@@ -19,7 +19,7 @@ if [[ -d $1 ]]; then
     done
 ##
     # Get the filename without extension.
-    for i in {*.mkv,*.MOV,*.mov}
+    for i in {*.mkv,*.MOV,*.mov,*.mp4}
     do
     if [[ $i == *.mkv ]]; then
         output=$(basename -s .mkv $i)
@@ -27,6 +27,8 @@ if [[ -d $1 ]]; then
         output=$(basename -s .MOV $i)
     elif [[ $i == *.mov ]]; then
         output=$(basename -s .mov $i)
+    elif [[ $i == *.mp4 ]]; then
+        output=$(basename -s .mp4 $i)
     fi
     ##
     # With ffmpeg command we transcode the clip to dnxhd codec
