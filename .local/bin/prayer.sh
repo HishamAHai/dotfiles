@@ -42,4 +42,5 @@ fast=$(date -u -d @$(($(date -d "$maghrib" '+%s') - $(date -d "$fajr" '+%s'))) '
 Tofast=$(date -u -d @$(($(date -d "$maghrib" '+%s') - $(date -d "$currenttime" '+%s'))) '+%H:%M')
 
 # Sending the salawat to the stdout
-printf "🕌 الصلاة القادمة ۩ $nextprayer ۩ $nextTime (الوقت المتبقي $remain)\nمدة الصوم $fast\nالوقت المتبقي حتى الإفطار $Tofast"
+printf "🕌 الصلاة القادمة ۩ $nextprayer ۩ $nextTime (الوقت المتبقي $remain)"
+#printf "🕌 الصلاة القادمة ۩ $nextprayer ۩ $nextTime (الوقت المتبقي $remain)\nمدة الصوم $fast\nالوقت المتبقي حتى الإفطار $Tofast"
