@@ -1,0 +1,9 @@
+#+title: Qtile Window Manager
+#+options: toc:2
+* Table of Content :toc:
+  - [[#preface][Preface]]
+
+** Preface
+A powerful and customizable window manager written in python.
+
+This is a work in progress and not the final product yet.
