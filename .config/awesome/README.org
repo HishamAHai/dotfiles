@@ -16,6 +16,8 @@ Awesome window manager is with no doubt the most customizable and configurable W
 The main configuration file of lua is =rc.lua= which has to be located at =$XDG_CONFIG_HOME/awesome/rc.lua=. After installing AwesomeWM for the first time, this file has to be copied from =/etc/xdg/awesome/rc.lua=, and the other important file is the theme configuration file which has to be located at =$XDG_CONFIG_HOME/awesome/themes/theme.lua=.
 
 My way of configuring AwesomeWM is by splitting the configuration into separte modules, each module is resposible for a certain function, to make it easier for trubleshooting and implementing new modules. My =rc.lua= has calls for each module being used.
+** Missing Modules directory
+This directory contains two github projects to expand the functionality of AwesomeWm. In order to add them, first create a new directory inside awesome directory called modules =mkdir modules && cd modules= and then clone the following repository =git clone https://github.com/BlingCorp/bling.git=
 ** Important notes
 - Note 1: keep in mind that the =Right alt= key works only for the *Spanish keyboard layout*. For other layouts you should assign a different key.
 - Note 2: I personally use =kitty terminal= since it's gpu accelerated and has a better Arabic support than others like =alacritty=.
