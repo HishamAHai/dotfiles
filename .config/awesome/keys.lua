@@ -138,7 +138,7 @@ globalkeys = gears.table.join(
     awful.key({ modkey , }, 'v', function () awful.spawn('virt-manager') end,
               {description = 'Launch virt-manager', group = 'productivity'}),
 
-    awful.key({ modkey , raltkey}, 'g', function () awful.spawn('gimp3') end,
+    awful.key({ modkey , raltkey}, 'g', function () awful.spawn('org.gimp.GIMP') end,
               {description = 'Launch Gimp', group = 'productivity'}),
 
     awful.key({ modkey, altkey}, 'i', function () awful.spawn('org.inkscape.Inkscape') end,
@@ -256,7 +256,7 @@ awful.key({}, 'XF86MonBrightnessUp', function () brightness_widget:inc() end, {d
     awful.key({ altkey, }, 'm', function () awful.spawn.with_shell('mpv --cache=yes $(xclip -o -selection clipboard)') end,
               {description = 'Play the copied link with mpv w caching', group = 'hotkeys'}),
 
-    awful.key({ altkey, 'Control'}, 's', function () awful.spawn.with_shell('mpv --shuffle /mnt/MULTIMEDIA/VIDEOS/*') end,
+    awful.key({ altkey, 'Control'}, 's', function () awful.spawn.with_shell('mpv --shuffle /mnt/MISC/VIDEOS/*') end,
               {description = 'Play the copied link with mpv w caching', group = 'hotkeys'}),
 
     awful.key({ altkey, 'Control'}, 'q', function () awful.spawn.with_shell('zathura /home/hisham/Documents/Quran_7afs.pdf') end,
