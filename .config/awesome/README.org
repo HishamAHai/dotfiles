@@ -1,10 +1,10 @@
 #+title: AwesomeWM
 #+options: toc:2
-* Table Of Content
+* Table Of Content :toc:
 - [[#preface][Preface]]
+  - [[#missing-modules-directory][Missing Modules directory]]
   - [[#important-notes][Important notes]]
   - [[#useful-keybindings-to-get-started][Useful keybindings to get started]]
-- [[#salat-prayer-widget][Salat (Prayer) widget]]
 
 * Preface
 #+caption: Dark mode
