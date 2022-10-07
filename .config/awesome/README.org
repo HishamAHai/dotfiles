@@ -17,7 +17,7 @@ The main configuration file of lua is =rc.lua= which has to be located at =$XDG_
 
 My way of configuring AwesomeWM is by splitting the configuration into separte modules, each module is resposible for a certain function, to make it easier for trubleshooting and implementing new modules. My =rc.lua= has calls for each module being used.
 ** Missing Modules directory
-This directory contains two github projects to expand the functionality of AwesomeWm. In order to add them, first create a new directory inside awesome directory called modules =mkdir modules && cd modules= and then clone the following repository =git clone https://github.com/BlingCorp/bling.git=
+This directory contains two github projects to expand the functionality of AwesomeWm. In order to add them, first create a new directory inside awesome directory called modules =mkdir modules && cd modules= and then clone the following repository =git clone https://github.com/BlingCorp/bling.git= and also we clone the following =https://github.com/andOrlando/rubato=
 ** Important notes
 - Note 1: keep in mind that the =Right alt= key works only for the *Spanish keyboard layout*. For other layouts you should assign a different key.
 - Note 2: I personally use =kitty terminal= since it's gpu accelerated and has a better Arabic support than others like =alacritty=.
