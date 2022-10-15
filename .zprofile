@@ -36,7 +36,7 @@ export _JAVA_OPTIONS=-Djava.util.prefs.userRoot="$XDG_CONFIG_HOME"/java
 export INPUTRC="$XDG_CONFIG_HOME"/readline/inputrc
 
 #Add .local/bin to the environment variables path
-export PATH=$HOME/.local/share/cargo/bin:$HOME/.local/bin:/usr/local/bin:$HOME/Applications:$HOME/.local/share/flatpak/exports/bin:/var/lib/flatpak/exports/bin:/usr/local/cuda-11.7/bin:$PATH
+export PATH=$HOME/.local/share/cargo/bin:$HOME/.local/bin:/usr/local/bin:$HOME/Applications:$HOME/.local/share/flatpak/exports/bin:/var/lib/flatpak/exports/bin:$PATH
 
 # Unify the gtk and qt5 themes
 export QT_QPA_PLATFORMTHEME="qt5ct"
