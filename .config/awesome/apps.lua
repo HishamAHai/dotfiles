@@ -14,7 +14,7 @@ local apps = {
 	vplayer	= 'mpv',
 	vector	= 'inkscape',
 	ssh	= 'filezilla',
-	wallpaper = 'nsxiv -tor /home/hisham/Pictures/*'
+	wallpaper = 'nsxiv -tor /mnt/SSD/Pictures/*'
 }
 local function run_once(cmd)
     local findme = cmd
