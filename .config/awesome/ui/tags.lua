@@ -4,6 +4,7 @@ local wibox = require('wibox')
 require('widgets.decoration')
 local beautiful = require('beautiful')
 local bling = require('modules.bling')
+local icons_dir     =   os.getenv('HOME') .. '/.config/awesome/icons/tags/dark/'
 
 
 local tags = {}
@@ -11,6 +12,7 @@ awful.screen.connect_for_each_screen(function(s)
     awful.tag.add('',{
             --name                = '⠚⠁⠧⠗⠊⠎',
             name                = 'JAVRIS',
+            --icon                = icons_dir .. 'javris.svg',
             id                  = '1',
 			layout              = awful.layout.suit.tile,
 			--layout			    = bling.layout.centered,
@@ -22,6 +24,7 @@ awful.screen.connect_for_each_screen(function(s)
     awful.tag.add('',{
             --name                = '⠞⠁⠗⠎',
             name                = 'TARS',
+            --icon                = icons_dir .. 'tars.svg',
             id                  = '2',
 			layout              = awful.layout.suit.tile,
             master_width_factor =   0.6,
@@ -32,6 +35,7 @@ awful.screen.connect_for_each_screen(function(s)
     awful.tag.add('',{
             --name                = '⠍⠕⠞⠓⠑⠗',
             name                = 'MOTHER',
+            --icon                = icons_dir .. 'mother.svg',
             id                  = '3',
 			layout			    = awful.layout.suit.tile,
 			gap_single_client	= true,
@@ -41,6 +45,7 @@ awful.screen.connect_for_each_screen(function(s)
     awful.tag.add('',{
             --name                = '⠓⠁⠇',
             name                = 'HAL',
+            --icon                = icons_dir .. 'hal.svg',
             id                  = '4',
 			layout			    = awful.layout.suit.tile,
 			gap_single_client	= true,
@@ -50,6 +55,7 @@ awful.screen.connect_for_each_screen(function(s)
     awful.tag.add('',{
             --name                = '⠎⠅⠽⠝⠑⠞',
             name                = 'SKYNET',
+            --icon                = icons_dir .. 'skynet.svg',
             id                  = '5',
 			layout			    = awful.layout.suit.tile,
 			gap_single_client	= true,
@@ -59,6 +65,7 @@ awful.screen.connect_for_each_screen(function(s)
     awful.tag.add('',{
             --name                = '⠋⠗⠊⠙⠁⠽',
             name                = 'FRIDAY',
+            --icon                = icons_dir .. 'friday.svg',
             id                  = '6',
 			layout			    = awful.layout.suit.tile,
             master_width_factor =   0.75,
@@ -69,6 +76,7 @@ awful.screen.connect_for_each_screen(function(s)
     awful.tag.add('',{
             --name                = '⠧⠕⠽⠁⠛⠑⠗',
             name                = 'VOYAGER',
+            --icon                = icons_dir .. 'voyager.svg',
             id                  = '7',
 			layout			    = awful.layout.suit.tile,
 			gap_single_client	= true,

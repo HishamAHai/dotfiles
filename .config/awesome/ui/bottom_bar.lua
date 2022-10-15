@@ -15,7 +15,7 @@ require('widgets.Weather_widget')
 require('widgets.Cpu_temp_widget')
 require('widgets.Gpu_temp_widget')
 require('widgets.quotes')
-require('widgets.clientSize')
+
 
 local bottom_bar = {}
 
@@ -104,7 +104,7 @@ awful.screen.connect_for_each_screen(function(s)
                 {
                     {
                         layout = wibox.layout.fixed.horizontal,
-                        separator, inc_left, separator, inc_right,
+                        
                         {
                             {
                                 Pryr_wdt,

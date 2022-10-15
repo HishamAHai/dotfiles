@@ -1,0 +1,66 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<!-- Created with Inkscape (http://www.inkscape.org/) -->
+
+<svg
+   width="512"
+   height="512"
+   viewBox="0 0 135.46665 135.46665"
+   version="1.1"
+   id="svg5"
+   inkscape:version="1.2.1 (9c6d41e410, 2022-07-14)"
+   sodipodi:docname="hal.svg"
+   xmlns:inkscape="http://www.inkscape.org/namespaces/inkscape"
+   xmlns:sodipodi="http://sodipodi.sourceforge.net/DTD/sodipodi-0.dtd"
+   xmlns="http://www.w3.org/2000/svg"
+   xmlns:svg="http://www.w3.org/2000/svg">
+  <sodipodi:namedview
+     id="namedview7"
+     pagecolor="#505050"
+     bordercolor="#a85e5e"
+     borderopacity="1"
+     inkscape:showpageshadow="false"
+     inkscape:pageopacity="0"
+     inkscape:pagecheckerboard="false"
+     inkscape:deskcolor="#505050"
+     inkscape:document-units="px"
+     showgrid="false"
+     showguides="true"
+     showborder="true"
+     inkscape:zoom="2.658"
+     inkscape:cx="255.83145"
+     inkscape:cy="256.01956"
+     inkscape:window-width="2880"
+     inkscape:window-height="1620"
+     inkscape:window-x="517"
+     inkscape:window-y="229"
+     inkscape:window-maximized="0"
+     inkscape:current-layer="layer1" />
+  <defs
+     id="defs2">
+    <rect
+       x="-220.65761"
+       y="298.65169"
+       width="503.29137"
+       height="312.67169"
+       id="rect1065" />
+  </defs>
+  <g
+     inkscape:label="Layer 1"
+     inkscape:groupmode="layer"
+     id="layer1">
+    <path
+       id="path1000"
+       style="opacity:1;fill:#333333;fill-opacity:1;stroke-width:0.286661"
+       d="M 67.733325 1.5874998 A 66.145828 66.145828 0 0 0 1.5874998 67.733325 A 66.145828 66.145828 0 0 0 67.733325 133.87915 A 66.145828 66.145828 0 0 0 133.87915 67.733325 A 66.145828 66.145828 0 0 0 67.733325 1.5874998 z M 67.733325 10.847915 A 56.88541 56.88541 0 0 1 124.61873 67.733325 A 56.88541 56.88541 0 0 1 67.733325 124.61873 A 56.88541 56.88541 0 0 1 10.847915 67.733325 A 56.88541 56.88541 0 0 1 67.733325 10.847915 z " />
+    <text
+       xml:space="preserve"
+       transform="matrix(0,0.54317043,-0.54317043,0,257.46645,132.46502)"
+       id="text1063"
+       style="white-space:pre;shape-inside:url(#rect1065);display:inline;opacity:1;fill:#333333;fill-opacity:1"><tspan
+         x="-220.6582"
+         y="383.71305"
+         id="tspan988"><tspan
+           style="font-weight:800;font-size:96px;font-family:'Open Sans';-inkscape-font-specification:'Open Sans, Ultra-Bold'"
+           id="tspan986">HAL</tspan></tspan></text>
+  </g>
+</svg>
