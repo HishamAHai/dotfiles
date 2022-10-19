@@ -36,11 +36,12 @@ export _JAVA_OPTIONS=-Djava.util.prefs.userRoot="$XDG_CONFIG_HOME"/java
 export INPUTRC="$XDG_CONFIG_HOME"/readline/inputrc
 
 #Add .local/bin to the environment variables path
-export PATH=$HOME/.local/share/cargo/bin:$HOME/.local/bin:/usr/local/bin:$HOME/Applications:$HOME/.local/share/flatpak/exports/bin:/var/lib/flatpak/exports/bin:$PATH
+export PATH=$HOME/.local/bin:$HOME/.local/share/flatpak/exports/bin:/var/lib/flatpak/exports/bin:$PATH
 
 # Unify the gtk and qt5 themes
-export QT_QPA_PLATFORMTHEME="qt5ct"
-#export QT_STYLE_OVERRIDE=adwaita
+#export QT_QPA_PLATFORMTHEME="qt5ct"
+export QT_STYLE_OVERRIDE=Adwaita-Dark
+export QT_SCALE_FACTOR=1.25
 export QT_AUTO_SCREEN_SCALE_FACTOR=0
 
 # Default applications
@@ -59,7 +60,8 @@ export VIDEO="mpv"
 export MOZ_GTK_TITLEBAR_DECORATION=client
 
 # Autostart useful programs
-#nextcloud &
+nextcloud &
+udiskie --tray &
 nvidia-settings --assign CurrentMetaMode="nvidia-auto-select +0+0 {ForceFullCompositionPipeline=On}" &
 ~/.fehbg &
 #tint2 &
