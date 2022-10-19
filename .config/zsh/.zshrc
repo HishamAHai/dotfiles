@@ -96,4 +96,4 @@ source /usr/share/zsh-autosuggestions/zsh-autosuggestions.zsh
 #
 source $HOME/.config/zsh/gitstatus/gitstatus.plugin.zsh
 
-#eval "$(starship init zsh)"
+eval "$(zoxide init zsh)"
