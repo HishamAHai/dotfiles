@@ -194,3 +194,15 @@ cmd bulk-rename ${{
     lf -remote "send $id unselect"
 }}
 map <c-b> :bulk-rename
+
+
+# zoxide integration
+cmd z %{{
+    result="$(zoxide query --exclude "${PWD}" -- "$@")"
+    lf -remote "send ${id} cd '${result}'"
+}}
+
+cmd zi ${{
+    result="$(zoxide query -i -- "$@")"
+    lf -remote "send ${id} cd '${result}'"
+}}
