@@ -1,0 +1,119 @@
+﻿في هذا الشرح سنجد الخطوات الكاملة لكيفية تثبيت خدمة التخزين السحابي نيكست كلاود Nextcloud على سيرفر ديبيان. لكي تتمكن من اتباع الخطوات يجب أن يكون عندك سيرفر مع إصدار ديبيان 11 سواء في المنزل أو على أي خدمة حجز مواقع من اختيارك. \\
+لن نتطرق في هذا الشرح إلى كيفية تثبيت رخصة أمان ssl التي تحتاج إلى وجود نطاق محجوز و بالتالي اتبع هذه الخطوات على مسؤوليتك الشخصية.
+#+options: toc:2
+* جدول المحتويات                                                        :toc:
+- [[#المتطلبات][المتطلبات]]
+- [[#إعداد-الجدار-الناري][إعداد الجدار الناري]]
+- [[#إنشاء-قاعدة-البيانات][إنشاء قاعدة البيانات]]
+- [[#تحميل-الإصدار-الأخير-من-نيكست-كلاود][تحميل الإصدار الأخير من نيكست كلاود]]
+- [[#ضبط-apache2][ضبط Apache2]]
+- [[#ضبط-php][ضبط PHP]]
+
+* المتطلبات
+قبل البدء بعملية إعداد السيرفر لابد من تثبيت الحزم و البرامج الضرورية
+#+begin_example
+sudo apt install wget unzip php7.4 php7.4-zip mariadb-server redis-server php7.4-cgi php7.4-xml php7.4-common php7.4-curl php7.4-gd php7.4-mbstring php7.4-mysql php7.4-bz2 php7.4-intl php7.4-bcmath php7.4-gmp php-apcu php-memcached php-redis redis-server php-imagick libapache2-mod-php7.4 libmagickcore-6.q16-6-extra ufw
+#+end_example
+* إعداد الجدار الناري
+هذه الخطوة ليست من متطلبات العمل الصحيح للتخزين السحابي لكن لابد من تأمين السيرفر باعتبار أنه سيكون مفتوحاً للشبكة
+#+begin_example
+sudo ufw default deny
+sudo ufw limit ssh
+sudo ufw allow 80
+sudo ufw enable
+sudo systemctl enable --now ufw.service
+#+end_example
+
+* إنشاء قاعدة البيانات
+في قسم المتطلبات قمنا بتثبيت حزمة قاعدة البيانات و الآن سنقوم بإنشاء قاعدة بيانات جديدة لكي يتم حفظ كافة البيانات و الملفات ضمنها و لابد في البداية من عمل بعض الإعداد البسيط لها.
+#+begin_example
+sudo mysql_secure_installation
+#+end_example
+بعد ذلك سندخل إلى الصدفة الخاصة بـ mysql باستخدام الأمر التالي \\
+#+begin_example
+sudo mariadb
+#+end_example
+و نقوم بتفيذ الأوامر التالية بالترتيب مع ضرورة الإنتباه إلى وجود الفاصلة المنقوطة في نهاية كل سطر و استبدال password بكلمة سر خاصة بك و قوية في الأمر الثالث
+#+begin_example
+  CREATE DATABASE nextcloud;
+  SHOW DATABASES;
+  GRANT ALL PRIVILEGES ON nextcloud.* TO 'nextcloud'@'localhost' IDENTIFIED BY 'password';
+  FLUSH PRIVILEGES;
+  QUIT;
+#+end_example
+* تحميل الإصدار الأخير من نيكست كلاود
+#+begin_example
+wget https://download.nextcloud.com/server/releases/latest.zip
+#+end_example
+بعد انتهاء التحميل سنقوم بفك الضغط عن الملف المضغوط الذي قمنا بتحيمله
+#+begin_example
+unzip latest.zip
+#+end_example
+ نقل المجلد إلى المسار الصحيح
+#+begin_example
+sudo mv nextcloud /var/www
+cd /var/www
+#+end_example
+ ضبط صلاحيات المسار الجديد
+#+begin_example
+sudo chown -R www-data:www-data nextcloud
+#+end_example
+* ضبط Apache2
+ تعطيل الموقع الافتراضي
+#+begin_example
+sudo a2dissite 000-default.conf
+#+end_example
+إنشاء ملف جديد لتعريف السيرفر عن مكان تواجد nextcloud و السماح له بالوصول للشكبة
+#+begin_example
+sudo vim /etc/apache2/sites-available/nextcloud.conf
+#+end_example
+محتويات الملف
+#+begin_example
+  <VirtualHost *:80>
+    DocumentRoot /var/www/nextcloud/
+
+    <Directory /var/www/nextcloud/>
+      Require all granted
+      AllowOverride All
+      Options FollowSymLinks MultiViews
+
+      <IfModule mod_dav.c>
+        Dav off
+      </IfModule>
+    </Directory>
+  </VirtualHost>
+#+end_example
+ تفعيل الوحدات اللازمة
+#+begin_example
+sudo phpenmod bcmath gmp imagick intl
+#+end_example
+ تفعيل الموقع الجديد
+#+begin_example
+sudo a2ensite nextcloud.conf
+#+end_example
+ إعادة تفعيل الخدمة
+#+begin_example
+sudo systemctl restart apache2.service
+#+end_example
+* ضبط PHP
+نقوم بفتح الملف التالي للقيام بالتعديلات الموضحة في الأسفل
+#+begin_example
+sudo vim /etc/php/7.4/apache2/php.ini
+#+end_example
+نقوم بالبحث عن الأسطر التالية و تعديلها حسب القيم المعطاة هنا
+#+begin_example
+  memory_limit = 512M
+  upload_max_filesize = 200M
+  post_max_size = 200M
+  date_timezone = /America/Argentina/Buenos_Aires
+  opcache.enable=1
+  opcache.memory.consumption=128
+  opcache.interned_strings_bufer=8
+  opcache.max_accelerated_files=10000
+  opcache.revalidate_freq=1
+  opcache.save_comments=1
+#+end_example
+و في النهاية لا ننسى أن نقوم بإعادة تشغيل الخدمة
+#+begin_example
+sudo systemctl restart apache2
+#+end_example
