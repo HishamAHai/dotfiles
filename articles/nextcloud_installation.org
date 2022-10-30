@@ -100,7 +100,9 @@ sudo systemctl restart apache2.service
 #+begin_example
 sudo vim /etc/php/7.4/apache2/php.ini
 #+end_example
-نقوم بالبحث عن الأسطر التالية و تعديلها حسب القيم المعطاة هنا
+نقوم بالبحث عن الأسطر التالية و تعديلها حسب القيم المعطاة هنا. \\
+للحصول على المنطقة الزمنية الخاصة بنا و استبدالها في السطر الرابع يمكن زيارة الرابط التالي: \\
+[[https://www.php.net/manual/en/datetime.configuration.php#ini.date.timezone][Timezones]]
 #+begin_example
   memory_limit = 512M
   upload_max_filesize = 200M
