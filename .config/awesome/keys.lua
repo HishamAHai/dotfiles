@@ -155,7 +155,7 @@ globalkeys = gears.table.join(
     awful.key({ modkey,           }, 'e', function () awful.spawn('emacsclient -c') end,
               {description = 'Run a new instance of emacs client', group = 'launcher'}),
 
-    awful.key({ modkey,           }, 'c', function () awful.spawn('firefox') end,
+    awful.key({ modkey,           }, 'c', function () awful.spawn('org.mozilla.firefox') end,
               {description = 'Navigate the web with chromium', group = 'launcher'}),
 
     awful.key({ modkey,           }, 'q', function () awful.spawn('qutebrowser') end,
