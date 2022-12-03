@@ -46,7 +46,7 @@ export QT_AUTO_SCREEN_SCALE_FACTOR=0
 
 # Default applications
 #export BROWSER="chromium"
-export BROWSER="firefox"
+export BROWSER="org.mozilla.firefox"
 export WM="awesome"
 export EDITOR="nvim"
 export TERMINAL="kitty"
@@ -65,7 +65,7 @@ udiskie --tray &
 nvidia-settings --assign CurrentMetaMode="nvidia-auto-select +0+0 {ForceFullCompositionPipeline=On}" &
 ~/.fehbg &
 #tint2 &
-lxpolkit &
+/usr/libexec/polkit-gnome-authentication-agent-1 &
 picom &
 solaar -w hide &
 emacs --daemon &
