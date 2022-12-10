@@ -135,7 +135,7 @@ font:
     #style: Bold Italic
 
   # Point size
-  size: 14.0
+  size: 16.0
 
   # Offset is the extra space around each character. `offset.y` can be thought of
   # as modifying the line spacing, and `offset.x` as modifying the letter spacing.
@@ -163,8 +163,8 @@ font:
 colors:
   # Default colors
   primary:
-    background: '#121212'
-    foreground: '#bbbbbb'
+    background: '#222221'
+    foreground: '#e4e4e4'
 
     # Bright and dim foreground colors
     #
@@ -221,25 +221,25 @@ colors:
 
   # Normal colors
   normal:
-    black:   '#121212'
-    red:     '#fa2573'
-    green:   '#97e123'
-    yellow:  '#dfd460'
-    blue:    '#0f7fcf'
-    magenta: '#8700ff'
-    cyan:    '#42a7cf'
-    white:   '#bbbbbb'
+    black:   '#212121'
+    red:     '#b7141e'
+    green:   '#457b23'
+    yellow:  '#f5971d'
+    blue:    '#134eb2'
+    magenta: '#550087'
+    cyan:    '#0e707c'
+    white:   '#eeeeee'
 
   # Bright colors
   bright:
-    black:   '#545454'
-    red:     '#f5669c'
-    green:   '#b0e05e'
-    yellow:  '#fef26c'
-    blue:    '#00afff'
-    magenta: '#af87ff'
-    cyan:    '#50cdfe'
-    white:   '#ffffff'
+    black:   '#424242'
+    red:     '#e83a3f'
+    green:   '#7aba39'
+    yellow:  '#fee92e'
+    blue:    '#53a4f3'
+    magenta: '#a94dbb'
+    cyan:    '#26bad1'
+    white:   '#d8d8d8'
 
   # Dim colors
   #
