@@ -57,13 +57,13 @@ awful.screen.connect_for_each_screen(function(s)
     ----s.top_left.y                =   screen_height * 0.00
     screen[1].Prayers_widget.x  =   screen_width * 0.92
     --screen[2].Prayers_widget.x  =   screen_width * 1.867
-    s.Prayers_widget.y          =   screen_height * 0.275
+    s.Prayers_widget.y          =   screen_height * 0.73
     screen[1].WEATHER_WIDGET.x  =   screen_width * 0.92
     --screen[2].WEATHER_WIDGET.x  =   screen_width * 1.867
-    s.WEATHER_WIDGET.y          =   screen_height * 0.5186
+    s.WEATHER_WIDGET.y          =   screen_height * 0.03
     screen[1].quotes.x                  =   screen_width * 0.92
     --screen[2].quotes.x                  =   screen_width * 1.887
-    s.quotes.y                  =   screen_height * 0.6318
+    s.quotes.y                  =   screen_height * 0.145
     s.bottom_bar.y              =   screen_height * 0.978
 
     s.bottom_bar:setup {
