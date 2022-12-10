@@ -39,8 +39,9 @@ export INPUTRC="$XDG_CONFIG_HOME"/readline/inputrc
 export PATH=$HOME/.local/bin:$HOME/.local/share/flatpak/exports/bin:/var/lib/flatpak/exports/bin:$PATH
 
 # Unify the gtk and qt5 themes
-#export QT_QPA_PLATFORMTHEME="qt5ct"
-export QT_STYLE_OVERRIDE=Adwaita-Dark
+export QT_QPA_PLATFORMTHEME="qt5ct"
+#export QT_STYLE_OVERRIDE=adwaita
+export QT_QPA_PLATFORMTHEME=qt5ct
 export QT_SCALE_FACTOR=1.25
 export QT_AUTO_SCREEN_SCALE_FACTOR=0
 

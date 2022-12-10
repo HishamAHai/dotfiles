@@ -33,7 +33,7 @@ map x $$f
 map X !$f
 
 # go to directory
-map ga cd /mnt/MISC/VIDEOS
+map ga cd /mnt/MISC
 map gD cd /mnt/SSD/DavinciTemporal
 map gm cd /mnt/MULTIMEDIA/MOVIES
 map gs cd /mnt/MULTIMEDIA/SERIES

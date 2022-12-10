@@ -31,12 +31,15 @@ awful.rules.rules = {
                 'DTA', 'copyq', 'pinentry'
             },
             class = {
-                'Arandr', 'Blueman-manager', 'Nitrogen', 'lxrandr', 'Lxappearance', 'qt5ct', 'qt6ct',
-                'Hardinfo', 'Kvantum Manager', 'Xarchiver', 'Nm-connection-editor', 'Pavucontrol',
-                'GParted', 'Timeshift-gtk', 'Virtualbox Machine', 'Virtualbox Manager', 'Xfce4-about',
-                'Xfce4-power-manager-settings', 'Songrec', 'Cadence', 'Catia', 'NoiseTorch', 'helvum',
-                'slickpicker', 'Gnome-sudoku','Psensor', 'org.kde.fancontrol.gui', 'corectrl', 'openrgb', 'Fsearch', 
-                'Galculator','pavucontrol-qt','Nvidia-settings', 'Gddccontrol', 'SimpleScreenRecorder', 'Solaar'
+                'Arandr', 'Blueman-manager', 'Nitrogen', 'lxrandr', 'Lxappearance',
+                'Hardinfo', 'Kvantum Manager', 'Xarchiver', 'Nm-connection-editor',
+                'GParted', 'Timeshift-gtk', 'Virtualbox Machine', 'Virtualbox Manager',
+                'Xfce4-about', 'KeePassXC', 'Pavucontrol', 'qt5ct', 'qt6ct', 'Songrec',
+                'Xfce4-power-manager-settings', 'Cadence', 'Catia', 'NoiseTorch',
+                'slickpicker', 'Psensor', 'org.kde.fancontrol.gui', 'Nextcloud',
+                'Galculator','pavucontrol-qt','Nvidia-settings', 'Gddccontrol',
+                'SimpleScreenRecorder', 'Solaar', 'corectrl', 'openrgb', 'Fsearch',
+                'helvum',
             },
         role = {
             'GtkFileChooserDialog', 'pop-up'
@@ -68,6 +71,16 @@ awful.rules.rules = {
 },
 
     -- Specific applications run on specific tags
+{
+    rule = {
+        class = 'wezterm'
+    },
+    properties = {
+        tag = screen[1].tags[1],
+        switchtotag = true
+    }
+},
+
 {
     rule = {
         class = 'kitty'

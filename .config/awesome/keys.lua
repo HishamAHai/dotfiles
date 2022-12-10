@@ -256,7 +256,7 @@ awful.key({}, 'XF86MonBrightnessUp', function () brightness_widget:inc() end, {d
     awful.key({ altkey, }, 'm', function () awful.spawn.with_shell('mpv --cache=yes $(xclip -o -selection clipboard)') end,
               {description = 'Play the copied link with mpv w caching', group = 'hotkeys'}),
 
-    awful.key({ altkey, 'Control'}, 's', function () awful.spawn.with_shell('mpv --shuffle /mnt/MISC/VIDEOS/*') end,
+    awful.key({ altkey, 'Control'}, 's', function () awful.spawn.with_shell('mpv --cache=yes --shuffle /mnt/MISC/*') end,
               {description = 'Play the copied link with mpv w caching', group = 'hotkeys'}),
 
     awful.key({ altkey, 'Control'}, 'q', function () awful.spawn.with_shell('zathura /home/hisham/Documents/Quran_7afs.pdf') end,
