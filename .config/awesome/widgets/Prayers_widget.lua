@@ -64,6 +64,7 @@ local function update_widget(widget,stdout)
     table.insert(Times,Result.data.timings.Asr)
     table.insert(Times,Result.data.timings.Maghrib)
     table.insert(Times,Result.data.timings.Isha)
+    table.insert(Times,Result.data.timings.Sunset)
 
     function Prayer_utc(P_h_m)
         str                         =   os.date('%a %d %b %Y ') .. P_h_m .. ':' .. os.date('%S')
@@ -81,12 +82,19 @@ local function update_widget(widget,stdout)
         return Total
     end
 
+    function day_length()
+        sunrise  =   Prayer_utc(Times[2])
+        sunset  =   Prayer_utc(Times[7])
+        length_number = sunset - sunrise - TZ_adj
+        length   =   os.date('%H:%M',length_number)
+        return length
+    end
+
 
     function Notification (name)
         naughty.notify(
         {
-            timeout     =   30,
-            --font        =   'Geeza Pro 11',
+            timeout     =   15,
             icon        =   icons_dir .. 'mosque.svg',
             icon_size   =   dpi(48),
             text        =   'حان الآن موعد صلاة <span fgcolor="' .. bgcolor .. '"><b>' .. name .. '</b></span> حسب التوقيت المحلي لمدينة باريلوتشي',
@@ -94,9 +102,9 @@ local function update_widget(widget,stdout)
         }
         )
         if name == Prayer_names[1] then
-            awful.spawn.with_shell('mpv --volume=70 $HOME/.local/share/Azan_fajr.webm')
+            awful.spawn.with_shell('io.mpv.Mpv --volume=70 $HOME/.local/share/Azan_fajr.webm')
         else
-            awful.spawn.with_shell('mpv --volume=70 $HOME/.local/share/Azan.webm')
+            awful.spawn.with_shell('io.mpv.Mpv --volume=70 $HOME/.local/share/Azan.webm')
         end
     end
 
@@ -112,7 +120,7 @@ end
         for i=1,5 do
             if Current_time >= Times[i] and Current_time < Times[i+1] then
                 if Current_time == Times[2] then
-                    awful.spawn.with_shell('mpv $HOME/.local/share/Nature.mp3')
+                    awful.spawn.with_shell('io.mpv.Mpv $HOME/.local/share/Nature.mp3')
                 elseif Current_time == Times[i] then
                     Notification(Prayer_names[i])
                 end
@@ -138,8 +146,8 @@ end
     ArabicDayNum    =   Result.data.date.hijri.day
     HijriMonth      =   Result.data.date.hijri.month.ar
     HijriYear       =   Result.data.date.hijri.year
-    HijriDate       =   ArabicDayNum .. ' ' .. HijriMonth .. ' ' .. HijriYear .. ' هجرية\n'
-    Heading         =   'مواقيت الصلاة ليوم ' .. ArabicDay .. '\n' .. HijriDate
+    HijriDate       =   ArabicDayNum .. ' ' .. HijriMonth .. ' ' .. HijriYear .. ' هجرية'
+    Heading         =   'مواقيت الصلاة ليوم ' .. ArabicDay ..  '\n' .. HijriDate .. '\n' .. 'طول اليوم: \t\t (' .. day_length() .. ' ساعة)\n'
 
     widget:get_children_by_id('icon')[1]:set_image(Image)
     widget:get_children_by_id('Heading_widget')[1]:set_markup(Heading ..
@@ -276,7 +284,7 @@ awful.screen.connect_for_each_screen(function(s)
     s.Prayers_widget = awful.wibar(
     {
         screen  =   s,
-        height  =   screen_height * 0.24,
+        height  =   screen_height * 0.25,
         width   =   screen_width * 0.078,
         bg      =   '#0000',
         shape   =   bar_wdt_shape
