@@ -206,3 +206,6 @@ cmd zi ${{
     result="$(zoxide query -i -- "$@")"
     lf -remote "send ${id} cd '${result}'"
 }}
+
+# trash can
+cmd trash %trash-put $fx
