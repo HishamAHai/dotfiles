@@ -96,4 +96,8 @@ source /usr/share/zsh-autosuggestions/zsh-autosuggestions.zsh
 #
 source $HOME/.config/zsh/gitstatus/gitstatus.plugin.zsh
 
+# zoxide
 eval "$(zoxide init zsh)"
+
+# mcfly
+eval "$(mcfly init zsh)"
