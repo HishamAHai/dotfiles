@@ -102,9 +102,9 @@ local function update_widget(widget,stdout)
         }
         )
         if name == Prayer_names[1] then
-            awful.spawn.with_shell('io.mpv.Mpv --volume=70 $HOME/.local/share/Azan_fajr.webm')
+            awful.spawn.with_shell('mpv --volume=70 $HOME/.local/share/Azan_fajr.webm')
         else
-            awful.spawn.with_shell('io.mpv.Mpv --volume=70 $HOME/.local/share/Azan.webm')
+            awful.spawn.with_shell('mpv --volume=70 $HOME/.local/share/Azan.webm')
         end
     end
 
@@ -120,7 +120,7 @@ end
         for i=1,5 do
             if Current_time >= Times[i] and Current_time < Times[i+1] then
                 if Current_time == Times[2] then
-                    awful.spawn.with_shell('io.mpv.Mpv $HOME/.local/share/Nature.mp3')
+                    awful.spawn.with_shell('mpv $HOME/.local/share/Nature.mp3')
                 elseif Current_time == Times[i] then
                     Notification(Prayer_names[i])
                 end
@@ -147,7 +147,7 @@ end
     HijriMonth      =   Result.data.date.hijri.month.ar
     HijriYear       =   Result.data.date.hijri.year
     HijriDate       =   ArabicDayNum .. ' ' .. HijriMonth .. ' ' .. HijriYear .. ' هجرية'
-    Heading         =   'مواقيت الصلاة ليوم ' .. ArabicDay ..  '\n' .. HijriDate .. '\n' .. 'طول اليوم: \t\t (' .. day_length() .. ' ساعة)\n'
+    Heading         =   'مواقيت الصلاة ليوم ' .. ArabicDay ..  '\n' .. HijriDate .. '\n<span fgcolor="' .. beautiful.color2 .. '">'.. 'طول اليوم: \t\t (' .. day_length() .. ' ساعة) </span>\n'
 
     widget:get_children_by_id('icon')[1]:set_image(Image)
     widget:get_children_by_id('Heading_widget')[1]:set_markup(Heading ..
