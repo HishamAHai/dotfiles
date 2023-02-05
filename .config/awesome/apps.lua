@@ -1,7 +1,7 @@
 local awful = require('awful')
 
 local apps = {
-    browser = 'brave',
+    browser = 'chromium-freeworld',
 	editor	= os.getenv('EDITOR') or 'nvim',
 	fmanager = 'pcmanfm',
 	geditor	= 'geany',

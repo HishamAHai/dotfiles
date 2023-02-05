@@ -126,7 +126,7 @@ globalkeys = gears.table.join(
     awful.key({ modkey,           }, 'Return', function () awful.spawn(apps.terminal) end,
               {description = 'open a terminal', group = 'launcher'}),
 
-    awful.key({ modkey , altkey}, 'o', function () awful.spawn('com.obsproject.Studio') end,
+    awful.key({ modkey , altkey}, 'o', function () awful.spawn('carla.sh') end,
               {description = 'Launch obs studio', group = 'productivity'}),
 
     awful.key({ modkey , altkey}, 'k', function () awful.spawn('org.kde.kdenlive') end,
@@ -155,7 +155,7 @@ globalkeys = gears.table.join(
     awful.key({ modkey,           }, 'e', function () awful.spawn('emacsclient -c') end,
               {description = 'Run a new instance of emacs client', group = 'launcher'}),
 
-    awful.key({ modkey,           }, 'c', function () awful.spawn('org.mozilla.firefox') end,
+    awful.key({ modkey,           }, 'c', function () awful.spawn('chromium-freeworld') end,
               {description = 'Navigate the web with chromium', group = 'launcher'}),
 
     awful.key({ modkey,           }, 'q', function () awful.spawn('qutebrowser') end,
@@ -255,6 +255,9 @@ awful.key({}, 'XF86MonBrightnessUp', function () brightness_widget:inc() end, {d
 
     awful.key({ altkey, }, 'm', function () awful.spawn.with_shell('mpv --cache=yes $(xclip -o -selection clipboard)') end,
               {description = 'Play the copied link with mpv w caching', group = 'hotkeys'}),
+
+    awful.key({ altkey, }, 'r', function () awful.spawn.with_shell('record.sh $(xclip -o -selection clipboard)') end,
+              {description = 'Play and record the copied link with mpv', group = 'hotkeys'}),
 
     awful.key({ altkey, 'Control'}, 's', function () awful.spawn.with_shell('mpv --cache=yes --shuffle /mnt/MISC/*') end,
               {description = 'Play the copied link with mpv w caching', group = 'hotkeys'}),
