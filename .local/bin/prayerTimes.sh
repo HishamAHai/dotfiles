@@ -12,4 +12,4 @@ adjustment="1"
 output="$HOME/.local/share/prayers.json"
 
 # The api can be found for free
-curl "http://api.aladhan.com/v1/timings/$today?latitude=$lat&longitude=$long&method=$method&adjustment=$adjustment" -s -o $output
+wget -O $output "http://api.aladhan.com/v1/timings/$today?latitude=$lat&longitude=$long&method=$method&adjustment=$adjustment"
