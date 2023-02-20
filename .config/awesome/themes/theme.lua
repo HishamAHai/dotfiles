@@ -34,7 +34,7 @@ theme.bg_normal             =   ColorScheme[1] .. 'f2'
 theme.fg_normal             =   ColorScheme[2]
 theme.bg_empty              =   ColorScheme[18] .. '2f'
 theme.fg_urgent             =   ColorScheme[5]
-theme.fg_occupied           =   ColorScheme[5]
+theme.fg_occupied           =   ColorScheme[14]
 theme.taglist_fg_occupied   =   ColorScheme[7]
 theme.taglist_bg_occupied   =   nil
 theme.taglist_bg_empty      =   nil
@@ -42,6 +42,7 @@ theme.taglist_bg_focus      =   theme.fg_occupied
 theme.bg_systray            =   theme.bg_normal
 
 -- Border colors
+theme.useless_gap           =   dpi(6)
 theme.border_width          =   dpi(1)
 theme.border_normal         =   theme.bg_normal
 theme.border_focus          =   theme.fg_occupied

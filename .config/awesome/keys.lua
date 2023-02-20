@@ -73,12 +73,20 @@ globalkeys = gears.table.join(
     awful.key({ modkey,           }, 'k', function ()
             awful.client.focus.byidx(-1) end,
         {description = 'focus previous by index', group = 'client'}),
+        
+    -- ================= Switching between screens ===========================
+    awful.key({ modkey, altkey }, 'j', function ()
+            awful.screen.focus_relative(1) end,
+        {description = 'focus previous screen', group = 'screen'}),
+    awful.key({ modkey, altkey }, 'k', function ()
+            awful.screen.focus_relative(-1) end,
+        {description = 'focus next screen', group = 'screen'}),
 
     -- ================= Layout control keybindings ===========================
-    awful.key({ modkey, 'Shift'  }, 'j',        function () awful.client.swap.bydirection(  'left')    end,
+    awful.key({ modkey, 'Shift'  }, 'j',        function () awful.client.swap.global_bydirection(  'left')    end,
               {description = 'swap with next client by index',          group = 'layout'}),
 
-    awful.key({ modkey, 'Shift'  }, 'k',        function () awful.client.swap.bydirection( 'right')    end,
+    awful.key({ modkey, 'Shift'  }, 'k',        function () awful.client.swap.global_bydirection( 'right')    end,
               {description = 'swap with previous client by index',      group = 'layout'}),
 
    awful.key({ modkey, 'Shift'   }, 'h',        function () awful.tag.incnmaster( 1, nil, true) end,
@@ -129,9 +137,6 @@ globalkeys = gears.table.join(
     awful.key({ modkey , altkey}, 'o', function () awful.spawn('carla.sh') end,
               {description = 'Launch obs studio', group = 'productivity'}),
 
-    awful.key({ modkey , altkey}, 'k', function () awful.spawn('org.kde.kdenlive') end,
-              {description = 'Launch kdenlive', group = 'productivity'}),
-
     awful.key({ modkey , 'Shift'}, 'd', function () awful.spawn('resolve') end,
               {description = 'Launch Davinci Resolve', group = 'productivity'}),
 
@@ -155,7 +160,7 @@ globalkeys = gears.table.join(
     awful.key({ modkey,           }, 'e', function () awful.spawn('emacsclient -c') end,
               {description = 'Run a new instance of emacs client', group = 'launcher'}),
 
-    awful.key({ modkey,           }, 'c', function () awful.spawn('chromium-freeworld') end,
+    awful.key({ modkey,           }, 'c', function () awful.spawn('com.github.Eloston.UngoogledChromium --force-dark-mode --enable-features=WebUIDarkMode') end,
               {description = 'Navigate the web with chromium', group = 'launcher'}),
 
     awful.key({ modkey,           }, 'q', function () awful.spawn('qutebrowser') end,

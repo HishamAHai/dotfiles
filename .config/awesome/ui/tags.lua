@@ -8,83 +8,81 @@ local icons_dir     =   os.getenv('HOME') .. '/.config/awesome/icons/tags/dark/'
 
 
 local tags = {}
+awful.layout.layouts = {
+    awful.layout.suit.tile,
+    awful.layout.suit.floating,
+    awful.layout.suit.max,
+    awful.layout.suit.max.fullscreen,
+    awful.layout.suit.tile.left,
+    awful.layout.suit.tile.bottom,
+    awful.layout.suit.tile.top,
+    awful.layout.suit.fair,
+    awful.layout.suit.fair.horizontal,
+}
 awful.screen.connect_for_each_screen(function(s)
-    awful.tag.add('',{
-            --name                = '⠚⠁⠧⠗⠊⠎',
-            name                = 'JAVRIS',
-            --icon                = icons_dir .. 'javris.svg',
+    if s.index == 1 then
+    awful.tag.add('',{ -- '⠚⠁⠧⠗⠊⠎',
+            name                = 'J.A.R.V.I.S',
             id                  = '1',
+            screen              = s,
 			layout              = awful.layout.suit.tile,
-			--layout			    = bling.layout.centered,
 			gap_single_client	= true,
 			gap                 = 6,
 			selected		    = true
 			}
 		)
-    awful.tag.add('',{
-            --name                = '⠞⠁⠗⠎',
+    awful.tag.add('',{      -- '⠞⠁⠗⠎',
             name                = 'TARS',
-            --icon                = icons_dir .. 'tars.svg',
             id                  = '2',
+            screen              = s,
 			layout              = awful.layout.suit.tile,
             master_width_factor =   0.6,
 			gap_single_client	= true,
 			gap			        = 6,
 			}
 		)
-    awful.tag.add('',{
-            --name                = '⠍⠕⠞⠓⠑⠗',
+    awful.tag.add('',{    -- '⠍⠕⠞⠓⠑⠗',
             name                = 'MOTHER',
-            --icon                = icons_dir .. 'mother.svg',
             id                  = '3',
+            screen              = s,
 			layout			    = awful.layout.suit.tile,
 			gap_single_client	= true,
 			gap			        = 6,
 			}
 		)
-    awful.tag.add('',{
-            --name                = '⠓⠁⠇',
+    awful.tag.add('',{       -- '⠓⠁⠇',
             name                = 'HAL',
-            --icon                = icons_dir .. 'hal.svg',
             id                  = '4',
+            screen              = s,
 			layout			    = awful.layout.suit.tile,
 			gap_single_client	= true,
 			gap			        = 6,
 			}
 		)
-    awful.tag.add('',{
-            --name                = '⠎⠅⠽⠝⠑⠞',
+    awful.tag.add('',{    -- '⠎⠅⠽⠝⠑⠞',
             name                = 'SKYNET',
-            --icon                = icons_dir .. 'skynet.svg',
             id                  = '5',
+            screen              = s,
 			layout			    = awful.layout.suit.tile,
 			gap_single_client	= true,
 			gap			        = 6,
 			}
 		)
-    awful.tag.add('',{
-            --name                = '⠋⠗⠊⠙⠁⠽',
-            name                = 'FRIDAY',
-            --icon                = icons_dir .. 'friday.svg',
+    awful.tag.add('',{    -- '⠋⠗⠊⠙⠁⠽',
+            name                = 'F.R.I.D.A.Y',
             id                  = '6',
+            screen              = s,
 			layout			    = awful.layout.suit.tile,
             master_width_factor =   0.75,
 			gap_single_client	= true,
 			gap			        = 6,
 			}
 		)
-    awful.tag.add('',{
-            --name                = '⠧⠕⠽⠁⠛⠑⠗',
-            name                = 'VOYAGER',
-            --icon                = icons_dir .. 'voyager.svg',
-            id                  = '7',
-			layout			    = awful.layout.suit.tile,
-			gap_single_client	= true,
-			gap			        = 3,
-			}
-		)
+    else
+    awful.tag({ "VOYAGER", "CASE", "BB-8", "T-800" }, s, awful.layout.tile)
+    end
     mytasklist = awful.widget.tasklist {
-    screen   = s,
+    screen   = screen.primary,
     filter   = awful.widget.tasklist.filter.focused,
     style    = {
         shape       =   Wdt_shape,

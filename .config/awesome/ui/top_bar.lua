@@ -33,8 +33,8 @@ awful.screen.connect_for_each_screen(function(s)
         height = awful.screen.focused().geometry.height * 0.02,
         width = awful.screen.focused().geometry.width * 0.995,
         bg  =   '#0000',
-        shape = function(cr, width, height)
-            gears.shape.rounded_rect(cr, width, height, screen_width * 0.003) end
+        --shape = function(cr, width, height)
+        --    gears.shape.rounded_rect(cr, width, height, screen_width * 0.003) end
     }
     )
 

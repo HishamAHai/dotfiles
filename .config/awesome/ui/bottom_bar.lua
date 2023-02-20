@@ -41,30 +41,24 @@ awful.screen.connect_for_each_screen(function(s)
         height      =   awful.screen.focused().geometry.height * 0.02,
         width       =   awful.screen.focused().geometry.width * 0.99,
         bg          =   '#0000',
-        shape       =   function(cr, width, height)
-            gears.shape.rounded_rect(cr, width, height, screen_width * 0.003) end
+        type        =   'dock',
+        --shape       =   function(cr, width, height)
+        --    gears.shape.rounded_rect(cr, width, height, screen_width * 0.003) end
 
     }
     )
 -- ========================= Widgets and bars placement =======================
-    s.top_bar.y               =   screen_height * 0.00208
-    --screen[1].top_right.x       =   screen_width * 0.606
-    ----screen[2].top_right.x       =   screen_width * 1.554
-    --s.top_right.y               =   screen_height * 0.00208
-    --screen[1].top_left.x        =   screen_width * 0.0015
-    ----screen[2].top_left.x        =   screen_width * 1.0025
-    --s.top_left.y                =   screen_height * 0.00208
-    ----s.top_left.y                =   screen_height * 0.00
-    screen[1].Prayers_widget.x  =   screen_width * 0.92
-    --screen[2].Prayers_widget.x  =   screen_width * 1.867
-    s.Prayers_widget.y          =   screen_height * 0.72
-    screen[1].WEATHER_WIDGET.x  =   screen_width * 0.92
-    --screen[2].WEATHER_WIDGET.x  =   screen_width * 1.867
-    s.WEATHER_WIDGET.y          =   screen_height * 0.03
-    screen[1].quotes.x                  =   screen_width * 0.92
-    --screen[2].quotes.x                  =   screen_width * 1.887
-    s.quotes.y                  =   screen_height * 0.145
-    s.bottom_bar.y              =   screen_height * 0.978
+    s.top_bar.y                 =   screen_height   * 0.00208
+    screen[1].Prayers_widget.x  =   screen_width    * 0.001
+    screen[2].Prayers_widget.x  =   screen_width    * 1.92
+    s.Prayers_widget.y          =   screen_height   * 0.722
+    screen[1].WEATHER_WIDGET.x  =   screen_width    * 0.001
+    screen[2].WEATHER_WIDGET.x  =   screen_width    * 1.92
+    s.WEATHER_WIDGET.y          =   screen_height   * 0.03
+    screen[1].quotes.x          =   screen_width    * 0.001
+    screen[2].quotes.x          =   screen_width    * 1.92
+    s.quotes.y                  =   screen_height   * 0.145
+    s.bottom_bar.y              =   screen_height   * 0.978
 
     s.bottom_bar:setup {
         {

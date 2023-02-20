@@ -8,7 +8,6 @@ local wibox = require('wibox')
 local rules = {}
 local screen_width = awful.screen.focused().geometry.width
 local screen_height = awful.screen.focused().geometry.height
-awful.screen.connect_for_each_screen(function(s)
 awful.rules.rules = {
     {
         rule = { },
@@ -59,31 +58,10 @@ awful.rules.rules = {
         titlebars_enabled = true,
     }
 },
-
-{
-    rule = {
-        class = 'org-tinymediamanager-TinyMediaManager',
-    },
-        properties = {
-            tag = screen[1].tags[3],
-            switchtotag = true
-        }
-},
-
     -- Specific applications run on specific tags
 {
     rule = {
-        class = 'wezterm'
-    },
-    properties = {
-        tag = screen[1].tags[1],
-        switchtotag = true
-    }
-},
-
-{
-    rule = {
-        class = 'kitty'
+        class = 'wezterm', 'kitty'
     },
     properties = {
         tag = screen[1].tags[1],
@@ -102,21 +80,10 @@ awful.rules.rules = {
 
 {
     rule = {
-        class = 'kdenlive'
+        class = 'kdenlive', 'resolve', 'VirtualBox Machine'
     },
     properties = {
         tag = screen[1].tags[5],
-        switchtotag = true
-    }
-},
-
-{
-    rule = {
-        class = 'resolve'
-    },
-    properties = {
-        tag = screen[1].tags[5],
-        floating = true,
         switchtotag = true
     }
 },
@@ -124,11 +91,14 @@ awful.rules.rules = {
 {
     rule_any = {
         class = {
-            'firefox','Brave-browser', 'Chromium', 'qutebrowser', 'LibreWolf'
+            'firefox','Brave-browser', 'qutebrowser', 'LibreWolf'
+        },
+        name = {
+            'Chromium',
         }
     },
     properties = {
-        tag = screen[1].tags[2],
+        tags = {'TARS', 'CASE' },
         switchtotag = true
     }
 },
@@ -136,7 +106,7 @@ awful.rules.rules = {
 {
     rule_any = {
         class = {
-            'Geany','Gimp','libreoffice-startcenter'
+            'Geany','Gimp','libreoffice-startcenter','org-tinymediamanager-TinyMediaManager',
         }
     },
     properties = {
@@ -174,30 +144,6 @@ awful.rules.rules = {
 {
     rule_any = {
         class = {
-            'VirtualBox Machine'
-        }
-    },
-    properties = {
-        tag = screen[1].tags[5],
-        switchtotag = true
-    }
-},
-
-{
-    rule_any = {
-        class = {
-            'VirtualBox Manager'
-        }
-    },
-    properties = {
-        tag = screen[1].tags[4],
-        switchtotag = true
-    }
-},
-
-{
-    rule_any = {
-        class = {
             'mpv'
         }
     },
@@ -212,25 +158,11 @@ awful.rules.rules = {
 {
     rule_any = {
         class = {
-            'FreeTube'
+            'obs'
         }
     },
     properties = {
-        tag = screen[1].tags[6],
-        switchtotag = true,
-        border_width = 0
-    }
-},
-
-{
-    rule_any = {
-        class = {
-            'discord'
-        }
-    },
-    properties = {
-        tag = screen[1].tags[7],
-        switchtotag = true,
+        screen = 2,
     }
 },
 
@@ -248,7 +180,6 @@ awful.rules.rules = {
 },
 
 }
-end)
 
 -- Add a titlebar if titlebars_enabled is set to true in the rules.
 client.connect_signal("request::titlebars", function(c)
@@ -322,8 +253,6 @@ end)
 
 
 -- ================= Experimenting with auto dpi functionality ================
---awful.screen.connect_for_each_screen(function(s)
 awful.screen.set_auto_dpi_enabled(true)
---end)
 
 return rules

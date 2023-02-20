@@ -152,11 +152,11 @@ awful.screen.connect_for_each_screen(function(s)
     s.WEATHER_WIDGET = awful.wibar(
     {
         position    =   'left',
-        screen      =   s,
+        screen      =   primary,
         width       =   screen_width * 0.078,
         height      =   screen_height * 0.11,
         bg          =   '#0000',
-        shape       =   bar_wdt_shape
+        --shape       =   bar_wdt_shape
     }
     )
 

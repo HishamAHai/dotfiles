@@ -29,13 +29,13 @@ require('bling.switcher')
 require('bling.playerctl')
 
 -- Default layouts (overwritten in tags module)
-awful.layout.layouts = {
-    awful.layout.suit.tile,
-    awful.layout.suit.spiral.dwindle,
-    awful.layout.suit.fair.horizontal,
-    awful.layout.suit.max.fullscreen,
-    awful.layout.suit.floating,
-}
+--awful.layout.layouts = {
+--    awful.layout.suit.tile,
+--    awful.layout.suit.spiral.dwindle,
+--    awful.layout.suit.fair.horizontal,
+--    awful.layout.suit.max.fullscreen,
+--    awful.layout.suit.floating,
+--}
 
 -- Reduce memory usage
 collectgarbage('setpause', 110)

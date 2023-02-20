@@ -287,7 +287,7 @@ awful.screen.connect_for_each_screen(function(s)
         height  =   screen_height * 0.25,
         width   =   screen_width * 0.078,
         bg      =   '#0000',
-        shape   =   bar_wdt_shape
+        --shape   =   bar_wdt_shape
     }
     )
 
