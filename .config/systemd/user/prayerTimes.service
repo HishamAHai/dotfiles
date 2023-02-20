@@ -7,3 +7,4 @@ ExecStart=%h/.local/bin/prayerTimes.sh
 
 [Install]
 WantedBy=default.target
+WantedBy=graphical-session.target
