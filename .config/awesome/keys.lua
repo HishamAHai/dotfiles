@@ -76,11 +76,11 @@ globalkeys = gears.table.join(
         
     -- ================= Switching between screens ===========================
     awful.key({ modkey, altkey }, 'j', function ()
-            awful.screen.focus_relative(1) end,
-        {description = 'focus previous screen', group = 'screen'}),
+            awful.screen.focus_bydirection('left') end,
+        {description = 'focus screen to the left', group = 'screen'}),
     awful.key({ modkey, altkey }, 'k', function ()
-            awful.screen.focus_relative(-1) end,
-        {description = 'focus next screen', group = 'screen'}),
+            awful.screen.focus_bydirection('right') end,
+        {description = 'focus screen to the right', group = 'screen'}),
 
     -- ================= Layout control keybindings ===========================
     awful.key({ modkey, 'Shift'  }, 'j',        function () awful.client.swap.global_bydirection(  'left')    end,
@@ -134,7 +134,7 @@ globalkeys = gears.table.join(
     awful.key({ modkey,           }, 'Return', function () awful.spawn(apps.terminal) end,
               {description = 'open a terminal', group = 'launcher'}),
 
-    awful.key({ modkey , altkey}, 'o', function () awful.spawn('carla.sh') end,
+    awful.key({ modkey , altkey}, 'o', function () awful.spawn.with_shell('QT_AUTO_SCREEN_SCALE_FACTOR=1 com.obsproject.Studio') end,
               {description = 'Launch obs studio', group = 'productivity'}),
 
     awful.key({ modkey , 'Shift'}, 'd', function () awful.spawn('resolve') end,
@@ -160,7 +160,7 @@ globalkeys = gears.table.join(
     awful.key({ modkey,           }, 'e', function () awful.spawn('emacsclient -c') end,
               {description = 'Run a new instance of emacs client', group = 'launcher'}),
 
-    awful.key({ modkey,           }, 'c', function () awful.spawn('com.github.Eloston.UngoogledChromium --force-dark-mode --enable-features=WebUIDarkMode') end,
+    awful.key({ modkey,           }, 'c', function () awful.spawn('com.brave.Browser') end,
               {description = 'Navigate the web with chromium', group = 'launcher'}),
 
     awful.key({ modkey,           }, 'q', function () awful.spawn('qutebrowser') end,
@@ -264,7 +264,7 @@ awful.key({}, 'XF86MonBrightnessUp', function () brightness_widget:inc() end, {d
     awful.key({ altkey, }, 'r', function () awful.spawn.with_shell('record.sh $(xclip -o -selection clipboard)') end,
               {description = 'Play and record the copied link with mpv', group = 'hotkeys'}),
 
-    awful.key({ altkey, 'Control'}, 's', function () awful.spawn.with_shell('mpv --cache=yes --shuffle /mnt/MISC/*') end,
+    awful.key({ altkey, 'Control'}, 's', function () awful.spawn.with_shell('mpvWatch.sh play') end,
               {description = 'Play the copied link with mpv w caching', group = 'hotkeys'}),
 
     awful.key({ altkey, 'Control'}, 'q', function () awful.spawn.with_shell('zathura /home/hisham/Documents/Quran_7afs.pdf') end,
@@ -291,7 +291,7 @@ awful.key({}, 'XF86MonBrightnessUp', function () brightness_widget:inc() end, {d
     awful.key({ raltkey, }, '7', function () awful.spawn.with_shell('movies.sh') end,
               {description = 'Play a random movie', group = 'dmenu'}),
 
-    awful.key({ raltkey }, 'w', function () awful.spawn.with_shell('mpvWatch.sh') end,
+    awful.key({ raltkey }, 'w', function () awful.spawn.with_shell('mpvWatch.sh list') end,
               {description = 'Select and Play video', group = 'dmenu'}),
 
     awful.key({ raltkey }, 's', function () awful.spawn.with_shell('dmenu_services.sh') end,

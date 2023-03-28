@@ -56,7 +56,7 @@ logo = wibox.widget {
     {
         {
             id = 'icon',
-            image = config_dir ..'/icons/logo2.0.png',
+            image = config_dir ..'/icons/logo_2023.svg',
             resize = true,
             opacity = 1.0,
             widget = wibox.widget.imagebox
@@ -64,7 +64,7 @@ logo = wibox.widget {
         --left = screen_width * 0.001,
         --top = screen_width * 0.0008,
         --bottom = screen_width * 0.0008,
-        margins = screen_width * 0.0003,
+        --margins = screen_width * 0.0003,
         widget = wibox.container.margin
     },
     shape = Wdt_shape,

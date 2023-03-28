@@ -8,11 +8,11 @@ local wibox = require('wibox')
 
 
 
-local quotes = {}
-local GET_QUOTES_CMD = 'shuf -n 1 /home/hisham/.local/share/quotes'
+local allah_names = {}
+local GET_QUOTES_CMD = [[bash -c 'echo -e $(</home/hisham/.local/share/allah_names.json)']]
 local timeout = 1800
 
-quotes_widget = wibox.widget {
+allah_names_widget = wibox.widget {
     {
         {
             id      =   'text',
@@ -35,7 +35,7 @@ end
 
 awful.screen.connect_for_each_screen(function(s)
     if s.index == 1 then
-    s.quotes= awful.wibar(
+    s.allah_names= awful.wibar(
     {
         position = 'left',
         screen = s,
@@ -47,9 +47,9 @@ awful.screen.connect_for_each_screen(function(s)
     }
     )
 
-    s.quotes:setup{
+    s.allah_names:setup{
         {
-            quotes_widget,
+            allah_names_widget,
             margins = screen_height * 0.003,
             widget = wibox.container.margin
         },
@@ -60,5 +60,5 @@ awful.screen.connect_for_each_screen(function(s)
     end
 end)
 
-watch(GET_QUOTES_CMD,timeout,update_widget,quotes_widget)
-return quotes
+watch(GET_QUOTES_CMD,timeout,update_widget,allah_names_widget)
+return allah_names

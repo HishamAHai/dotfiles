@@ -51,7 +51,7 @@ local icons_ext =   '.png'
 
 Prayer_id       =   {'Fajr_widget', 'Shuruq_widget', 'Duhur_widget', 'Asr_widget', 'Maghrib_widget', 'Isha_widget'}
 Prayer_bg_id    =   {'Fajr_widget_bg', 'Shuruq_widget_bg', 'Duhur_widget_bg', 'Asr_widget_bg', 'Maghrib_widget_bg', 'Isha_widget_bg'}
-Prayer_names    =   {'الـــفجـــر', 'الشروق', 'الـــظهر', 'العــــصر', 'المــغرب', 'الـعشاء'}
+Prayer_names    =   {'الفـجـــــــر', 'الشروق', 'الظهـــــــر', 'العصــــــر', 'المــغرب', 'الـعشاء'}
 icon_name       =   {'praying_fajr', 'praying', 'praying_duhur', 'praying_asr', 'praying_maghrib', 'praying_isha'}
 
 local function update_widget(widget,stdout)
@@ -90,6 +90,14 @@ local function update_widget(widget,stdout)
         return length
     end
 
+    function fast_length()
+        sunrise  =   Prayer_utc(Times[1])
+        sunset  =   Prayer_utc(Times[6])
+        length_number = sunset - sunrise - TZ_adj
+        length   =   os.date('%H:%M',length_number)
+        return length
+    end
+
 
     function Notification (name)
         naughty.notify(
@@ -110,10 +118,10 @@ local function update_widget(widget,stdout)
 
 Texts = {}
 for i=1,6 do
-    table.insert(Texts, '۞ ' .. Prayer_names[i] .. '\t\t\t' .. Times[i]     .. ' ۞')
+    table.insert(Texts, '❂ ' .. Prayer_names[i] .. '\t\t\t' .. Times[i]     .. ' ❂')
     widget:get_children_by_id(Prayer_bg_id[i])[1]:set_bg(beautiful.bg_empty)
     widget:get_children_by_id(Prayer_bg_id[i])[1]:set_shape(Wdt_shape)
-    widget:get_children_by_id(Prayer_id[i])[1]:set_font('10')
+    widget:get_children_by_id(Prayer_id[i])[1]:set_font('11')
 end
 
     if Current_time >= Times[1] and Current_time < Times[6] then
@@ -147,11 +155,15 @@ end
     HijriMonth      =   Result.data.date.hijri.month.ar
     HijriYear       =   Result.data.date.hijri.year
     HijriDate       =   ArabicDayNum .. ' ' .. HijriMonth .. ' ' .. HijriYear .. ' هجرية'
-    Heading         =   'مواقيت الصلاة ليوم ' .. ArabicDay ..  '\n' .. HijriDate .. '\n<span fgcolor="' .. beautiful.color2 .. '">'.. 'طول اليوم: \t\t (' .. day_length() .. ' ساعة) </span>\n'
+    if HijriMonth == 'رَمَضان' then
+    Heading         =   'مواقيت الصلاة ليوم ' .. ArabicDay ..  '\n' .. HijriDate .. '\n<span fgcolor="' .. beautiful.color2 .. '">'.. 'مدة الصوم:\t(' .. fast_length() .. ' ساعة) </span>\n'
+    else
+    Heading         =   'مواقيت الصلاة ليوم ' .. ArabicDay ..  '\n' .. HijriDate .. '\n<span fgcolor="' .. beautiful.color2 .. '">'.. 'طول اليوم:\t(' .. day_length() .. ' ساعة) </span>\n'
+    end
 
     widget:get_children_by_id('icon')[1]:set_image(Image)
     widget:get_children_by_id('Heading_widget')[1]:set_markup(Heading ..
-    'الوقت المتبقي:\t\t<span fgcolor="' .. beautiful.fg_occupied .. '">'.. Remain .. '</span> ۞ ')
+    'الوقت المتبقي:\t\t<span fgcolor="' .. beautiful.fg_occupied .. '">'.. Remain .. '</span>')
     for i=1,6 do
         widget:get_children_by_id(Prayer_id[i])[1]:set_markup(Texts[i])
     end
@@ -181,12 +193,12 @@ Prayers_widget = wibox.widget {
          {
              {
                  id      =   'Heading_widget',
-                 font    =   '10',
+                 font    =   '11',
                  widget  =   wibox.widget.textbox
              },
              top = screen_width * 0.0020,
-             right = screen_width * 0.0015,
-             left = screen_width * 0.0015,
+             right = screen_width * 0.001,
+             left = screen_width * 0.001,
              widget = wibox.container.margin
          },
          bg = beautiful.bg_empty,
@@ -199,8 +211,8 @@ Prayers_widget = wibox.widget {
 	       id      =   Prayer_id[1],
 	       widget  =   wibox.widget.textbox
 	    },
-	    left = screen_width * 0.0015,
-	    right = screen_width * 0.0015,
+	    left = screen_width * 0.001,
+	    right = screen_width * 0.001,
 	    widget = wibox.container.margin
          },
          id      =   Prayer_bg_id[1],
@@ -212,8 +224,8 @@ Prayers_widget = wibox.widget {
 	       id      =   Prayer_id[2],
 	       widget  =   wibox.widget.textbox
 	    },
-	    left = screen_width * 0.0015,
-	    right = screen_width * 0.0015,
+	    left = screen_width * 0.001,
+	    right = screen_width * 0.001,
 	    widget = wibox.container.margin
          },
          id      =   Prayer_bg_id[2],
@@ -225,8 +237,8 @@ Prayers_widget = wibox.widget {
 	       id      =   Prayer_id[3],
 	       widget  =   wibox.widget.textbox
 	    },
-	    left = screen_width * 0.0015,
-	    right = screen_width * 0.0015,
+	    left = screen_width * 0.001,
+	    right = screen_width * 0.001,
 	    widget = wibox.container.margin
          },
          id = Prayer_bg_id[3],
@@ -238,8 +250,8 @@ Prayers_widget = wibox.widget {
 	       id      =   Prayer_id[4],
 	       widget  =   wibox.widget.textbox
 	    },
-	    left = screen_width * 0.0015,
-	    right = screen_width * 0.0015,
+	    left = screen_width * 0.001,
+	    right = screen_width * 0.001,
 	    widget = wibox.container.margin
          },
          id      =   Prayer_bg_id[4],
@@ -251,8 +263,8 @@ Prayers_widget = wibox.widget {
 	       id      =   Prayer_id[5],
 	       widget  =   wibox.widget.textbox
 	    },
-	    left = screen_width * 0.0015,
-	    right = screen_width * 0.0015,
+	    left = screen_width * 0.001,
+	    right = screen_width * 0.001,
 	    widget = wibox.container.margin
          },
          id      =   Prayer_bg_id[5],
@@ -264,27 +276,28 @@ Prayers_widget = wibox.widget {
 	       id      =   Prayer_id[6],
 	       widget  =   wibox.widget.textbox
 	    },
-	    left = screen_width * 0.0015,
-	    right = screen_width * 0.0015,
+	    left = screen_width * 0.001,
+	    right = screen_width * 0.001,
 	    widget = wibox.container.margin
          },
          id      =   Prayer_bg_id[6],
          widget = wibox.container.background
      },
-     spacing = screen_height * 0.0022,
+     spacing = screen_height * 0.0025,
      layout = wibox.layout.fixed.vertical,
     },
     widget = wibox.container.margin
 }
 
-CAT_CMD = [[bash -c 'cat $HOME/.local/share/prayers.json']]
+CAT_CMD = [[bash -c 'cat /mnt/NASBKUP/prayers.json']]
 watch(CAT_CMD, timeout, update_widget, Prayers_widget)
 
 awful.screen.connect_for_each_screen(function(s)
+    if s.index == 1 then
     s.Prayers_widget = awful.wibar(
     {
         screen  =   s,
-        height  =   screen_height * 0.25,
+        height  =   screen_height * 0.24,
         width   =   screen_width * 0.078,
         bg      =   '#0000',
         --shape   =   bar_wdt_shape
@@ -306,6 +319,7 @@ awful.screen.connect_for_each_screen(function(s)
         bg = beautiful.bg_normal
     }
 
+    end
 end)
 Prayers_widget:connect_signal('button::release',function(_,_,_,button)
     if (button == 1) then

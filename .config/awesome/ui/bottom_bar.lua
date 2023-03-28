@@ -33,13 +33,14 @@ layoutbox = wibox.widget {
 }
 
 awful.screen.connect_for_each_screen(function(s)
+    if s.index == 1 then
 
     s.bottom_bar = awful.wibar(
     {
         position    =   'bottom',
         screen      =   s,
         height      =   awful.screen.focused().geometry.height * 0.02,
-        width       =   awful.screen.focused().geometry.width * 0.99,
+        width       =   awful.screen.focused().geometry.width * 1.0,
         bg          =   '#0000',
         type        =   'dock',
         --shape       =   function(cr, width, height)
@@ -48,17 +49,21 @@ awful.screen.connect_for_each_screen(function(s)
     }
     )
 -- ========================= Widgets and bars placement =======================
-    s.top_bar.y                 =   screen_height   * 0.00208
-    screen[1].Prayers_widget.x  =   screen_width    * 0.001
-    screen[2].Prayers_widget.x  =   screen_width    * 1.92
-    s.Prayers_widget.y          =   screen_height   * 0.722
-    screen[1].WEATHER_WIDGET.x  =   screen_width    * 0.001
-    screen[2].WEATHER_WIDGET.x  =   screen_width    * 1.92
+    --screen[1].top_bar.y                 =   screen_height   * 0.00208
+    --screen[3].top_bar.y                 =   screen_height   * 0.00208
+    screen[1].Prayers_widget.x  =   screen_width    * 0.002
+    --screen[2].Prayers_widget.x  =   screen_width    * 2.92
+    --screen[3].Prayers_widget.x  =   screen_width    * 1.92
+    s.Prayers_widget.y          =   screen_height   * 0.75
+    screen[1].WEATHER_WIDGET.x  =   screen_width    * 0.002
+    --screen[2].WEATHER_WIDGET.x  =   screen_width    * 2.92
+    --screen[3].WEATHER_WIDGET.x  =   screen_width    * 1.92
     s.WEATHER_WIDGET.y          =   screen_height   * 0.03
-    screen[1].quotes.x          =   screen_width    * 0.001
-    screen[2].quotes.x          =   screen_width    * 1.92
+    screen[1].quotes.x          =   screen_width    * 0.002
+    --screen[2].quotes.x          =   screen_width    * 2.92
+    --screen[3].quotes.x          =   screen_width    * 1.92
     s.quotes.y                  =   screen_height   * 0.145
-    s.bottom_bar.y              =   screen_height   * 0.978
+    --screen[1].bottom_bar.y              =   screen_height   * 0.978
 
     s.bottom_bar:setup {
         {
@@ -130,13 +135,14 @@ awful.screen.connect_for_each_screen(function(s)
                     widget = wibox.container.background,
                 },
             },
-            margins = screen_width * 0.001,
+            margins = screen_width * 0.0,
             widget = wibox.container.margin
         },
         widget = wibox.container.background,
         shape = bar_wdt_shape,
         bg = beautiful.bg_normal,
     }
+    end
 end)
 
 return bottom_bar

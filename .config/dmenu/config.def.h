@@ -16,13 +16,13 @@ static const char *prompt      = NULL;      /* -p  option; prompt to the left of
 
 #include "Material_Dark.h" /* ColorScheme to be used */
 static const unsigned int alphas[SchemeLast][2] = {
-	/*		fgalpha		bgalphga	*/
-	[SchemeNorm] = { fgalpha, bgalpha },
-	[SchemeSel] = { fgalpha, bgalpha },
-	[SchemeSelHighlight] = { fgalpha, bgalpha },
-	[SchemeNormHighlight] = { fgalpha, bgalpha },
-	[SchemeOut] = { fgalpha, bgalpha },
-	[SchemeHp] = { fgalpha, bgalpha }
+	                        /*    fgalpha, bgalpha	*/
+	[SchemeNorm]            =   { fgalpha, bgalpha },
+	[SchemeSel]             =   { fgalpha, bgalpha },
+	[SchemeSelHighlight]    =   { fgalpha, bgalpha },
+	[SchemeNormHighlight]   =   { fgalpha, bgalpha },
+	[SchemeOut]             =   { fgalpha, bgalpha },
+	[SchemeHp]              =   { fgalpha, bgalpha }
 };
 
 /* -l and -g options; controls number of lines and columns in grid if > 0 */

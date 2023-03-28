@@ -1,4 +1,4 @@
-#!/bin/sh
+#!/bin/bash
 ##
 # Usage: transcode.sh $1 $2
 # $1 Could be a file or a directory

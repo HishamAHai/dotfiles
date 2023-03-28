@@ -13,6 +13,10 @@ case $distro in
 	       ins_pkg=$(dnf list --installed | wc -l)
 	       upd_pkg=$(dnf check-update | wc -l)
 	       ;;
+    "Void")
+	       ins_pkg=$(xbps-query -l | wc -l)
+	       upd_pkg=$(xbps-checkvers -D /var/cache/xbps | wc -l)
+	       ;;
     "Debian" | "Ubuntu" | "Linux") #Linux here refers to Linux Mint
 	       ins_pkg=$(apt list --installed | wc -l)
 	       upd_pkg=$(apt list --upgradable | wc -l)

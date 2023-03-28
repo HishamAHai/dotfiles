@@ -9,6 +9,9 @@ require('awful.hotkeys_popup')
 require('awful.hotkeys_popup.keys')
 local bling = require('modules.bling')
 
+-- ================= Experimenting with auto dpi functionality ================
+awful.screen.set_auto_dpi_enabled(true)
+
 -- Theme
 local config_dir = gears.filesystem.get_configuration_dir()
 beautiful.init(config_dir .. "themes/theme.lua")

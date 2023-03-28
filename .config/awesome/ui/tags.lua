@@ -78,8 +78,28 @@ awful.screen.connect_for_each_screen(function(s)
 			gap			        = 6,
 			}
 		)
+    elseif s.index == 3 then
+    awful.tag({ "VOYAGER", "CASE", "BB-8", "T-800" }, s, awful.layout.suit.tile)
     else
-    awful.tag({ "VOYAGER", "CASE", "BB-8", "T-800" }, s, awful.layout.tile)
+    awful.tag.add('',{
+            name                = 'VISION',
+            id                  = '1',
+            screen              = s,
+			layout              = awful.layout.suit.tile,
+			gap_single_client	= true,
+			gap                 = 0,
+			selected		    = true
+			}
+		)
+    awful.tag.add('',{
+            name                = 'R2D2',
+            id                  = '1',
+            screen              = s,
+			layout              = awful.layout.suit.tile,
+			gap_single_client	= true,
+			gap                 = 0,
+			}
+		)
     end
     mytasklist = awful.widget.tasklist {
     screen   = screen.primary,

@@ -38,7 +38,7 @@ awful.rules.rules = {
                 'slickpicker', 'Psensor', 'org.kde.fancontrol.gui', 'Nextcloud',
                 'Galculator','pavucontrol-qt','Nvidia-settings', 'Gddccontrol',
                 'SimpleScreenRecorder', 'Solaar', 'corectrl', 'openrgb', 'Fsearch',
-                'helvum',
+                'helvum', 'smile', 
             },
         role = {
             'GtkFileChooserDialog', 'pop-up'
@@ -60,11 +60,11 @@ awful.rules.rules = {
 },
     -- Specific applications run on specific tags
 {
-    rule = {
-        class = 'wezterm', 'kitty'
+    rule_any = {
+        class = {'wezterm', 'kitty'},
     },
     properties = {
-        tag = screen[1].tags[1],
+        tags = {'J.A.R.V.I.S', 'VOYAGER' },
         switchtotag = true
     }
 },
@@ -79,11 +79,25 @@ awful.rules.rules = {
 },
 
 {
-    rule = {
-        class = 'kdenlive', 'resolve', 'VirtualBox Machine'
+    rule_any = {
+        class = {'resolve'},
     },
     properties = {
         tag = screen[1].tags[5],
+        titlebars_enabled = false, 
+        floating = true,
+        switchtotag = true
+    }
+},
+
+{
+    rule_any = {
+        class = {'kdenlive'},
+    },
+    properties = {
+        tag = screen[1].tags[5],
+        titlebars_enabled = false, 
+        floating = false,
         switchtotag = true
     }
 },
@@ -106,12 +120,35 @@ awful.rules.rules = {
 {
     rule_any = {
         class = {
-            'Geany','Gimp','libreoffice-startcenter','org-tinymediamanager-TinyMediaManager',
+            'Geany','libreoffice-startcenter','org-tinymediamanager-TinyMediaManager',
         }
     },
     properties = {
         tag = screen[1].tags[3],
         switchtotag = true
+    }
+},
+
+{
+    rule_any = {
+        class = {
+            'Gimp',
+        },
+    },
+    properties = {
+        tag = screen[3].tags[3],
+        switchtotag = true
+    }
+},
+
+{
+    rule_any = {
+        class = {
+            'altaqwaa',
+        },
+    },
+    properties = {
+        floating = true,
     }
 },
 
@@ -132,7 +169,7 @@ awful.rules.rules = {
 {
     rule_any = {
         class = {
-            'Pcmanfm','qBittorrent','Uget-gtk', 'Nemo', 'krusader', 'pcmanfm-qt', 'Fragments',
+            'Pcmanfm','Uget-gtk', 'Nemo', 'krusader', 'pcmanfm-qt', 'Fragments',
         }
     },
     properties = {
@@ -148,7 +185,7 @@ awful.rules.rules = {
         }
     },
     properties = {
-        tag = screen[1].tags[6],
+        tags = {'T-800','F.R.I.D.A.Y'},
         switchtotag = true,
         floating = true,
         border_width = 0
@@ -219,7 +256,7 @@ client.connect_signal("request::titlebars", function(c)
 end)
 
 -- ========================= Signals ===========================================
--- No borders for flaoting windows
+-- No borders for floating windows
 screen.connect_signal('arrange', function(s)
     for _, c in pairs(s.clients) do
         if c.floating == true then
@@ -230,7 +267,7 @@ end)
 
 -- Enable borders for focused windows
 client.connect_signal('focus', function(c)
-            if not awful.rules.match_any(c, {class = {'mpv', 'Sxiv', 'Vlc'}}) then
+            if not awful.rules.match_any(c, {class = {'mpv', 'Nsxiv', 'Vlc', 'resolve'}}) then
                 c.border_width = beautiful.border_width
                 c.border_color = beautiful.border_focus
             end
@@ -251,8 +288,5 @@ client.connect_signal('mouse::enter', function(c)
     c:emit_signal('request::activate', 'mouse_enter', {raise = false})
 end)
 
-
--- ================= Experimenting with auto dpi functionality ================
-awful.screen.set_auto_dpi_enabled(true)
 
 return rules

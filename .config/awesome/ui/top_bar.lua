@@ -25,13 +25,62 @@ local top_bar = {}
 local screen_width = awful.screen.focused().geometry.width
 
 awful.screen.connect_for_each_screen(function(s)
+    if s.index == 2 then
+        s.top_bar = awful.wibar(
+        {
+            position = 'top',
+            visible = false,
+            screen = s,
+            height = awful.screen.focused().geometry.height * 0.015,
+            width = awful.screen.focused().geometry.width * 0.15,
+            bg  =   '#0000',
+        }
+        )
+    s.top_bar:setup {
+        {
+            {
+                layout = wibox.layout.align.horizontal,
+                { -- Left widgets
+                    {
+                        layout = wibox.layout.fixed.horizontal,
+                        separator, logo, separator,
+                        s.mytaglist, separator,
+                    },
+                    widget = wibox.container.background,
+                    shape = Wdt_shape,
+                    bg = Wdt_bg
+                },
+                { -- Middle widgets
+                layout = wibox.layout.fixed.horizontal,
+                },
+                { -- Right widgets
+                    {
+                        layout = wibox.layout.fixed.horizontal,
+                        datewidget, separator,
+                    },
+                    widget = wibox.container.background,
+                    shape = Wdt_shape,
+                    bg = Wdt_bg
+                },
+            },
+            top = screen_width * 0.001,
+            bottom = screen_width * 0.001,
+            right = screen_width * 0.001,
+            left = screen_width * 0.001,
+            widget = wibox.container.margin
+        },
+        widget = wibox.container.background,
+        shape = bar_wdt_shape,
+        bg = beautiful.bg_normal
+    }
+    else
     -- Create the wibox
     s.top_bar = awful.wibar(
     {
         position = 'top',
         screen = s ,
         height = awful.screen.focused().geometry.height * 0.02,
-        width = awful.screen.focused().geometry.width * 0.995,
+        width = awful.screen.focused().geometry.width * 1.0,
         bg  =   '#0000',
         --shape = function(cr, width, height)
         --    gears.shape.rounded_rect(cr, width, height, screen_width * 0.003) end
@@ -89,14 +138,15 @@ awful.screen.connect_for_each_screen(function(s)
             },
             top = screen_width * 0.001,
             bottom = screen_width * 0.001,
-            right = screen_width * 0.001,
-            left = screen_width * 0.001,
+            right = screen_width * 0.002,
+            left = screen_width * 0.002,
             widget = wibox.container.margin
         },
         widget = wibox.container.background,
-        shape = bar_wdt_shape,
+        --shape = bar_wdt_shape,
         bg = beautiful.bg_normal
     }
 
+    end
 end)
 return top_bar

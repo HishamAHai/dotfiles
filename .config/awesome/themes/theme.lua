@@ -10,7 +10,7 @@ local Themes_path = config_dir .. '/awesome/themes/'
 local theme = {}
 
 -- Font
-theme.font          =   'Open Sans 11'
+theme.font          =   'Red Hat Display Medium 11'
 
 -- Define 16 colors base
 local ColorScheme = {}
@@ -30,7 +30,7 @@ theme.color12                     =   ColorScheme[12]
 theme.color13                     =   ColorScheme[14]
 theme.color14                     =   ColorScheme[16]
 
-theme.bg_normal             =   ColorScheme[1] .. 'f2'
+theme.bg_normal             =   ColorScheme[1] .. 'c0'
 theme.fg_normal             =   ColorScheme[2]
 theme.bg_empty              =   ColorScheme[18] .. '2f'
 theme.fg_urgent             =   ColorScheme[5]
@@ -42,7 +42,7 @@ theme.taglist_bg_focus      =   theme.fg_occupied
 theme.bg_systray            =   theme.bg_normal
 
 -- Border colors
-theme.useless_gap           =   dpi(6)
+theme.useless_gap           =   dpi(2)
 theme.border_width          =   dpi(1)
 theme.border_normal         =   theme.bg_normal
 theme.border_focus          =   theme.fg_occupied

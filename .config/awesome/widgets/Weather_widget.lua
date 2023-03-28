@@ -149,6 +149,7 @@ end
 end
 
 awful.screen.connect_for_each_screen(function(s)
+    if s.index == 1 then
     s.WEATHER_WIDGET = awful.wibar(
     {
         position    =   'left',
@@ -170,6 +171,7 @@ awful.screen.connect_for_each_screen(function(s)
         shape = big_wdt_shape,
         bg = beautiful.bg_normal
     }
+    end
 end)
 
 watch(string.format(GET_WTHR_CMD,API),timeout,update_widget,WEATHER_WIDGET_DESC)

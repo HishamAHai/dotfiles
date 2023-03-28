@@ -8,8 +8,8 @@ alias ltime="sudo timeshift --list"
 alias dels="sudo timeshift --delete --snapshot"
 alias cres="sudo timeshift --create --comments"
 
-#alias ls="exa --icons -lah --no-user --color=always --group-directories-first"
-alias ls="lsd -lAh"
+alias ls="exa -lag --extended --color=always --group-directories-first --icons --color-scale"
+#alias ls="lsd -lAh"
 alias diff="diff --color=always"
 alias v="nvim"
 #alias w="curl -H 'Accept-Language: es' wttr.in/bariloche"
@@ -74,3 +74,6 @@ alias ar="aria2c"
 
 # ncdu with blocks
 alias ncdu="ncdu --graph-style half-block"
+
+#alias reboot="sudo reboot"
+#alias shutdown="sudo shutdown"
