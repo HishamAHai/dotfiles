@@ -74,12 +74,14 @@ theme.hotkeys_shape             =   function(cr, width, height) gears.shape.roun
 
 -- tasklist
 theme.tasklist_fg_focus         =   theme.fg_normal
-theme.tasklist_bg_normal        =   theme.bg_empty
-theme.tasklist_disable_icon     =   true
-theme.tasklist_plain_task_name  =   true
+theme.tasklist_bg_focus         =   ColorScheme[14] .. '7a'
+theme.tasklist_fg_normal        =   theme.bg_empty
+theme.tasklist_bg_normal        =   ColorScheme[18] .. '1a'
+theme.tasklist_disable_icon     =   false
+theme.tasklist_plain_task_name  =   false
 theme.tasklist_font             =   theme.font
 theme.tasklist_align            =   'center'
-theme.icon_theme                =   '/usr/share/icons/Papirus-Dark/48x48/apps'
+theme.icon_theme                =   '/usr/share/icons/Papirus-Dark/48x48/'
 
 theme.layout_fairh      = Themes_path..'layouts/fairhw.png'
 theme.layout_fairv      = Themes_path..'layouts/fairvw.png'
@@ -92,7 +94,7 @@ theme.layout_spiral     = Themes_path..'layouts/spiralw.png'
 theme.layout_dwindle    = Themes_path..'layouts/dwindlew.png'
 
 -- menu
-theme.menu_font         = 'Inter 12'
+theme.menu_font         = theme.font
 theme.menu_height       = dpi(20)
 theme.menu_width        = dpi(160)
 theme.menu_border_color = '#0000'
@@ -105,8 +107,20 @@ theme.temp_norm         =   ColorScheme[9]
 theme.temp_hot          =   ColorScheme[5]
 theme.temp_min          =   ColorScheme[15]
 theme.temp_max          =   ColorScheme[14]
-
-theme.titlebar_bg       =   theme.border_focus
+theme.titlebar_bgimage = function(context, cr, width, height)
+        pattern = gears.color({ type = "linear",
+                                from = { 0, 0 },
+                                to = { width, 0 },
+                                stops = { { 0, ColorScheme[5] },
+                                          { 0.2, ColorScheme[14]},
+                                          { 0.5, ColorScheme[5]},
+                                          { 0.8, ColorScheme[14]},
+                                          { 1, ColorScheme[5] },
+                                        },
+                              })
+    cr:set_source(pattern)
+    cr:paint()
+end
 theme.titlebar_fg       =   theme.fg_normal
 theme.titlebar_close_button_normal = "/home/hisham/.config/awesome/icons/buttons/close.svg"
 theme.titlebar_close_button_focus  = "/home/hisham/.config/awesome/icons/buttons/close.svg"

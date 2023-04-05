@@ -102,40 +102,69 @@ awful.screen.connect_for_each_screen(function(s)
 		)
     end
     mytasklist = awful.widget.tasklist {
-    screen   = screen.primary,
-    filter   = awful.widget.tasklist.filter.focused,
+    screen     = screen.primary,
+    filter     = awful.widget.tasklist.filter.allscreen,
+    buttons    = awful.button({ }, 1, function(c)
+        if   c == client.focus then
+             c.minimized = true
+        else
+            c:emit_signal(
+            'request::activate',
+            'mytasklist',
+            {
+                raise = true,
+                switchtotag = true,
+                selected = true
+            }
+            )
+        end
+    end),
     style    = {
         shape       =   Wdt_shape,
-        bg_focus    =   Wdt_bg,
         align       =  'center'
     },
     layout   = {
         spacing = 5,
-        max_widget_size = awful.screen.focused().geometry.width * 0.13,
+        max_widget_size = awful.screen.focused().geometry.width * 0.07,
         layout  = wibox.layout.flex.horizontal
     },
-    widget_template = {
+widget_template = {
+    {
         {
+            {
+                {
+                    id     = 'clienticon',
+                    widget = awful.widget.clienticon,
+                },
+                valgin = 'center',
+                haligh = 'center',
+                widget  = wibox.container.place,
+            },
             {
                 {
                     id     = 'text_role',
                     widget = wibox.widget.textbox,
                 },
-                layout = wibox.layout.fixed.horizontal,
+                left = 5,
+                widget = wibox.container.margin,
             },
-            left  = 10,
-            right = 10,
-            widget = wibox.container.margin
+            layout = wibox.layout.fixed.horizontal,
         },
-        id     = 'background_role',
-        widget = wibox.container.background,
+        margins = 5,
+        widget = wibox.container.margin
     },
+    id     = 'background_role',
+    widget = wibox.container.background,
+    create_callback = function(self, c)
+        self:get_children_by_id('clienticon')[1].client = c
+    end,
+},
 }
     s.mylayoutbox = awful.widget.layoutbox(s)
     s.mylayoutbox:buttons(gears.table.join(
                            awful.button({ }, 1, function () awful.layout.inc( 1) end)))
     -- Create a taglist widget
-        s.mytaglist = awful.widget.taglist {
+        s.hortaglist = awful.widget.taglist {
         screen  = s,
         style = {
             shape		= Wdt_shape,
@@ -146,6 +175,39 @@ awful.screen.connect_for_each_screen(function(s)
             },
             filter  = awful.widget.taglist.filter.all,
             buttons = awful.button({ }, 1, function(t) t:view_only() end)
+    }
+
+        s.vertaglist = awful.widget.taglist {
+        screen  = s,
+        style = {
+            shape		= Wdt_shape,
+        },
+            layout	= {
+                layout = wibox.layout.flex.vertical,
+                spacing = 5,
+            },
+            filter  = awful.widget.taglist.filter.all,
+            buttons = awful.button({ }, 1, function(t) t:view_only() end),
+            widget_template = {
+                {
+                    {
+                        {
+                            {
+                                id = 'text_role',
+                                widget = wibox.widget.textbox
+                            },
+                            direction = 'east',
+                            widget = wibox.container.rotate
+                        },
+                        fill_horizontal = true,
+                        fill_vertical = true,
+                        widget = wibox.container.place,
+                    },
+                    layout = wibox.layout.fixed.vertical,
+                },
+                id = 'background_role',
+                widget = wibox.container.background
+            },
     }
 
 end)

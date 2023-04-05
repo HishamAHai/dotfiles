@@ -1,6 +1,7 @@
 local json          =   require('json')
 local watch         =   require('awful.widget.watch')
 local awful         =   require('awful')
+local gears         =   require('gears')
 local wibox         =   require('wibox')
 local beautiful     =   require('beautiful')
 local icons_dir     =   os.getenv('HOME') .. '/.config/awesome/icons/weather/Dark/'
@@ -60,22 +61,47 @@ WEATHER_WIDGET_BIG = wibox.widget {
         {
                 {
                     {
-                        id = 'icon',
-                        forced_width = screen_width * 0.03,
-                        forced_height = screen_width * 0.03,
-                        resize = true,
-                        widget = wibox.widget.imagebox
+                        {
+                            {
+                                {
+                                    id = 'icon',
+                                    resize = true,
+                                    widget = wibox.widget.imagebox
+                                },
+                                margins = screen_width * 0.001,
+                                widget = wibox.container.margin,
+                            },
+                            valign = 'center',
+                            halign = 'center',
+                            widget = wibox.container.place,
+                        },
+                        shape = function(cr,width,height)
+                            gears.shape.rounded_rect(cr,width,height,screen_width * 0.0033) end,
+                        bg = beautiful.bg_empty,
+                        forced_width = screen_width * 0.05,
+                        widget = wibox.container.background,
                     },
                     {
-                        id = 'desc',
-                        font = 'Inter 13',
-                        align = 'center',
-                        widget = wibox.widget.textbox
+                        {
+                            {
+                                id = 'desc',
+                                font = 'Red Hat Display Medium 13',
+                                align = 'center',
+                                widget = wibox.widget.textbox
+                            },
+                                margins = screen_width * 0.0005,
+                                widget = wibox.container.margin,
+                        },
+                        shape = function(cr,width,height)
+                            gears.shape.rounded_rect(cr,width,height,screen_width * 0.0033) end,
+                        bg = beautiful.bg_empty,
+                        forced_width = screen_width * 0.05,
+                        widget = wibox.container.background,
                     },
-                    spacing = screen_width * 0.005,
-                    layout = wibox.layout.fixed.horizontal,
+                    spacing = screen_width * 0.003,
+                    layout = wibox.layout.flex.horizontal,
                 },
-                margins = screen_width * 0.002,
+                margins = screen_width * 0.001,
                 widget = wibox.container.margin
         },
         align = 'center',
@@ -83,10 +109,10 @@ WEATHER_WIDGET_BIG = wibox.widget {
     },
     {
         {
-            {
+            {{
                 {
                     id = 'Temperatures',
-                    font = 'Inter Bold 15',
+                    font = 'Red Hat Display Bold 15',
                     widget = wibox.widget.textbox
                 },
                 align = 'center',
@@ -95,19 +121,23 @@ WEATHER_WIDGET_BIG = wibox.widget {
             {
                 {
                     id = 'wind_cond',
-                    font = 'Inter 12',
+                    font = 'Red Hat Display Medium 12',
                     widget = wibox.widget.textbox
                 },
                 align = 'center',
                 widget = wibox.container.place
             },
             spacing = screen_height * 0.011,
-            layout = wibox.layout.fixed.vertical
+            layout = wibox.layout.flex.vertical
+        },
+        margins = screen_height * 0.001,
+        widget = wibox.container.margin,
         },
         shape = big_wdt_shape,
         bg = beautiful.bg_empty,
         widget = wibox.container.background
     },
+    spacing = screen_height * 0.003,
     layout = wibox.layout.fixed.vertical
 }
 
@@ -154,8 +184,8 @@ awful.screen.connect_for_each_screen(function(s)
     {
         position    =   'left',
         screen      =   primary,
-        width       =   screen_width * 0.078,
-        height      =   screen_height * 0.11,
+        width       =   screen_width * 0.085,
+        height      =   screen_height * 0.127,
         bg          =   '#0000',
         --shape       =   bar_wdt_shape
     }

@@ -1,6 +1,7 @@
 local json          =   require('json')
 local awful         =   require('awful')
 local beautiful     =   require('beautiful')
+local gears         =   require('gears')
 local icons_dir     =   os.getenv('HOME') .. '/.config/awesome/icons/prayers/'
 local naughty       =   require('naughty')
 local watch         =   require('awful.widget.watch')
@@ -13,6 +14,9 @@ screen_height = awful.screen.focused().geometry.height
 screen_width = awful.screen.focused().geometry.width
 
 local Prayers_widget = {}
+
+corners = function(cr, width, height)
+    gears.shape.rounded_rect(cr, width, height, screen_width * 0.0015) end
 
 Pryr_wdt = wibox.widget {
     {
@@ -51,7 +55,7 @@ local icons_ext =   '.png'
 
 Prayer_id       =   {'Fajr_widget', 'Shuruq_widget', 'Duhur_widget', 'Asr_widget', 'Maghrib_widget', 'Isha_widget'}
 Prayer_bg_id    =   {'Fajr_widget_bg', 'Shuruq_widget_bg', 'Duhur_widget_bg', 'Asr_widget_bg', 'Maghrib_widget_bg', 'Isha_widget_bg'}
-Prayer_names    =   {'الفـجـــــــر', 'الشروق', 'الظهـــــــر', 'العصــــــر', 'المــغرب', 'الـعشاء'}
+Prayer_names    =   {'الفـجـــــــر', 'الشروق', 'الظهـــــــر', 'العصــــــر', 'المـغرب', 'الـعشاء'}
 icon_name       =   {'praying_fajr', 'praying', 'praying_duhur', 'praying_asr', 'praying_maghrib', 'praying_isha'}
 
 local function update_widget(widget,stdout)
@@ -118,9 +122,9 @@ local function update_widget(widget,stdout)
 
 Texts = {}
 for i=1,6 do
-    table.insert(Texts, '❂ ' .. Prayer_names[i] .. '\t\t\t' .. Times[i]     .. ' ❂')
+    table.insert(Texts, ' ❂   ' .. Prayer_names[i] .. '\t\t\t' .. Times[i]     .. '   ❂ ')
     widget:get_children_by_id(Prayer_bg_id[i])[1]:set_bg(beautiful.bg_empty)
-    widget:get_children_by_id(Prayer_bg_id[i])[1]:set_shape(Wdt_shape)
+    widget:get_children_by_id(Prayer_bg_id[i])[1]:set_shape(corners)
     widget:get_children_by_id(Prayer_id[i])[1]:set_font('11')
 end
 
@@ -286,6 +290,8 @@ Prayers_widget = wibox.widget {
      spacing = screen_height * 0.0025,
      layout = wibox.layout.fixed.vertical,
     },
+    left = screen_width * 0.001,
+    right = screen_width * 0.001,
     widget = wibox.container.margin
 }
 
@@ -298,7 +304,7 @@ awful.screen.connect_for_each_screen(function(s)
     {
         screen  =   s,
         height  =   screen_height * 0.24,
-        width   =   screen_width * 0.078,
+        width   =   screen_width * 0.085,
         bg      =   '#0000',
         --shape   =   bar_wdt_shape
     }

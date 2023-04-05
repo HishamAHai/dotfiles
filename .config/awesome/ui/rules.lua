@@ -96,8 +96,7 @@ awful.rules.rules = {
     },
     properties = {
         tag = screen[1].tags[5],
-        titlebars_enabled = false, 
-        floating = false,
+        titlebars_enabled = false,
         switchtotag = true
     }
 },
@@ -267,7 +266,7 @@ end)
 
 -- Enable borders for focused windows
 client.connect_signal('focus', function(c)
-            if not awful.rules.match_any(c, {class = {'mpv', 'Nsxiv', 'Vlc', 'resolve'}}) then
+            if not awful.rules.match_any(c, {class = {'mpv', 'Nsxiv', 'Vlc', 'resolve', 'Double Commander'}}) then
                 c.border_width = beautiful.border_width
                 c.border_color = beautiful.border_focus
             end
@@ -287,6 +286,25 @@ end)
 client.connect_signal('mouse::enter', function(c)
     c:emit_signal('request::activate', 'mouse_enter', {raise = false})
 end)
+
+-- Dialogs of kdenlive are not to be tiled
+client.connect_signal('activated', function(c)
+    if awful.rules.match(c, {class = 'kdenlive'}) and not awful.rules.match(c, {type = {'dialog'}}) then
+        c.titlebars_enabled   =   false
+        c.floating            =   false
+        c.switchtotag         =   true
+    end
+end)
+
+-- Ensure there is always a gap around maximized windows
+--client.connect_signal('manage', function(c)
+--    c:struts({
+--        top     =   dpi(33),
+--        bottom  =   dpi(33),
+--        left    =   dpi(3),
+--        right   =   dpi(3),
+--    })
+--end)
 
 
 return rules

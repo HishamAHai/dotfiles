@@ -134,7 +134,7 @@ globalkeys = gears.table.join(
     awful.key({ modkey,           }, 'Return', function () awful.spawn(apps.terminal) end,
               {description = 'open a terminal', group = 'launcher'}),
 
-    awful.key({ modkey , altkey}, 'o', function () awful.spawn.with_shell('QT_AUTO_SCREEN_SCALE_FACTOR=1 com.obsproject.Studio') end,
+    awful.key({ modkey , altkey}, 'o', function () awful.spawn.with_shell('QT_SCALE_FACTOR=0.75 QT_AUTO_SCREEN_SCALE_FACTOR=0 com.obsproject.Studio') end,
               {description = 'Launch obs studio', group = 'productivity'}),
 
     awful.key({ modkey , 'Shift'}, 'd', function () awful.spawn('resolve') end,

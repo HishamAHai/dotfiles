@@ -16,7 +16,7 @@ quotes_widget = wibox.widget {
     {
         {
             id      =   'text',
-            font    =   'Open Sans 11',
+            font    =   'Red Hat Display Medium 12',
             align   =   'center',
             valign  =   'center',
             widget  =   wibox.widget.textbox
@@ -39,7 +39,7 @@ awful.screen.connect_for_each_screen(function(s)
     {
         position = 'left',
         screen = s,
-        width = screen_width * 0.078,
+        width = screen_width * 0.085,
         height = screen_height * 0.11,
         bg = ('#0000'),
         opacity = 1,

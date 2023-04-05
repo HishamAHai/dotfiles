@@ -16,7 +16,7 @@ require('widgets.Load_avg_widget')
 require('widgets.Uptime_widget')
 local volume_widget = require("widgets.volume-widget.volume")
 local volume_widget_widget = volume_widget({display_notification = true})
-local brightness_widget = require("widgets.brightness-widget.brightness")
+--local brightness_widget = require("widgets.brightness-widget.brightness")
 --require('widgets.Volume_widget')
 --require('widgets.Net_widget')
 
@@ -44,7 +44,7 @@ awful.screen.connect_for_each_screen(function(s)
                     {
                         layout = wibox.layout.fixed.horizontal,
                         separator, logo, separator,
-                        s.mytaglist, separator,
+                        s.hortaglist, separator,
                     },
                     widget = wibox.container.background,
                     shape = Wdt_shape,
@@ -63,14 +63,64 @@ awful.screen.connect_for_each_screen(function(s)
                     bg = Wdt_bg
                 },
             },
-            top = screen_width * 0.001,
-            bottom = screen_width * 0.001,
-            right = screen_width * 0.001,
-            left = screen_width * 0.001,
+            margins = screen_width * 0.001,
             widget = wibox.container.margin
         },
         widget = wibox.container.background,
         shape = bar_wdt_shape,
+        bg = beautiful.bg_normal
+    }
+elseif s.index == 3 then
+        s.top_bar = awful.wibar(
+        {
+            position    =   'left',
+            visible     =   true,
+            screen      =   s,
+            height      =   awful.screen.focused().geometry.height * 1,
+            width       =   awful.screen.focused().geometry.width * 0.0135,
+            bg          =   '#0000',
+        }
+        )
+    s.top_bar:setup {
+        {
+            {
+                layout = wibox.layout.align.vertical,
+                { -- Left widgets
+                    {
+                        layout = wibox.layout.fixed.vertical,
+                        forced_height = awful.screen.focused().geometry.height * 0.25,
+                        --separator, logo, separator,
+                        s.vertaglist,
+                    },
+                    widget  =   wibox.container.background,
+                    shape   =   Wdt_shape,
+                    bg      =   Wdt_bg
+                },
+                { -- Middle widgets
+                layout = wibox.layout.fixed.vertical,
+                },
+                {
+                    {
+                        {
+                            layout = wibox.layout.fixed.vertical,
+                            awful.widget.layoutbox(),
+                        },
+                        fill_horizontal = true,
+                        widget = wibox.container.place,
+                    },
+                    bg = Wdt_bg,
+                    shape = Wdt_shape,
+                    widget = wibox.container.background,
+                },
+            },
+            top     =   screen_width * 0.225,
+            bottom  =   screen_width * 0.001,
+            right   =   screen_width * 0.001,
+            left    =   screen_width * 0.001,
+            widget  =   wibox.container.margin
+        },
+        widget = wibox.container.background,
+        --shape = bar_wdt_shape,
         bg = beautiful.bg_normal
     }
     else
@@ -96,7 +146,7 @@ awful.screen.connect_for_each_screen(function(s)
                 {
                     layout = wibox.layout.fixed.horizontal,
                     separator, logo, separator,
-                    s.mytaglist, separator,
+                    s.hortaglist, separator,
                 },
                 widget = wibox.container.background,
                 shape = Wdt_shape,
@@ -115,18 +165,18 @@ awful.screen.connect_for_each_screen(function(s)
                     cpu_widget, separator,
                     Load_wdt, separator,
                     uptime_wdt, separator,
-                    {
-                        brightness_widget{
-                            type = 'icon_and_text',
-                            program= 'ybacklight',
-                            path_to_icon = '/usr/share/icons/Papirus/48x48/status/notification-display-brightness-high.svg',
-                            step = 10
-                            },
-                            left = screen_width * 0.002,
-                            right = screen_width * 0.002,
-                            widget = wibox.container.margin
-                    },
-                    separator,
+--                    {
+--                        brightness_widget{
+--                            type = 'icon_and_text',
+--                            program= 'ybacklight',
+--                            path_to_icon = '/usr/share/icons/Papirus/48x48/status/notification-display-brightness-high.svg',
+--                            step = 10
+--                            },
+--                            left = screen_width * 0.002,
+--                            right = screen_width * 0.002,
+--                            widget = wibox.container.margin
+--                    },
+--                    separator,
                     datewidget, separator,
                     volume_widget_widget,
                     separator, kbd_widget,
