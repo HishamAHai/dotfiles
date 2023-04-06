@@ -76,7 +76,7 @@ elseif s.index == 3 then
             position    =   'left',
             visible     =   true,
             screen      =   s,
-            height      =   awful.screen.focused().geometry.height * 1,
+            height      =   awful.screen.focused().geometry.height * 0.8,
             width       =   awful.screen.focused().geometry.width * 0.0135,
             bg          =   '#0000',
         }
@@ -113,14 +113,16 @@ elseif s.index == 3 then
                     widget = wibox.container.background,
                 },
             },
-            top     =   screen_width * 0.225,
+            top     =   screen_width * 0.14,
             bottom  =   screen_width * 0.001,
             right   =   screen_width * 0.001,
             left    =   screen_width * 0.001,
             widget  =   wibox.container.margin
         },
         widget = wibox.container.background,
-        --shape = bar_wdt_shape,
+        shape = function(cr,width,height)
+            gears.shape.partially_rounded_rect(cr,width,height,false,true,true,false,screen_width * 0.0031)
+        end,
         bg = beautiful.bg_normal
     }
     else
