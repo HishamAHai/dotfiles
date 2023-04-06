@@ -84,8 +84,8 @@ WEATHER_WIDGET_BIG = wibox.widget {
                     {
                         {
                             {
-                                id = 'desc',
-                                font = 'Red Hat Display Medium 13',
+                                id = 'Temperatures',
+                                font = 'Red Hat Display Bold 24',
                                 align = 'center',
                                 widget = wibox.widget.textbox
                             },
@@ -109,10 +109,10 @@ WEATHER_WIDGET_BIG = wibox.widget {
     },
     {
         {
-            {{
+            {
                 {
-                    id = 'Temperatures',
-                    font = 'Red Hat Display Bold 15',
+                    id = 'desc',
+                    font = 'Red Hat Display 14',
                     widget = wibox.widget.textbox
                 },
                 align = 'center',
@@ -121,17 +121,13 @@ WEATHER_WIDGET_BIG = wibox.widget {
             {
                 {
                     id = 'wind_cond',
-                    font = 'Red Hat Display Medium 12',
+                    font = 'Red Hat Display 14',
                     widget = wibox.widget.textbox
                 },
                 align = 'center',
                 widget = wibox.container.place
             },
-            spacing = screen_height * 0.011,
             layout = wibox.layout.flex.vertical
-        },
-        margins = screen_height * 0.001,
-        widget = wibox.container.margin,
         },
         shape = big_wdt_shape,
         bg = beautiful.bg_empty,
@@ -153,28 +149,17 @@ local function update_widget(widget,stdout)
     Min         =   math.floor(Deg_min)
     Max         =   math.floor(Deg_max)
     Win         =   math.floor(wind_spd)
-    widget:get_children_by_id('desc')[1]:set_markup(Desc)
-    WEATHER_WIDGET_BIG:get_children_by_id('wind_cond')[1]:set_markup('viento: '.. Win .. 'km/h')
-    WEATHER_WIDGET_BIG:get_children_by_id('desc')[1]:set_markup(Desc)
-    if Deg <= 10 then
-    widget:get_children_by_id('deg')[1]:set_markup('<span fgcolor="' .. beautiful.temp_cold .. '"> ' .. Deg .. ' °C' .. '</span>')
-    WEATHER_WIDGET_BIG:get_children_by_id('Temperatures')[1]:set_markup('<span font="8" fgcolor="' .. beautiful.temp_min .. '"> Min: ' ..
-    Min .. ' °C </span> <span fgcolor="' .. beautiful.temp_cold .. '">' .. Deg .. ' °C' ..
-    '</span>' .. '<span font="8" fgcolor="' .. beautiful.temp_max .. '"> Max: ' .. Max .. ' °C</span>')
-    elseif Deg > 10 and Deg <= 24 then
-    widget:get_children_by_id('deg')[1]:set_markup('<span fgcolor="' .. beautiful.temp_norm .. '"> ' .. Deg .. ' °C' .. '</span>')
-    WEATHER_WIDGET_BIG:get_children_by_id('Temperatures')[1]:set_markup('<span font="8" fgcolor="' .. beautiful.temp_min .. '"> Min: ' ..
-    Min .. ' °C </span> <span fgcolor="' .. beautiful.temp_norm .. '">' .. Deg .. ' °C</span>' ..
-    '<span font="8" fgcolor="' .. beautiful.temp_max .. '"> Max: ' .. Max .. ' °C</span>')
-    else
-    widget:get_children_by_id('deg')[1]:set_markup('<span fgcolor="' .. beautiful.temp_hot .. '"> ' .. Deg .. ' °C' .. '</span>')
-    WEATHER_WIDGET_BIG:get_children_by_id('Temperatures')[1]:set_markup('<span font="8" fgcolor="' .. beautiful.temp_min .. '"> Min: ' .. Min ..
-    ' °C </span>' .. '<span fgcolor="' .. beautiful.temp_hot .. '"> ' .. Deg .. ' °C' ..
-    '</span>' ..'<span font="8" fgcolor="' .. beautiful.temp_max .. '"> Max: ' .. Max .. ' °C</span>')
-end
+
     widget:get_children_by_id('icon')[1]:set_image(icons_dir .. Icon .. icons_ext)
-    WEATHER_WIDGET_BIG:get_children_by_id('icon')[1]:set_image(icons_dir .. Icon .. icons_ext)
+    widget:get_children_by_id('desc')[1]:set_markup(' ' .. Desc)
+    widget:get_children_by_id('deg')[1]:set_markup( ' ' .. Deg .. ' °C')
+
     datewidget:get_children_by_id('icon')[1]:set_image(clock_icon .. os.date('%H') .. icons_ext)
+
+    WEATHER_WIDGET_BIG:get_children_by_id('icon')[1]:set_image(icons_dir .. Icon .. icons_ext)
+    WEATHER_WIDGET_BIG:get_children_by_id('desc')[1]:set_markup(Desc)
+    WEATHER_WIDGET_BIG:get_children_by_id('Temperatures')[1]:set_markup( Deg .. ' °C')
+    WEATHER_WIDGET_BIG:get_children_by_id('wind_cond')[1]:set_markup('viento: '.. Win .. 'km/h')
 
 end
 
@@ -185,7 +170,7 @@ awful.screen.connect_for_each_screen(function(s)
         position    =   'left',
         screen      =   primary,
         width       =   screen_width * 0.085,
-        height      =   screen_height * 0.127,
+        height      =   screen_height * 0.12,
         bg          =   '#0000',
         --shape       =   bar_wdt_shape
     }
