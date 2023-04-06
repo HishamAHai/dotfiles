@@ -7,10 +7,10 @@
   - [[#useful-keybindings-to-get-started][Useful keybindings to get started]]
 
 * Preface
-## Dark Mode
+** Dark Mode
 #+caption: Dark mode
 [[https://github.com/HishamAHai/dotfiles/blob/main/.screenshots/widescreen_dark.png]]
-## Light Mode
+** Light Mode
 #+caption: Light mode
 [[https://github.com/HishamAHai/dotfiles/blob/main/.screenshots/widescreen_light.png]]
 Awesome window manager is with no doubt the most customizable and configurable WM use can use.It has a great and probably the best documentation and the selling point (figuratively) is the widgets system. But it does not stop at this point, since it uses the scripting language =lua=  to write the configuration file, you can extende it to do whatever you want.
