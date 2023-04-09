@@ -26,8 +26,10 @@ local API           =   'api.openweathermap.org/data/2.5/onecall?exclude=minutel
                         .. '&id='       ..  city_id
                         .. '&units='    ..  untis
                         .. '&lang='     ..  lang
-local screen_width = awful.screen.focused().geometry.width
-local screen_height = awful.screen.focused().geometry.height
+local screen_width      = awful.screen.focused().geometry.width
+local screen_height     = awful.screen.focused().geometry.height
+local big_wthr_corner   = function(cr,width,height)
+    gears.shape.rounded_rect(cr,width,height,screen_width * 0.0033)end
 
 WEATHER_WIDGET_DESC = wibox.widget {
     layout = wibox.layout.fixed.horizontal,
@@ -68,15 +70,14 @@ WEATHER_WIDGET_BIG = wibox.widget {
                                     resize = true,
                                     widget = wibox.widget.imagebox
                                 },
-                                margins = screen_width * 0.001,
+                                margins = screen_width * 0.002,
                                 widget = wibox.container.margin,
                             },
                             valign = 'center',
                             halign = 'center',
                             widget = wibox.container.place,
                         },
-                        shape = function(cr,width,height)
-                            gears.shape.rounded_rect(cr,width,height,screen_width * 0.0033) end,
+                        shape = big_wthr_corner,
                         bg = beautiful.bg_empty,
                         forced_width = screen_width * 0.05,
                         widget = wibox.container.background,
@@ -85,15 +86,14 @@ WEATHER_WIDGET_BIG = wibox.widget {
                         {
                             {
                                 id = 'Temperatures',
-                                font = 'Red Hat Display Bold 24',
+                                font = 'Red Hat Display Black 24',
                                 align = 'center',
                                 widget = wibox.widget.textbox
                             },
                                 margins = screen_width * 0.0005,
                                 widget = wibox.container.margin,
                         },
-                        shape = function(cr,width,height)
-                            gears.shape.rounded_rect(cr,width,height,screen_width * 0.0033) end,
+                        shape = big_wthr_corner,
                         bg = beautiful.bg_empty,
                         forced_width = screen_width * 0.05,
                         widget = wibox.container.background,
@@ -152,14 +152,23 @@ local function update_widget(widget,stdout)
 
     widget:get_children_by_id('icon')[1]:set_image(icons_dir .. Icon .. icons_ext)
     widget:get_children_by_id('desc')[1]:set_markup(' ' .. Desc)
-    widget:get_children_by_id('deg')[1]:set_markup( ' ' .. Deg .. ' °C')
 
     datewidget:get_children_by_id('icon')[1]:set_image(clock_icon .. os.date('%H') .. icons_ext)
 
     WEATHER_WIDGET_BIG:get_children_by_id('icon')[1]:set_image(icons_dir .. Icon .. icons_ext)
     WEATHER_WIDGET_BIG:get_children_by_id('desc')[1]:set_markup(Desc)
-    WEATHER_WIDGET_BIG:get_children_by_id('Temperatures')[1]:set_markup( Deg .. ' °C')
     WEATHER_WIDGET_BIG:get_children_by_id('wind_cond')[1]:set_markup('viento: '.. Win .. 'km/h')
+
+    if Deg <= 10 then
+        widget:get_children_by_id('deg')[1]:set_markup( '<span fgcolor="' .. beautiful.temp_cold .. '"> ' .. Deg .. ' °C</span>')
+        WEATHER_WIDGET_BIG:get_children_by_id('Temperatures')[1]:set_markup( '<span fgcolor="' .. beautiful.temp_cold .. '">' .. Deg .. ' °C</span>')
+    elseif Deg > 10 and Deg <= 24 then
+        widget:get_children_by_id('deg')[1]:set_markup( '<span fgcolor="' .. beautiful.temp_norm .. '"> ' .. Deg .. ' °C</span>')
+        WEATHER_WIDGET_BIG:get_children_by_id('Temperatures')[1]:set_markup( '<span fgcolor="' .. beautiful.temp_norm .. '">' .. Deg .. ' °C</span>')
+    else
+        widget:get_children_by_id('deg')[1]:set_markup( '<span fgcolor="' .. beautiful.temp_hot .. '"> ' .. Deg .. ' °C</span>')
+        WEATHER_WIDGET_BIG:get_children_by_id('Temperatures')[1]:set_markup( '<span fgcolor="' .. beautiful.temp_hot .. '">' .. Deg .. ' °C</span>')
+    end
 
 end
 

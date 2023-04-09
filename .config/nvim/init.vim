@@ -49,7 +49,7 @@ let g:rehash256 = 1
 let g:rainbow_active = 1
 
 " Use system clipboard
-set clipboard=unnamed
+set clipboard=unnamedplus
 
 " Remove the pipe symbol in split view
 set fillchars+=vert:\ 

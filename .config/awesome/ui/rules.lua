@@ -55,7 +55,7 @@ awful.rules.rules = {
     },
     properties = {
         floating = true,
-        titlebars_enabled = true,
+        --titlebars_enabled = true,
     }
 },
     -- Specific applications run on specific tags
@@ -135,8 +135,7 @@ awful.rules.rules = {
         },
     },
     properties = {
-        tag = screen[3].tags[3],
-        switchtotag = true
+        screen = 3,
     }
 },
 
@@ -158,7 +157,7 @@ awful.rules.rules = {
         },
     },
     properties = {
-        titlebars_enabled = true,
+        --titlebars_enabled = true,
         tag = screen[1].tags[3],
         floating = true,
         switchtotag = true
@@ -211,7 +210,7 @@ awful.rules.rules = {
     properties = {
         tag = screen[1].tags[4],
         switchtotag = true,
-	titlebars_enabled = true,
+	--titlebars_enabled = true,
     }
 },
 

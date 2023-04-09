@@ -49,21 +49,23 @@ awful.screen.connect_for_each_screen(function(s)
     }
     )
 -- ========================= Widgets and bars placement =======================
+    s.WEATHER_WIDGET.x  =   screen_width    * 0.913
+    s.WEATHER_WIDGET.y  =   screen_height   * 0.03
+    s.quotes.x          =   screen_width    * 0.913
+    s.quotes.y          =   screen_height   * 0.16
+    s.Prayers_widget.x  =   screen_width    * 0.913
+    s.Prayers_widget.y  =   screen_height   * 0.73
+-- ======================== Not in use currently ==============================
     --screen[1].top_bar.y                 =   screen_height   * 0.00208
     --screen[3].top_bar.y                 =   screen_height   * 0.00208
-    screen[1].Prayers_widget.x  =   screen_width    * 0.913
     --screen[2].Prayers_widget.x  =   screen_width    * 2.92
     --screen[3].Prayers_widget.x  =   screen_width    * 1.893
-    s.Prayers_widget.y          =   screen_height   * 0.73
-    screen[1].WEATHER_WIDGET.x  =   screen_width    * 0.913
     --screen[2].WEATHER_WIDGET.x  =   screen_width    * 2.92
     --screen[3].WEATHER_WIDGET.x  =   screen_width    * 1.893
-    s.WEATHER_WIDGET.y          =   screen_height   * 0.03
-    screen[1].quotes.x          =   screen_width    * 0.913
     --screen[2].quotes.x          =   screen_width    * 2.92
     --screen[3].quotes.x          =   screen_width    * 1.893
-    s.quotes.y                  =   screen_height   * 0.16
     --screen[1].bottom_bar.y              =   screen_height   * 0.978
+-- ============================================================================
 
     s.bottom_bar:setup {
         {

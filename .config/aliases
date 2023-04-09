@@ -8,7 +8,7 @@ alias ltime="sudo timeshift --list"
 alias dels="sudo timeshift --delete --snapshot"
 alias cres="sudo timeshift --create --comments"
 
-alias ls="exa -lag --extended --color=always --group-directories-first --icons --color-scale"
+alias ls="exa -lag --color=always --group-directories-first --icons --color-scale"
 #alias ls="lsd -lAh"
 alias diff="diff --color=always"
 alias v="nvim"

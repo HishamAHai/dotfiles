@@ -1,7 +1,7 @@
 #!/bin/sh
 
 # Clear the last preview (if any)
-$HOME/.config/lf/image clear
+$HOME/.config/lf/clear_img.sh
 
 # Calculate where the image should be placed on the screen.
 num=$(printf "%0.f\n" "`echo "$(tput cols) / 2" | bc`")
@@ -83,7 +83,7 @@ if [ -n "$FIFO_UEBERZUG" ]; then
     video/*)
       cache="$(hash "$file").jpg"
       cache "$cache" "$@"
-      /mnt/SSD/builds/ffmpegthumbnailer/ffmpegthumbnailer -i "$file" -o "$cache" -s 0
+      ffmpegthumbnailer -i "$file" -o "$cache" -s 0
       draw "$cache" "$@"
       ;;
   esac

@@ -21,8 +21,8 @@ set hidden
 set icons
 
 # image perview
-set previewer ~/.config/lf/preview
-set cleaner ~/.config/lf/clear_img.sh
+set previewer ~/.config/lf/previewer.sh
+set cleaner ~/.config/lf/cleaner.sh
 
 # line numbers
 set number
@@ -33,7 +33,7 @@ map x $$f
 map X !$f
 
 # go to directory
-map ga cd /mnt/MISC
+map ga cd /mnt/videos
 map gD cd /mnt/SSD/DavinciTemporal
 map gm cd /mnt/MULTIMEDIA/MOVIES
 map gs cd /mnt/MULTIMEDIA/SERIES
