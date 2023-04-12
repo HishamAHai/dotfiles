@@ -88,17 +88,17 @@ local function update_widget(widget,stdout)
 
     function day_length()
         sunrise  =   Prayer_utc(Times[2])
-        sunset  =   Prayer_utc(Times[7])
+        sunset  =   Prayer_utc(Times[5])
         length_number = sunset - sunrise - TZ_adj
         length   =   os.date('%H:%M',length_number)
         return length
     end
 
     function fast_length()
-        sunrise  =   Prayer_utc(Times[1])
-        sunset  =   Prayer_utc(Times[6])
-        length_number = sunset - sunrise - TZ_adj
-        length   =   os.date('%H:%M',length_number)
+        suhur  =   Prayer_utc(Times[1])
+        iftar  =   Prayer_utc(Times[5])
+        fast_dur = iftar - suhur - TZ_adj
+        length   =   os.date('%H:%M',fast_dur)
         return length
     end
 
