@@ -13,11 +13,12 @@ This mod includes the following patches:
     Numbers
     listfullwidth
     centered
+    borders
 diff --git a/config.def.h b/config.def.h
-index 1edb647..0b022c9 100644
+index 1edb647..8f1cc2b 100644
 --- a/config.def.h
 +++ b/config.def.h
-@@ -2,19 +2,35 @@
+@@ -2,22 +2,41 @@
  /* Default settings; can be overriden by command line. */
  
  static int topbar = 1;                      /* -b  option; if 0, dmenu appears at bottom     */
@@ -60,6 +61,12 @@ index 1edb647..0b022c9 100644
  
  /*
   * Characters not considered part of a word while deleting words
+  * for example: " /?\"&[]"
+  */
+ static const char worddelimiters[] = " ";
++
++/* Size of the window border */
++static unsigned int border_width = 0;
 diff --git a/config.mk b/config.mk
 index 566348b..fd0b2c3 100644
 --- a/config.mk
@@ -182,7 +189,7 @@ index 323f93c..76adea0 100644
  prints version information to stdout, then exits.
  .TP
 diff --git a/dmenu.c b/dmenu.c
-index 62f1089..dfdd30f 100644
+index 62f1089..139d783 100644
 --- a/dmenu.c
 +++ b/dmenu.c
 @@ -1,6 +1,7 @@
@@ -740,7 +747,7 @@ index 62f1089..dfdd30f 100644
  	}
  	promptw = (prompt && *prompt) ? TEXTW(prompt) - lrpad / 4 : 0;
  	inputw = mw / 3; /* input width: ~33% of monitor width */
-@@ -683,11 +976,13 @@ setup(void)
+@@ -683,11 +976,15 @@ setup(void)
  
  	/* create menu window */
  	swa.override_redirect = True;
@@ -749,15 +756,18 @@ index 62f1089..dfdd30f 100644
 +	swa.border_pixel = 0;
 +	swa.colormap = cmap;
  	swa.event_mask = ExposureMask | KeyPressMask | VisibilityChangeMask;
- 	win = XCreateWindow(dpy, root, x, y, mw, mh, 0,
+-	win = XCreateWindow(dpy, root, x, y, mw, mh, 0,
 -	                    CopyFromParent, CopyFromParent, CopyFromParent,
 -	                    CWOverrideRedirect | CWBackPixel | CWEventMask, &swa);
++	win = XCreateWindow(dpy, root, x, y, mw, mh, border_width,
 +	                    depth, CopyFromParent, visual,
 +	                    CWOverrideRedirect | CWBackPixel | CWBorderPixel | CWColormap | CWEventMask, &swa);
++	if (border_width)
++		XSetWindowBorder(dpy, win, scheme[SchemeSelHighlight][ColBg].pixel);
  	XSetClassHint(dpy, win, &ch);
  
  
-@@ -716,8 +1011,10 @@ setup(void)
+@@ -716,8 +1013,10 @@ setup(void)
  static void
  usage(void)
  {
@@ -770,7 +780,7 @@ index 62f1089..dfdd30f 100644
  }
  
  int
-@@ -735,15 +1032,33 @@ main(int argc, char *argv[])
+@@ -735,15 +1034,33 @@ main(int argc, char *argv[])
  			topbar = 0;
  		else if (!strcmp(argv[i], "-f"))   /* grabs keyboard before reading stdin */
  			fast = 1;
@@ -806,7 +816,7 @@ index 62f1089..dfdd30f 100644
  			mon = atoi(argv[++i]);
  		else if (!strcmp(argv[i], "-p"))   /* adds prompt to left of input field */
  			prompt = argv[++i];
-@@ -757,8 +1072,22 @@ main(int argc, char *argv[])
+@@ -757,8 +1074,24 @@ main(int argc, char *argv[])
  			colors[SchemeSel][ColBg] = argv[++i];
  		else if (!strcmp(argv[i], "-sf"))  /* selected foreground color */
  			colors[SchemeSel][ColFg] = argv[++i];
@@ -824,12 +834,14 @@ index 62f1089..dfdd30f 100644
 +			colors[SchemeSelHighlight][ColFg] = argv[++i];
  		else if (!strcmp(argv[i], "-w"))   /* embedding window id */
  			embed = argv[++i];
++		else if (!strcmp(argv[i], "-bw"))
++			border_width = atoi(argv[++i]); /* border width */
 +		else if (!strcmp(argv[i], "-hp"))
 +			hpitems = tokenize(argv[++i], ",", &hplength);
  		else
  			usage();
  
-@@ -773,7 +1102,8 @@ main(int argc, char *argv[])
+@@ -773,7 +1106,8 @@ main(int argc, char *argv[])
  	if (!XGetWindowAttributes(dpy, parentwin, &wa))
  		die("could not get embedding window attributes: 0x%lx",
  		    parentwin);
@@ -839,7 +851,7 @@ index 62f1089..dfdd30f 100644
  	if (!drw_fontset_create(drw, fonts, LENGTH(fonts)))
  		die("no fonts could be loaded.");
  	lrpad = drw->fonts->h;
-@@ -795,3 +1125,40 @@ main(int argc, char *argv[])
+@@ -795,3 +1129,40 @@ main(int argc, char *argv[])
  
  	return 1; /* unreachable */
  }
