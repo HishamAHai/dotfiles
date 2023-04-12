@@ -255,13 +255,13 @@ end)
 
 -- ========================= Signals ===========================================
 -- No borders for floating windows
-screen.connect_signal('arrange', function(s)
-    for _, c in pairs(s.clients) do
-        if c.floating == true then
-            c.border_width = 0
-        end
-    end
-end)
+--screen.connect_signal('arrange', function(s)
+--    for _, c in pairs(s.clients) do
+--        if c.floating == true then
+--            c.border_width = 0
+--        end
+--    end
+--end)
 
 -- Enable borders for focused windows
 client.connect_signal('focus', function(c)
@@ -294,16 +294,5 @@ client.connect_signal('activated', function(c)
         c.switchtotag         =   true
     end
 end)
-
--- Ensure there is always a gap around maximized windows
---client.connect_signal('manage', function(c)
---    c:struts({
---        top     =   dpi(33),
---        bottom  =   dpi(33),
---        left    =   dpi(3),
---        right   =   dpi(3),
---    })
---end)
-
 
 return rules
