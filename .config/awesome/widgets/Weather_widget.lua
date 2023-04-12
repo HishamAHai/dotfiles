@@ -153,8 +153,6 @@ local function update_widget(widget,stdout)
     Deg_now     =   Result.current.temp
     wind_spd    =   Result.current.wind_speed * 3.6
     Deg         =   math.floor(Deg_now)
-    Min         =   math.floor(Deg_min)
-    Max         =   math.floor(Deg_max)
     Win         =   math.floor(wind_spd)
 
     widget:get_children_by_id('icon')[1]:set_image(icons_dir .. Icon .. icons_ext)
