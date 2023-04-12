@@ -111,25 +111,34 @@ WEATHER_WIDGET_BIG = wibox.widget {
         {
             {
                 {
-                    id = 'desc',
-                    font = 'Red Hat Display 14',
-                    widget = wibox.widget.textbox
+                    {
+                        id = 'desc',
+                        font = 'Red Hat Display 14',
+                        halign = 'left',
+                        widget = wibox.widget.textbox
+                    },
+                    halign = 'left',
+                    widget = wibox.container.place
                 },
-                align = 'center',
-                widget = wibox.container.place
-            },
-            {
                 {
-                    id = 'wind_cond',
-                    font = 'Red Hat Display 14',
-                    widget = wibox.widget.textbox
+                    {
+                        id = 'wind_cond',
+                        font = 'Red Hat Display 14',
+                        halign = 'left',
+                        widget = wibox.widget.textbox
+                    },
+                    halign = 'left',
+                    widget = wibox.container.place
                 },
-                align = 'center',
-                widget = wibox.container.place
+                layout = wibox.layout.flex.vertical
             },
-            layout = wibox.layout.flex.vertical
-        },
-        shape = big_wdt_shape,
+            left = 10,
+            widget = wibox.container.margin,
+        }, 
+        -- shape = big_wdt_shape,
+        shape = function(cr,width,height)
+            gears.shape.rounded_rect(cr,width,height,screen_width * 0.0025)
+        end,
         bg = beautiful.bg_empty,
         widget = wibox.container.background
     },
@@ -142,8 +151,6 @@ local function update_widget(widget,stdout)
     Desc        =   Result.current.weather[1].description
     Icon        =   Result.current.weather[1].icon
     Deg_now     =   Result.current.temp
-    Deg_min     =   Result.daily[1].temp.night
-    Deg_max     =   Result.daily[1].temp.day
     wind_spd    =   Result.current.wind_speed * 3.6
     Deg         =   math.floor(Deg_now)
     Min         =   math.floor(Deg_min)
@@ -156,8 +163,8 @@ local function update_widget(widget,stdout)
     datewidget:get_children_by_id('icon')[1]:set_image(clock_icon .. os.date('%H') .. icons_ext)
 
     WEATHER_WIDGET_BIG:get_children_by_id('icon')[1]:set_image(icons_dir .. Icon .. icons_ext)
-    WEATHER_WIDGET_BIG:get_children_by_id('desc')[1]:set_markup(Desc)
-    WEATHER_WIDGET_BIG:get_children_by_id('wind_cond')[1]:set_markup('viento: '.. Win .. 'km/h')
+    WEATHER_WIDGET_BIG:get_children_by_id('desc')[1]:set_markup( 'ℹ️\t' .. Desc)
+    WEATHER_WIDGET_BIG:get_children_by_id('wind_cond')[1]:set_markup('💨\tviento: '.. Win .. 'km/h')
 
     if Deg <= 10 then
         widget:get_children_by_id('deg')[1]:set_markup( '<span fgcolor="' .. beautiful.temp_cold .. '"> ' .. Deg .. ' °C</span>')
