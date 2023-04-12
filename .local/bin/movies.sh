@@ -23,6 +23,7 @@ dir=$(dirname $movie)
 
 # Movie artwork is organized and we will use the discart image
 thumb=$(find $dir -iname "*discart*")
+#thumb=$(find $dir -iname "*logo*")
 
 # The .nfo file will be used to get the movie title, not the file name
 info=$(find $dir -name "*.nfo")
