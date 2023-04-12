@@ -13,9 +13,24 @@ This mod includes the following patches:
     Numbers
     listfullwidth
     centered
-    borders
+diff --git a/Material_Dark.h b/Material_Dark.h
+new file mode 100644
+index 0000000..426c4fd
+--- /dev/null
++++ b/Material_Dark.h
+@@ -0,0 +1,10 @@
++static const unsigned int bgalpha = 0xc8;
++static const char *colors[SchemeLast][2] = {
++	/*     fg         bg       */
++	[SchemeNorm]            =   { "#e4e4e4", "#222221"},
++	[SchemeSel]             =   { "#fee92e", "#424242" },
++	[SchemeSelHighlight]    =   { "#134eb2", "#a94dbb" },
++	[SchemeNormHighlight]   =   { "#b7141e", "#222221" },
++	[SchemeOut]             =   { "#222221", "#7aba39" },
++	[SchemeHp]              =   { "#b7141e", "#424242" }
++};
 diff --git a/config.def.h b/config.def.h
-index 1edb647..8f1cc2b 100644
+index 1edb647..6c3291a 100644
 --- a/config.def.h
 +++ b/config.def.h
 @@ -2,22 +2,41 @@
