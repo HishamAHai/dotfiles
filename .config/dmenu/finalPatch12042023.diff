@@ -10,16 +10,22 @@ This mod includes the following patches:
     heighlight
     HighPriority
     External Color Scheme
+    Numbers
+    listfullwidth
+    centered
 diff --git a/config.def.h b/config.def.h
-index 1edb647..dfd837b 100644
+index 1edb647..0b022c9 100644
 --- a/config.def.h
 +++ b/config.def.h
-@@ -2,19 +2,32 @@
+@@ -2,19 +2,35 @@
  /* Default settings; can be overriden by command line. */
  
  static int topbar = 1;                      /* -b  option; if 0, dmenu appears at bottom     */
 +static const unsigned int alpha = 0xc8;     /* Amount of opacity. 0xff is opaque             */
 +static const int user_bh = 8;               /* add an defined amount of pixels to the bar height */
++static int colorprompt = 1;                /* -p  option; if 1, prompt uses SchemeSel, otherwise SchemeNorm */
++static int centered = 0;                    /* -c option; centers dmenu on screen */
++static int min_width = 500;                    /* minimum width when centered */
 +static int fuzzy = 1;                      /* -F  option; if 0, dmenu doesn't use fuzzy matching     */
 +
  /* -fn option overrides fonts[0]; default X11 font or font set */
@@ -68,7 +74,7 @@ index 566348b..fd0b2c3 100644
  # flags
  CPPFLAGS = -D_DEFAULT_SOURCE -D_BSD_SOURCE -D_XOPEN_SOURCE=700 -D_POSIX_C_SOURCE=200809L -DVERSION=\"$(VERSION)\" $(XINERAMAFLAGS)
 diff --git a/dmenu.1 b/dmenu.1
-index 323f93c..5c0507e 100644
+index 323f93c..76adea0 100644
 --- a/dmenu.1
 +++ b/dmenu.1
 @@ -4,10 +4,20 @@ dmenu \- dynamic menu
@@ -107,7 +113,17 @@ index 323f93c..5c0507e 100644
  .RB [ \-w
  .IR windowid ]
  .P
-@@ -47,13 +65,37 @@ is faster, but will lock up X until stdin reaches end\-of\-file.
+@@ -40,6 +58,9 @@ which lists programs in the user's $PATH and runs the result in their $SHELL.
+ .B \-b
+ dmenu appears at the bottom of the screen.
+ .TP
++.B \-c
++dmenu appears centered on the screen.
++.TP
+ .B \-f
+ dmenu grabs the keyboard before reading stdin if not reading from a tty. This
+ is faster, but will lock up X until stdin reaches end\-of\-file.
+@@ -47,13 +68,37 @@ is faster, but will lock up X until stdin reaches end\-of\-file.
  .B \-i
  dmenu matches menu items case insensitively.
  .TP
@@ -146,7 +162,7 @@ index 323f93c..5c0507e 100644
  .BI \-p " prompt"
  defines the prompt to be displayed to the left of the input field.
  .TP
-@@ -75,6 +117,18 @@ defines the selected background color.
+@@ -75,6 +120,18 @@ defines the selected background color.
  .BI \-sf " color"
  defines the selected foreground color.
  .TP
@@ -166,7 +182,7 @@ index 323f93c..5c0507e 100644
  prints version information to stdout, then exits.
  .TP
 diff --git a/dmenu.c b/dmenu.c
-index 62f1089..e866494 100644
+index 62f1089..dfdd30f 100644
 --- a/dmenu.c
 +++ b/dmenu.c
 @@ -1,6 +1,7 @@
@@ -190,12 +206,15 @@ index 62f1089..e866494 100644
  #include <X11/Xft/Xft.h>
  
  #include "drw.h"
-@@ -25,18 +28,28 @@
+@@ -24,19 +27,32 @@
+                              * MAX(0, MIN((y)+(h),(r).y_org+(r).height) - MAX((y),(r).y_org)))
  #define LENGTH(X)             (sizeof X / sizeof X[0])
  #define TEXTW(X)              (drw_fontset_getwidth(drw, (X)) + lrpad)
- 
-+#define OPAQUE                0xffu
++#define NUMBERSMAXDIGITS      100
++#define NUMBERSBUFSIZE        (NUMBERSMAXDIGITS * 2) + 1
 +
++#define OPAQUE                0xffu
+ 
  /* enums */
 -enum { SchemeNorm, SchemeSel, SchemeOut, SchemeLast }; /* color schemes */
 +enum { SchemeNorm, SchemeSel, SchemeNormHighlight, SchemeSelHighlight,
@@ -212,6 +231,7 @@ index 62f1089..e866494 100644
  
 +static char **hpitems = NULL;
 +static int hplength = 0;
++static char numbers[NUMBERSBUFSIZE] = "";
  static char text[BUFSIZ] = "";
  static char *embed;
  static int bh, mw, mh;
@@ -221,7 +241,7 @@ index 62f1089..e866494 100644
  static int inputw = 0, promptw;
  static int lrpad; /* sum of left and right padding */
  static size_t cursor;
-@@ -53,10 +66,52 @@ static XIC xic;
+@@ -53,10 +69,52 @@ static XIC xic;
  static Drw *drw;
  static Clr *scheme[SchemeLast];
  
@@ -274,16 +294,35 @@ index 62f1089..e866494 100644
  
  static unsigned int
  textw_clamp(const char *str, unsigned int n)
-@@ -84,7 +139,7 @@ calcoffsets(void)
+@@ -84,9 +142,9 @@ calcoffsets(void)
  	int i, n;
  
  	if (lines > 0)
 -		n = lines * bh;
 +		n = lines * columns * bh;
  	else
- 		n = mw - (promptw + inputw + TEXTW("<") + TEXTW(">"));
+-		n = mw - (promptw + inputw + TEXTW("<") + TEXTW(">"));
++		n = mw - (promptw + inputw + TEXTW("<") + TEXTW(">") + TEXTW(numbers));
  	/* calculate which items will begin the next page and previous page */
-@@ -104,6 +159,9 @@ cleanup(void)
+ 	for (i = 0, next = curr; next; next = next->right)
+ 		if ((i += (lines > 0) ? bh : textw_clamp(next->text, n)) > n)
+@@ -96,6 +154,15 @@ calcoffsets(void)
+ 			break;
+ }
+ 
++static int
++max_textw(void)
++{
++	int len = 0;
++	for (struct item *item = items; item && item->text; item++)
++		len = MAX(TEXTW(item->text), len);
++	return len;
++}
++
+ static void
+ cleanup(void)
+ {
+@@ -104,6 +171,9 @@ cleanup(void)
  	XUngrabKey(dpy, AnyKey, AnyModifier, root);
  	for (i = 0; i < SchemeLast; i++)
  		free(scheme[i]);
@@ -293,7 +332,7 @@ index 62f1089..e866494 100644
  	for (i = 0; items && items[i].text; ++i)
  		free(items[i].text);
  	free(items);
-@@ -130,17 +188,59 @@ cistrstr(const char *h, const char *n)
+@@ -130,17 +200,74 @@ cistrstr(const char *h, const char *n)
  	return NULL;
  }
  
@@ -351,10 +390,25 @@ index 62f1089..e866494 100644
 +	r = drw_text(drw, x, y, w, bh, lrpad / 2, item->text, 0);
 +	drawhighlights(item, x, y, w);
 +	return r;
++}
++
++static void
++recalculatenumbers()
++{
++	unsigned int numer = 0, denom = 0;
++	struct item *item;
++	if (matchend) {
++		numer++;
++		for (item = matchend; item && item->left; item = item->left)
++			numer++;
++	}
++	for (item = items; item && item->text; item++)
++		denom++;
++	snprintf(numbers, NUMBERSBUFSIZE, "%d/%d", numer, denom);
  }
  
  static void
-@@ -148,7 +248,7 @@ drawmenu(void)
+@@ -148,13 +275,14 @@ drawmenu(void)
  {
  	unsigned int curpos;
  	struct item *item;
@@ -363,7 +417,15 @@ index 62f1089..e866494 100644
  
  	drw_setscheme(drw, scheme[SchemeNorm]);
  	drw_rect(drw, 0, 0, mw, mh, 1, 1);
-@@ -165,13 +265,19 @@ drawmenu(void)
+ 
+ 	if (prompt && *prompt) {
+-		drw_setscheme(drw, scheme[SchemeSel]);
++		if (colorprompt)
++			drw_setscheme(drw, scheme[SchemeSel]);
+ 		x = drw_text(drw, x, 0, promptw, bh, lrpad / 2, prompt, 0);
+ 	}
+ 	/* draw input field */
+@@ -165,13 +293,20 @@ drawmenu(void)
  	curpos = TEXTW(text) - TEXTW(&text[cursor]);
  	if ((curpos += lrpad / 2 - 1) < w) {
  		drw_setscheme(drw, scheme[SchemeNorm]);
@@ -371,6 +433,7 @@ index 62f1089..e866494 100644
 +		drw_rect(drw, x + curpos, 2 + (bh - fh) / 2, 2, fh - 4, 1, 0);
  	}
  
++	recalculatenumbers();
  	if (lines > 0) {
 -		/* draw vertical list */
 -		for (item = curr; item != next; item = item->right)
@@ -380,14 +443,32 @@ index 62f1089..e866494 100644
 +		for (item = curr; item != next; item = item->right, i++)
 +			drawitem(
 +				item,
-+				x + ((i / lines) *  ((mw - x) / columns)),
++				0 + ((i / lines) *  ((mw - x) / columns)),
 +				y + (((i % lines) + 1) * bh),
 +				(mw - x) / columns
 +			);
  	} else if (matches) {
  		/* draw horizontal list */
  		x += inputw;
-@@ -226,17 +332,103 @@ grabkeyboard(void)
+@@ -182,13 +317,15 @@ drawmenu(void)
+ 		}
+ 		x += w;
+ 		for (item = curr; item != next; item = item->right)
+-			x = drawitem(item, x, 0, textw_clamp(item->text, mw - x - TEXTW(">")));
++			x = drawitem(item, x, 0, textw_clamp(item->text, mw - x - TEXTW(">") - TEXTW(numbers)));
+ 		if (next) {
+ 			w = TEXTW(">");
+ 			drw_setscheme(drw, scheme[SchemeNorm]);
+-			drw_text(drw, mw - w, 0, w, bh, lrpad / 2, ">", 0);
++			drw_text(drw, mw - w - TEXTW(numbers), 0, w, bh, lrpad / 2, ">", 0);
+ 		}
+ 	}
++	drw_setscheme(drw, scheme[SchemeNorm]);
++	drw_text(drw, mw - TEXTW(numbers), 0, TEXTW(numbers), bh, lrpad / 2, numbers, 0);
+ 	drw_map(drw, win, 0, 0, mw, mh);
+ }
+ 
+@@ -226,17 +363,103 @@ grabkeyboard(void)
  	}
  	die("cannot grab keyboard");
  }
@@ -492,7 +573,7 @@ index 62f1089..e866494 100644
  
  	strcpy(buf, text);
  	/* separate input text into tokens to be matched individually */
-@@ -245,7 +437,7 @@ match(void)
+@@ -245,7 +468,7 @@ match(void)
  			die("cannot realloc %zu bytes:", tokn * sizeof *tokv);
  	len = tokc ? strlen(tokv[0]) : 0;
  
@@ -501,7 +582,7 @@ index 62f1089..e866494 100644
  	textsize = strlen(text) + 1;
  	for (item = items; item && item->text; item++) {
  		for (i = 0; i < tokc; i++)
-@@ -253,14 +445,24 @@ match(void)
+@@ -253,14 +476,24 @@ match(void)
  				break;
  		if (i != tokc) /* not all tokens match */
  			continue;
@@ -527,7 +608,7 @@ index 62f1089..e866494 100644
  	if (lprefix) {
  		if (matches) {
  			matchend->right = lprefix;
-@@ -328,6 +530,8 @@ keypress(XKeyEvent *ev)
+@@ -328,6 +561,8 @@ keypress(XKeyEvent *ev)
  	int len;
  	KeySym ksym = NoSymbol;
  	Status status;
@@ -536,7 +617,7 @@ index 62f1089..e866494 100644
  
  	len = XmbLookupString(xic, ev, buf, sizeof buf, &ksym, &status);
  	switch (status) {
-@@ -459,6 +663,27 @@ insert:
+@@ -459,6 +694,27 @@ insert:
  		calcoffsets();
  		break;
  	case XK_Left:
@@ -564,7 +645,7 @@ index 62f1089..e866494 100644
  	case XK_KP_Left:
  		if (cursor > 0 && (!sel || !sel->left || lines > 0)) {
  			cursor = nextrune(-1);
-@@ -499,6 +724,27 @@ insert:
+@@ -499,6 +755,27 @@ insert:
  			sel->out = 1;
  		break;
  	case XK_Right:
@@ -592,7 +673,7 @@ index 62f1089..e866494 100644
  	case XK_KP_Right:
  		if (text[cursor] != '\0') {
  			cursor = nextrune(+1);
-@@ -566,6 +812,7 @@ readstdin(void)
+@@ -566,6 +843,7 @@ readstdin(void)
  			die("strdup:");
  
  		items[i].out = 0;
@@ -600,7 +681,7 @@ index 62f1089..e866494 100644
  	}
  	free(line);
  	if (items)
-@@ -628,13 +875,15 @@ setup(void)
+@@ -628,15 +906,18 @@ setup(void)
  #endif
  	/* init appearance */
  	for (j = 0; j < SchemeLast; j++)
@@ -617,34 +698,49 @@ index 62f1089..e866494 100644
 +	bh = user_bh ? bh + user_bh : bh + 2;
  	lines = MAX(lines, 0);
  	mh = (lines + 1) * bh;
++	promptw = (prompt && *prompt) ? TEXTW(prompt) - lrpad / 4 : 0;
  #ifdef XINERAMA
-@@ -663,9 +912,9 @@ setup(void)
+ 	i = 0;
+ 	if (parentwin == root && (info = XineramaQueryScreens(dpy, &n))) {
+@@ -663,9 +944,15 @@ setup(void)
  				if (INTERSECT(x, y, 1, 1, info[i]) != 0)
  					break;
  
 -		x = info[i].x_org;
 -		y = info[i].y_org + (topbar ? 0 : info[i].height - mh);
 -		mw = info[i].width;
++		if (centered) {
++			mw = MIN(MAX(max_textw() + promptw, min_width), info[i].width);
++			x = info[i].x_org + ((info[i].width  - dmx) / 2);
++			y = info[i].y_org + ((info[i].height - dmy) / 2);
++		} else {
 +		x = info[i].x_org + dmx;
 +		y = info[i].y_org + (topbar ? dmy : info[i].height - mh - dmy);
 +		mw = (dmw>0 ? dmw : info[i].width);
++}
  		XFree(info);
  	} else
  #endif
-@@ -673,9 +922,9 @@ setup(void)
+@@ -673,9 +960,15 @@ setup(void)
  		if (!XGetWindowAttributes(dpy, parentwin, &wa))
  			die("could not get embedding window attributes: 0x%lx",
  			    parentwin);
 -		x = 0;
 -		y = topbar ? 0 : wa.height - mh;
 -		mw = wa.width;
++		if (centered) {
++			mw = MIN(MAX(max_textw() + promptw, min_width), info[i].width);
++			x = info[i].x_org + ((info[i].width  - dmx) / 2);
++			y = info[i].y_org + ((info[i].height - dmy) / 2);
++		} else {
 +		x = dmx;
 +		y = topbar ? dmy : wa.height - mh - dmy;
 +		mw = (dmw>0 ? dmw : wa.width);
++        }
  	}
  	promptw = (prompt && *prompt) ? TEXTW(prompt) - lrpad / 4 : 0;
  	inputw = mw / 3; /* input width: ~33% of monitor width */
-@@ -683,11 +932,13 @@ setup(void)
+@@ -683,11 +976,13 @@ setup(void)
  
  	/* create menu window */
  	swa.override_redirect = True;
@@ -661,7 +757,7 @@ index 62f1089..e866494 100644
  	XSetClassHint(dpy, win, &ch);
  
  
-@@ -716,8 +967,10 @@ setup(void)
+@@ -716,8 +1011,10 @@ setup(void)
  static void
  usage(void)
  {
@@ -674,10 +770,12 @@ index 62f1089..e866494 100644
  }
  
  int
-@@ -735,15 +988,31 @@ main(int argc, char *argv[])
+@@ -735,15 +1032,33 @@ main(int argc, char *argv[])
  			topbar = 0;
  		else if (!strcmp(argv[i], "-f"))   /* grabs keyboard before reading stdin */
  			fast = 1;
++		else if (!strcmp(argv[i], "-c"))   /* centers dmenu on screen */
++			centered = 1;
 +		else if (!strcmp(argv[i], "-F"))   /* grabs keyboard before reading stdin */
 +			fuzzy = 0;
  		else if (!strcmp(argv[i], "-i")) { /* case-insensitive item matching */
@@ -708,7 +806,7 @@ index 62f1089..e866494 100644
  			mon = atoi(argv[++i]);
  		else if (!strcmp(argv[i], "-p"))   /* adds prompt to left of input field */
  			prompt = argv[++i];
-@@ -757,8 +1026,22 @@ main(int argc, char *argv[])
+@@ -757,8 +1072,22 @@ main(int argc, char *argv[])
  			colors[SchemeSel][ColBg] = argv[++i];
  		else if (!strcmp(argv[i], "-sf"))  /* selected foreground color */
  			colors[SchemeSel][ColFg] = argv[++i];
@@ -731,7 +829,7 @@ index 62f1089..e866494 100644
  		else
  			usage();
  
-@@ -773,7 +1056,8 @@ main(int argc, char *argv[])
+@@ -773,7 +1102,8 @@ main(int argc, char *argv[])
  	if (!XGetWindowAttributes(dpy, parentwin, &wa))
  		die("could not get embedding window attributes: 0x%lx",
  		    parentwin);
@@ -741,7 +839,7 @@ index 62f1089..e866494 100644
  	if (!drw_fontset_create(drw, fonts, LENGTH(fonts)))
  		die("no fonts could be loaded.");
  	lrpad = drw->fonts->h;
-@@ -795,3 +1079,40 @@ main(int argc, char *argv[])
+@@ -795,3 +1125,40 @@ main(int argc, char *argv[])
  
  	return 1; /* unreachable */
  }
