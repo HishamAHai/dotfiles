@@ -56,6 +56,7 @@ export MOZ_GTK_TITLEBAR_DECORATION=client
 
 ## Autostart useful programs
 dbus-update-activation-environment --systemd DBUS_SESSION_BUS_ADDRESS DISPLAY XAUTHORITY &
+xrdb merge ~/.Xresources &
 /usr/lib/polkit-gnome/polkit-gnome-authentication-agent-1 &
 picom &
 ~/.fehbg &
