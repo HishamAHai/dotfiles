@@ -6,7 +6,8 @@ theme=$(ls ~/.config/awesome/themes/colorschemes | sed -e 's/\.conf//' | dmenu -
 sed -i "17s/'.*' .. '.conf'/'$theme' .. '.conf'/" ~/.config/awesome/themes/theme.lua
 
 if [[ $theme == *"Dark"* ]]; then
-    sed -i '6s/Light/Dark/ ; 7s/light/dark/' ~/.config/awesome/widgets/Weather_widget.lua
+    sed -i '7s/Light/Dark/' ~/.config/awesome/widgets/Weather_widget.lua
+    sed -i '8s/light/dark/' ~/.config/awesome/widgets/Weather_widget.lua
     sed -i '4s/light/dark/ ; 5s/Light/Dark/' ~/.gtkrc-2.0
     sed -i '2s/light/dark/ ; 3s/Light/Dark/' ~/.config/gtk-3.0/settings.ini
     sed -i '/gtk-application-prefer-dark-theme/s/0/1/' ~/.config/gtk-3.0/settings.ini
@@ -26,11 +27,12 @@ if [[ $theme == *"Dark"* ]]; then
 
     cd ~/.config/dmenu
     rm -f config.h
-    sed -i '17s/Light/Dark/' config.def.h
+    sed -i '19s/Light/Dark/' config.def.h
     sudo make clean install
 
 else
-    sed -i '6s/Dark/Light/ ; 7s/dark/light/' ~/.config/awesome/widgets/Weather_widget.lua
+    sed -i '7s/Dark/Light/' ~/.config/awesome/widgets/Weather_widget.lua
+    sed -i '8s/dark/light/' ~/.config/awesome/widgets/Weather_widget.lua
     sed -i '4s/dark/light/ ; 5s/Dark/Light/' ~/.gtkrc-2.0
     sed -i '2s/dark/light/ ; 3s/Dark/Light/' ~/.config/gtk-3.0/settings.ini
     printf "[General]\ntheme=KvLibadwaita" > ~/.config/Kvantum/kvantum.kvconfig
@@ -48,7 +50,7 @@ else
 
     cd ~/.config/dmenu
     rm -f config.h
-    sed -i '17s/Dark/Light/' config.def.h
+    sed -i '19s/Dark/Light/' config.def.h
     sudo make clean install
 
 fi
