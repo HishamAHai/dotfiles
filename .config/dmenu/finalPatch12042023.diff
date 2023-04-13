@@ -1,25 +1,25 @@
 This mod includes the following patches:
-    alpha
-    bar height
-    line height
-    grid
-    gridnav
-    xyw
-    fuzzymatch
-    fuzzyheighlight
-    heighlight
-    HighPriority
-    External Color Scheme
-    Numbers
-    listfullwidth
-    centered
+    1.alpha
+    2.bar height
+    3.line height
+    4.grid
+    5.gridnav
+    6.xyw
+    7.fuzzymatch
+    8.fuzzyheighlight
+    9.heighlight
+    10.HighPriority
+    11.External Color Scheme
+    12.Numbers
+    13.listfullwidth
+    14.centered
+    15.Mouse Support
 diff --git a/Material_Dark.h b/Material_Dark.h
 new file mode 100644
 index 0000000..426c4fd
 --- /dev/null
 +++ b/Material_Dark.h
 @@ -0,0 +1,10 @@
-+static const unsigned int bgalpha = 0xc8;
 +static const char *colors[SchemeLast][2] = {
 +	/*     fg         bg       */
 +	[SchemeNorm]            =   { "#e4e4e4", "#222221"},
@@ -30,7 +30,7 @@ index 0000000..426c4fd
 +	[SchemeHp]              =   { "#b7141e", "#424242" }
 +};
 diff --git a/config.def.h b/config.def.h
-index 1edb647..6c3291a 100644
+index 1edb647..8f1cc2b 100644
 --- a/config.def.h
 +++ b/config.def.h
 @@ -2,22 +2,41 @@
@@ -204,7 +204,7 @@ index 323f93c..76adea0 100644
  prints version information to stdout, then exits.
  .TP
 diff --git a/dmenu.c b/dmenu.c
-index 62f1089..139d783 100644
+index 62f1089..6f7fdae 100644
 --- a/dmenu.c
 +++ b/dmenu.c
 @@ -1,6 +1,7 @@
@@ -695,7 +695,127 @@ index 62f1089..139d783 100644
  	case XK_KP_Right:
  		if (text[cursor] != '\0') {
  			cursor = nextrune(+1);
-@@ -566,6 +843,7 @@ readstdin(void)
+@@ -528,6 +805,119 @@ draw:
+ 	drawmenu();
+ }
+ 
++static void
++buttonpress(XEvent *e)
++{
++	struct item *item;
++	XButtonPressedEvent *ev = &e->xbutton;
++	int x = 0, y = 0, h = bh, w;
++
++	if (ev->window != win)
++		return;
++
++	/* right-click: exit */
++	if (ev->button == Button3)
++		exit(1);
++
++	if (prompt && *prompt)
++		x += promptw;
++
++	/* input field */
++	w = (lines > 0 || !matches) ? mw - x : inputw;
++
++	/* left-click on input: clear input,
++	 * NOTE: if there is no left-arrow the space for < is reserved so
++	 *       add that to the input width */
++	if (ev->button == Button1 &&
++	   ((lines <= 0 && ev->x >= 0 && ev->x <= x + w +
++	   ((!prev || !curr->left) ? TEXTW("<") : 0)) ||
++	   (lines > 0 && ev->y >= y && ev->y <= y + h))) {
++		insert(NULL, -cursor);
++		drawmenu();
++		return;
++	}
++	/* middle-mouse click: paste selection */
++	if (ev->button == Button2) {
++		XConvertSelection(dpy, (ev->state & ShiftMask) ? clip : XA_PRIMARY,
++		                  utf8, utf8, win, CurrentTime);
++		drawmenu();
++		return;
++	}
++	/* scroll up */
++	if (ev->button == Button4 && prev) {
++		sel = curr = prev;
++		calcoffsets();
++		drawmenu();
++		return;
++	}
++	/* scroll down */
++	if (ev->button == Button5 && next) {
++		sel = curr = next;
++		calcoffsets();
++		drawmenu();
++		return;
++	}
++	if (ev->button != Button1)
++		return;
++	if (ev->state & ~ControlMask)
++		return;
++	if (lines > 0) {
++		/* vertical list: (ctrl)left-click on item */
++		w = mw - x;
++		for (item = curr; item != next; item = item->right) {
++			y += h;
++			if (ev->y >= y && ev->y <= (y + h)) {
++				puts(item->text);
++				if (!(ev->state & ControlMask))
++					exit(0);
++				sel = item;
++				if (sel) {
++					sel->out = 1;
++					drawmenu();
++				}
++				return;
++			}
++		}
++	} else if (matches) {
++		/* left-click on left arrow */
++		x += inputw;
++		w = TEXTW("<");
++		if (prev && curr->left) {
++			if (ev->x >= x && ev->x <= x + w) {
++				sel = curr = prev;
++				calcoffsets();
++				drawmenu();
++				return;
++			}
++		}
++		/* horizontal list: (ctrl)left-click on item */
++		for (item = curr; item != next; item = item->right) {
++			x += w;
++			w = MIN(TEXTW(item->text), mw - x - TEXTW(">"));
++			if (ev->x >= x && ev->x <= x + w) {
++				puts(item->text);
++				if (!(ev->state & ControlMask))
++					exit(0);
++				sel = item;
++				if (sel) {
++					sel->out = 1;
++					drawmenu();
++				}
++				return;
++			}
++		}
++		/* left-click on right arrow */
++		w = TEXTW(">");
++		x = mw - w;
++		if (next && ev->x >= x && ev->x <= x + w) {
++			sel = curr = next;
++			calcoffsets();
++			drawmenu();
++			return;
++		}
++	}
++}
++
+ static void
+ paste(void)
+ {
+@@ -566,6 +956,7 @@ readstdin(void)
  			die("strdup:");
  
  		items[i].out = 0;
@@ -703,7 +823,17 @@ index 62f1089..139d783 100644
  	}
  	free(line);
  	if (items)
-@@ -628,15 +906,18 @@ setup(void)
+@@ -587,6 +978,9 @@ run(void)
+ 				break;
+ 			cleanup();
+ 			exit(1);
++		case ButtonPress:
++			buttonpress(&ev);
++			break;
+ 		case Expose:
+ 			if (ev.xexpose.count == 0)
+ 				drw_map(drw, win, 0, 0, mw, mh);
+@@ -628,15 +1022,18 @@ setup(void)
  #endif
  	/* init appearance */
  	for (j = 0; j < SchemeLast; j++)
@@ -724,7 +854,7 @@ index 62f1089..139d783 100644
  #ifdef XINERAMA
  	i = 0;
  	if (parentwin == root && (info = XineramaQueryScreens(dpy, &n))) {
-@@ -663,9 +944,15 @@ setup(void)
+@@ -663,9 +1060,15 @@ setup(void)
  				if (INTERSECT(x, y, 1, 1, info[i]) != 0)
  					break;
  
@@ -743,7 +873,7 @@ index 62f1089..139d783 100644
  		XFree(info);
  	} else
  #endif
-@@ -673,9 +960,15 @@ setup(void)
+@@ -673,9 +1076,15 @@ setup(void)
  		if (!XGetWindowAttributes(dpy, parentwin, &wa))
  			die("could not get embedding window attributes: 0x%lx",
  			    parentwin);
@@ -762,18 +892,20 @@ index 62f1089..139d783 100644
  	}
  	promptw = (prompt && *prompt) ? TEXTW(prompt) - lrpad / 4 : 0;
  	inputw = mw / 3; /* input width: ~33% of monitor width */
-@@ -683,11 +976,15 @@ setup(void)
+@@ -683,11 +1092,16 @@ setup(void)
  
  	/* create menu window */
  	swa.override_redirect = True;
 -	swa.background_pixel = scheme[SchemeNorm][ColBg].pixel;
-+	swa.background_pixel = 0;
-+	swa.border_pixel = 0;
-+	swa.colormap = cmap;
- 	swa.event_mask = ExposureMask | KeyPressMask | VisibilityChangeMask;
+-	swa.event_mask = ExposureMask | KeyPressMask | VisibilityChangeMask;
 -	win = XCreateWindow(dpy, root, x, y, mw, mh, 0,
 -	                    CopyFromParent, CopyFromParent, CopyFromParent,
 -	                    CWOverrideRedirect | CWBackPixel | CWEventMask, &swa);
++	swa.background_pixel = 0;
++	swa.border_pixel = 0;
++	swa.colormap = cmap;
++	swa.event_mask = ExposureMask | KeyPressMask | VisibilityChangeMask |
++                     ButtonPressMask;
 +	win = XCreateWindow(dpy, root, x, y, mw, mh, border_width,
 +	                    depth, CopyFromParent, visual,
 +	                    CWOverrideRedirect | CWBackPixel | CWBorderPixel | CWColormap | CWEventMask, &swa);
@@ -782,7 +914,7 @@ index 62f1089..139d783 100644
  	XSetClassHint(dpy, win, &ch);
  
  
-@@ -716,8 +1013,10 @@ setup(void)
+@@ -716,8 +1130,10 @@ setup(void)
  static void
  usage(void)
  {
@@ -795,7 +927,7 @@ index 62f1089..139d783 100644
  }
  
  int
-@@ -735,15 +1034,33 @@ main(int argc, char *argv[])
+@@ -735,15 +1151,33 @@ main(int argc, char *argv[])
  			topbar = 0;
  		else if (!strcmp(argv[i], "-f"))   /* grabs keyboard before reading stdin */
  			fast = 1;
@@ -831,7 +963,7 @@ index 62f1089..139d783 100644
  			mon = atoi(argv[++i]);
  		else if (!strcmp(argv[i], "-p"))   /* adds prompt to left of input field */
  			prompt = argv[++i];
-@@ -757,8 +1074,24 @@ main(int argc, char *argv[])
+@@ -757,8 +1191,24 @@ main(int argc, char *argv[])
  			colors[SchemeSel][ColBg] = argv[++i];
  		else if (!strcmp(argv[i], "-sf"))  /* selected foreground color */
  			colors[SchemeSel][ColFg] = argv[++i];
@@ -856,7 +988,7 @@ index 62f1089..139d783 100644
  		else
  			usage();
  
-@@ -773,7 +1106,8 @@ main(int argc, char *argv[])
+@@ -773,7 +1223,8 @@ main(int argc, char *argv[])
  	if (!XGetWindowAttributes(dpy, parentwin, &wa))
  		die("could not get embedding window attributes: 0x%lx",
  		    parentwin);
@@ -866,7 +998,7 @@ index 62f1089..139d783 100644
  	if (!drw_fontset_create(drw, fonts, LENGTH(fonts)))
  		die("no fonts could be loaded.");
  	lrpad = drw->fonts->h;
-@@ -795,3 +1129,40 @@ main(int argc, char *argv[])
+@@ -795,3 +1246,40 @@ main(int argc, char *argv[])
  
  	return 1; /* unreachable */
  }
