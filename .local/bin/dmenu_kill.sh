@@ -1,6 +1,6 @@
 #!/usr/bin/env bash
 
-selected="$(ps -a -u $USER | dmenu -i -p "Search a process to kill" -l 20 | awk '{print $1" "$4}')"; 
+selected="$(ps -a -u $USER | dmenu -p "Search a process to kill" -i -l 20 -g 1 -x 1380 -y 2 -bw 2 -z 1080 | awk '{print $1" "$4}')"; 
 
 if [[ ! -z $selected ]]; then
 
