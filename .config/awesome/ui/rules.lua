@@ -265,7 +265,7 @@ end)
 
 -- Enable borders for focused windows
 client.connect_signal('focus', function(c)
-            if not awful.rules.match_any(c, {class = {'mpv', 'Nsxiv', 'Vlc', 'resolve', 'Double Commander'}}) then
+            if not awful.rules.match_any(c, {class = {'mpv', 'Nsxiv', 'Vlc', 'resolve', 'Blender', 'Double Commander'}}) then
                 c.border_width = beautiful.border_width
                 c.border_color = beautiful.border_focus
             end
