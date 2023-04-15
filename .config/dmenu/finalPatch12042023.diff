@@ -14,21 +14,6 @@ This mod includes the following patches:
     13.listfullwidth
     14.centered
     15.Mouse Support
-diff --git a/Material_Dark.h b/Material_Dark.h
-new file mode 100644
-index 0000000..426c4fd
---- /dev/null
-+++ b/Material_Dark.h
-@@ -0,0 +1,10 @@
-+static const char *colors[SchemeLast][2] = {
-+	/*     fg         bg       */
-+	[SchemeNorm]            =   { "#e4e4e4", "#222221"},
-+	[SchemeSel]             =   { "#fee92e", "#424242" },
-+	[SchemeSelHighlight]    =   { "#134eb2", "#a94dbb" },
-+	[SchemeNormHighlight]   =   { "#b7141e", "#222221" },
-+	[SchemeOut]             =   { "#222221", "#7aba39" },
-+	[SchemeHp]              =   { "#b7141e", "#424242" }
-+};
 diff --git a/config.def.h b/config.def.h
 index 1edb647..8f1cc2b 100644
 --- a/config.def.h
