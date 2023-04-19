@@ -123,7 +123,27 @@ WEATHER_WIDGET_BIG = wibox.widget {
                 {
                     {
                         id = 'wind_cond',
-                        font = 'Red Hat Display 14',
+                        font = 'Red Hat Display 13',
+                        halign = 'left',
+                        widget = wibox.widget.textbox
+                    },
+                    halign = 'left',
+                    widget = wibox.container.place
+                },
+                {
+                    {
+                        id = 'sunrise',
+                        font = 'Red Hat Display 13',
+                        halign = 'left',
+                        widget = wibox.widget.textbox
+                    },
+                    halign = 'left',
+                    widget = wibox.container.place
+                },
+                {
+                    {
+                        id = 'sunset',
+                        font = 'Red Hat Display 13',
                         halign = 'left',
                         widget = wibox.widget.textbox
                     },
@@ -132,7 +152,9 @@ WEATHER_WIDGET_BIG = wibox.widget {
                 },
                 layout = wibox.layout.flex.vertical
             },
-            left = 10,
+            top = 4,
+            bottom = 4,
+            left = 6,
             widget = wibox.container.margin,
         }, 
         -- shape = big_wdt_shape,
@@ -150,6 +172,8 @@ local function update_widget(widget,stdout)
     Result      =   json.decode(stdout)
     Desc        =   Result.current.weather[1].description
     Icon        =   Result.current.weather[1].icon
+    sunrise_unix=   Result.daily[1].sunrise
+    sunset_unix =   Result.daily[1].sunset
     Deg_now     =   Result.current.temp
     wind_spd    =   Result.current.wind_speed * 3.6
     Deg         =   math.floor(Deg_now)
@@ -160,9 +184,11 @@ local function update_widget(widget,stdout)
 
     datewidget:get_children_by_id('icon')[1]:set_image(clock_icon .. os.date('%H') .. icons_ext)
 
-    WEATHER_WIDGET_BIG:get_children_by_id('icon')[1]:set_image(icons_dir .. Icon .. icons_ext)
-    WEATHER_WIDGET_BIG:get_children_by_id('desc')[1]:set_markup( 'ℹ️\t' .. Desc)
-    WEATHER_WIDGET_BIG:get_children_by_id('wind_cond')[1]:set_markup('💨\tviento: '.. Win .. 'km/h')
+    WEATHER_WIDGET_BIG:get_children_by_id('icon')[1]:set_image(         icons_dir .. Icon .. icons_ext)
+    WEATHER_WIDGET_BIG:get_children_by_id('desc')[1]:set_markup(        'ℹ️\t' .. string.upper(Desc))
+    WEATHER_WIDGET_BIG:get_children_by_id('wind_cond')[1]:set_markup(   '💨\tViento:\t\t'   ..  Win .. ' km/h')
+    WEATHER_WIDGET_BIG:get_children_by_id('sunrise')[1]:set_markup(     '🌄\tAmanece:\t'    ..  os.date('%H:%M',sunrise_unix))
+    WEATHER_WIDGET_BIG:get_children_by_id('sunset')[1]:set_markup(      '🌇\tAtardece:\t\t' ..  os.date('%H:%M',sunset_unix))
 
     if Deg <= 10 then
         widget:get_children_by_id('deg')[1]:set_markup( '<span fgcolor="' .. beautiful.temp_cold .. '"> ' .. Deg .. ' °C</span>')
@@ -184,7 +210,7 @@ awful.screen.connect_for_each_screen(function(s)
         position    =   'left',
         screen      =   primary,
         width       =   screen_width * 0.085,
-        height      =   screen_height * 0.12,
+        height      =   screen_height * 0.15,
         bg          =   '#0000',
         --shape       =   bar_wdt_shape
     }
