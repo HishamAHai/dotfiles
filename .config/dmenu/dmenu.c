@@ -59,7 +59,7 @@ static size_t cursor;
 static struct item *items = NULL;
 static struct item *matches, *matchend;
 static struct item *prev, *curr, *next, *sel;
-static int mon = -1, screen;
+static int mon = 0, screen; /* mon = -1 to follow the mouse, mon = 0 to place the menu always on the primary monitor */
 
 static Atom clip, utf8;
 static Display *dpy;

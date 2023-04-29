@@ -12,7 +12,7 @@ static int fuzzy = 1;                      /* -F  option; if 0, dmenu doesn't us
 /* -fn option overrides fonts[0]; default X11 font or font set */
 static const char *fonts[] = {
 	"FantasqueSansMono Nerd Font:size=12",
-    "Noto Color Emoji:size=11:antialias=true:hinting=true"
+    "Noto Color Emoji:size=18:antialias=true:hinting=true"
 };
 static const char *prompt      = NULL;      /* -p  option; prompt to the left of input field */
 
@@ -27,7 +27,7 @@ static const unsigned int alphas[SchemeLast][2] = {
 };
 /* -l and -g options; controls number of lines and columns in grid if > 0 */
 static unsigned int lines      = 0;
-static unsigned int columns    = 0;
+static unsigned int columns    = 1;
 /* -h option; minimum height of a menu line */
 static unsigned int lineheight = 40;
 static unsigned int min_lineheight = 8;

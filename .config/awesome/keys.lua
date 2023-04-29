@@ -107,6 +107,23 @@ globalkeys = gears.table.join(
     awful.key({ modkey, 'Shift'  }, 'space',    function () awful.layout.inc(-1)                end,
               {description = 'select previous',                         group = 'layout'}),
 
+-- Move/Resize a flaoting client in a given direction
+    awful.key({ modkey, 'Control' }, 'j', function() client.focus:relative_move(0,10,0,0) end,
+              {description = 'Move the window upwards ', group = 'client'}),
+    awful.key({ modkey, 'Control' }, 'k', function() client.focus:relative_move(0,-10,0,0) end,
+              {description = 'Move the window downwards ', group = 'client'}),
+    awful.key({ modkey, 'Control' }, 'h', function() client.focus:relative_move(-10,0,0,0) end,
+              {description = 'Move the window to the left ', group = 'client'}),
+    awful.key({ modkey, 'Control' }, 'l', function() client.focus:relative_move(10,0,0,0) end,
+              {description = 'Move the window to the right ', group = 'client'}),
+    awful.key({ modkey, 'Control', 'Shift' }, 'l', function() client.focus:relative_move(0,0,10,0) end,
+              {description = 'Increase window width ', group = 'client'}),
+    awful.key({ modkey, 'Control', 'Shift' }, 'h', function() client.focus:relative_move(0,0,-10,0) end,
+              {description = 'Decrease window width ', group = 'client'}),
+    awful.key({ modkey, 'Control', 'Shift' }, 'k', function() client.focus:relative_move(0,0,0,-10) end,
+              {description = 'Decrease window height ', group = 'client'}),
+    awful.key({ modkey, 'Control', 'Shift' }, 'j', function() client.focus:relative_move(0,0,0,10) end,
+              {description = 'Increase window height ', group = 'client'}),
     awful.key({ modkey           }, 'y',        awful.placement.centered ,
               {description = 'centering client',        group = 'layout'}),
 
@@ -160,7 +177,7 @@ globalkeys = gears.table.join(
     awful.key({ modkey,           }, 'e', function () awful.spawn('emacsclient -c') end,
               {description = 'Run a new instance of emacs client', group = 'launcher'}),
 
-    awful.key({ modkey,           }, 'c', function () awful.spawn('com.brave.Browser') end,
+    awful.key({ modkey,           }, 'c', function () awful.spawn('firefox.sh') end,
               {description = 'Navigate the web with chromium', group = 'launcher'}),
 
     awful.key({ modkey,           }, 'q', function () awful.spawn('qutebrowser') end,
@@ -209,12 +226,15 @@ awful.key({ modkey, 'Shift' }, 'u', function () awful.spawn.with_shell('kill -9 
     -- ================= Hotkeys (using multimedia keys) ===========================
     
 awful.key({}, 'XF86AudioRaiseVolume', volume_widget.raise,
+--awful.key({}, 'XF86AudioRaiseVolume', function() awful.spawn('wpctl set-volume @DEFAULT_AUDIO_SINK@ 5%+') end ,
  {description = "Volume increase", group = "hotkeys"}),
 
 awful.key({},'XF86AudioLowerVolume', volume_widget.lower,
+--awful.key({}, 'XF86AudioLowerVolume', function() awful.spawn('wpctl set-volume @DEFAULT_AUDIO_SINK@ 5%-') end,
  {description = "Volume decrease", group = "hotkeys"}),
 
 awful.key({},'XF86AudioMute', volume_widget.toggle,
+--awful.key({}, 'XF86AudioMute', function() awful.spawn('wpctl set-mute @DEFAULT_AUDIO_SINK@ toggle') end,
  {description = "Volume mute", group = "hotkeys"}),
 
 --awful.key({altkey}, 'x', volume_widget.raise,
@@ -282,7 +302,7 @@ awful.key({}, 'XF86MonBrightnessUp', function () brightness_widget:inc() end, {d
     awful.key({ raltkey }, '4', function () awful.spawn.with_shell('nordvpn.sh') end,
               {description = 'dmenu script to switch the vpn', group = 'dmenu'}),
 
-    awful.key({ raltkey }, '5', function () awful.spawn.with_shell('dmenu_emoji.sh') end,
+    awful.key({ raltkey }, '5', function () awful.spawn.with_shell('emojis.sh') end,
               {description = 'dmenu script to select an emoji', group = 'dmenu'}),
 
     awful.key({ raltkey }, '6', function () awful.spawn.with_shell('configs.sh') end,
@@ -306,8 +326,7 @@ awful.key({}, 'XF86MonBrightnessUp', function () brightness_widget:inc() end, {d
 --    awful.key({ 'Control' }, 'p', function () awful.spawn.with_shell('passmenu') end,
 --              {description = 'spawn pass program', group = 'dmenu'}),
 
-    awful.key({ raltkey }, 'Escape', function()
-        awful.spawn.with_shell('dmenu_shutdown.sh') end,
+    awful.key({ raltkey }, 'Escape', function() awful.spawn.with_shell('shutdown.sh') end,
         {description = 'Power options', group = 'dmenu'}),
 
     -- Increase number of clients in master

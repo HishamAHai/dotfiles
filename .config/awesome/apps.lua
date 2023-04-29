@@ -5,7 +5,7 @@ local apps = {
 	editor	= os.getenv('EDITOR') or 'nvim',
 	fmanager = 'pcmanfm',
 	geditor	= 'geany',
-	launcher = 'dmenu_run -i -p "Run:"',
+	launcher = 'dmenu_run -i -l 5 -g 10 -p "Run:"',
 	rofi = 'rofi -show drun',
 	lock	= 'i3lock',
 	mplayer	= 'spotify',
@@ -14,7 +14,7 @@ local apps = {
 	vplayer	= 'mpv',
 	vector	= 'inkscape',
 	ssh	= 'filezilla',
-	wallpaper = 'nsxiv -tor /mnt/SSD/Pictures/*'
+	wallpaper = 'nsxiv -tor /mnt/ssd/Pictures/*'
 }
 local function run_once(cmd)
     local findme = cmd

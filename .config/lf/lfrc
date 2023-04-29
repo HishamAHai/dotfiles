@@ -34,14 +34,15 @@ map X !$f
 
 # go to directory
 map ga cd /mnt/videos
-map gD cd /mnt/SSD/DavinciTemporal
-map gm cd /mnt/MULTIMEDIA/MOVIES
-map gs cd /mnt/MULTIMEDIA/SERIES
+map gD cd /mnt/ssd/DavinciTemporal
+map gm cd /mnt/multimedia/movies
+map gn cd /mnt/nasbkup
+map gs cd /mnt/multimedia/series
 map gc cd ~/.config
 map gd cd ~/Downloads
-map gi cd /mnt/DATA/ISOs
+map gi cd /mnt/data/ISOs
 map gv cd ~/Videos
-map gy cd /mnt/DATA/YouTubeChannel
+map gy cd /mnt/data/YouTubeChannel
 
 # dedicated keys for file opener actions
 map o $mimeopen $f

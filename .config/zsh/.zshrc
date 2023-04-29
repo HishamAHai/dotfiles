@@ -1,12 +1,12 @@
-# Prompt
-preexec() {
-    cmd_start="$SECONDS"
-}
-precmd() {
-  local cmd_end="$SECONDS"
-  elapsed=$((cmd_end-cmd_start))
-  PS1="%F{magenta}%n%f%F{green}@%f%F{blue}%m%f%F{yellow}[took $elapsed%ss]%f%K{red}$(gitstatus -i)%k%F{red}%(3~|%-1~/…/%2~|%3~)%f "
-}
+## Prompt
+#preexec() {
+#    cmd_start="$SECONDS"
+#}
+#precmd() {
+#  local cmd_end="$SECONDS"
+#  elapsed=$((cmd_end-cmd_start))
+#  PS1="%F{magenta}%n%f%F{green}@%f%F{blue}%m%f%F{yellow}[took $elapsed%ss]%f%K{red}$(gitstatus -i)%k%F{red}%(3~|%-1~/…/%2~|%3~)%f "
+#}
 
 setopt autocd # Automaticaly cd into typed directory.
 
@@ -98,6 +98,9 @@ source $HOME/.config/zsh/gitstatus/gitstatus.plugin.zsh
 
 # zoxide
 eval "$(zoxide init zsh)"
+
+#startship
+eval "$(starship init zsh)"
 
 # mcfly
 #eval "$(mcfly init zsh)"

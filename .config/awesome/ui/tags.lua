@@ -78,7 +78,7 @@ awful.screen.connect_for_each_screen(function(s)
 			gap			        = 6,
 			}
 		)
-    elseif s.index == 3 then
+    elseif s.index == 2 then
     awful.tag({ "VOYAGER", "CASE", "BB-8", "T-800" }, s, awful.layout.suit.tile)
     else
     awful.tag.add('',{

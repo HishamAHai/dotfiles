@@ -49,7 +49,7 @@ naughty.config.presets.low = {
 naughty.config.presets.critical = {
    fg = '#ffffff',
    bg = '#ff0000',
-   timeout = 0
+   timeout = 10
 }
 
 naughty.config.presets.ok = naughty.config.presets.normal

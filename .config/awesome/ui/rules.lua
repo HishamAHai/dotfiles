@@ -38,7 +38,7 @@ awful.rules.rules = {
                 'slickpicker', 'Psensor', 'org.kde.fancontrol.gui', 'Nextcloud',
                 'Galculator','pavucontrol-qt','Nvidia-settings', 'Gddccontrol',
                 'SimpleScreenRecorder', 'Solaar', 'corectrl', 'openrgb', 'Fsearch',
-                'helvum', 'smile', 
+                'helvum', 'smile', 'livecaptions',
             },
         role = {
             'GtkFileChooserDialog', 'pop-up'
@@ -135,7 +135,7 @@ awful.rules.rules = {
         },
     },
     properties = {
-        screen = 3,
+        screen = 2,
     }
 },
 
@@ -159,7 +159,7 @@ awful.rules.rules = {
     properties = {
         --titlebars_enabled = true,
         tag = screen[1].tags[3],
-        floating = true,
+        floating = false,
         switchtotag = true
     }
 },
@@ -197,7 +197,7 @@ awful.rules.rules = {
         }
     },
     properties = {
-        screen = 2,
+        screen = 3,
     }
 },
 

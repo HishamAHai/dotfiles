@@ -8,7 +8,7 @@ convertmin() {
 }
 
 # Movies are stored in /media/MOVIES
-root=/mnt/MULTIMEDIA/MOVIES
+root=/mnt/multimedia/movies
 
 # Each movie is stored in its directory with all associated files
 # So make a recursive list of all the children directories and select a random video file

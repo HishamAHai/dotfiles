@@ -167,7 +167,7 @@ end
 
     widget:get_children_by_id('icon')[1]:set_image(Image)
     widget:get_children_by_id('Heading_widget')[1]:set_markup(Heading ..
-    'الوقت المتبقي:\t\t<span fgcolor="' .. beautiful.fg_occupied .. '">'.. Remain .. '</span>')
+    'الوقت المتبقي:\t\t<span fgcolor="' .. beautiful.color3 .. '">'.. Remain .. '</span>')
     for i=1,6 do
         widget:get_children_by_id(Prayer_id[i])[1]:set_markup(Texts[i])
     end
@@ -295,7 +295,7 @@ Prayers_widget = wibox.widget {
     widget = wibox.container.margin
 }
 
-CAT_CMD = [[bash -c 'cat /mnt/NASBKUP/prayers.json']]
+CAT_CMD = [[bash -c 'cat /mnt/nasbkup/prayers.json']]
 watch(CAT_CMD, timeout, update_widget, Prayers_widget)
 
 awful.screen.connect_for_each_screen(function(s)

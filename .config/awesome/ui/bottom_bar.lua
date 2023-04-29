@@ -39,6 +39,7 @@ awful.screen.connect_for_each_screen(function(s)
     {
         position    =   'bottom',
         screen      =   s,
+        visible     =   true,
         height      =   awful.screen.focused().geometry.height * 0.02,
         width       =   awful.screen.focused().geometry.width * 1.0,
         bg          =   '#0000',
@@ -50,9 +51,9 @@ awful.screen.connect_for_each_screen(function(s)
     )
 -- ========================= Widgets and bars placement =======================
     s.WEATHER_WIDGET.x  =   screen_width    * 0.913
-    s.WEATHER_WIDGET.y  =   screen_height   * 0.03
+    s.WEATHER_WIDGET.y  =   screen_height   * 0.04
     s.quotes.x          =   screen_width    * 0.913
-    s.quotes.y          =   screen_height   * 0.16
+    s.quotes.y          =   screen_height   * 0.193
     s.Prayers_widget.x  =   screen_width    * 0.913
     s.Prayers_widget.y  =   screen_height   * 0.73
 -- ======================== Not in use currently ==============================
@@ -132,7 +133,7 @@ awful.screen.connect_for_each_screen(function(s)
                         cpu_temp_widget, separator,
                         kernel_wdt, separator,
                         layoutbox, separator,
-                        round_systry,
+                        wibox.widget.systray(),
                     },
                     shape = Wdt_shape,
                     bg = Wdt_bg,

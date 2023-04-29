@@ -36,17 +36,6 @@ end
 function volume:lower()
     volume:_cmd('amixer ' .. volume.device .. ' sset Master ' .. tostring(volume.delta) .. '%-')
 end
---
---function volume:toggle()
---    volume:_cmd('pamixer -t')
---end
---
---function volume:raise()
---    volume:_cmd('pamixer ' .. ' -i ' .. tostring(volume.delta))
---end
---function volume:lower()
---    volume:_cmd('pamixer ' .. ' -d ' .. tostring(volume.delta))
---end
 
 --{{{ Icon and notification update
 
@@ -191,3 +180,4 @@ local function worker(user_args)
 end
 
 return setmetatable(volume, { __call = function(_, ...) return worker(...) end })
+

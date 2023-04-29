@@ -25,7 +25,7 @@ local top_bar = {}
 local screen_width = awful.screen.focused().geometry.width
 
 awful.screen.connect_for_each_screen(function(s)
-    if s.index == 2 then
+    if s.index == 3 then
         s.top_bar = awful.wibar(
         {
             position = 'top',
@@ -70,7 +70,7 @@ awful.screen.connect_for_each_screen(function(s)
         shape = bar_wdt_shape,
         bg = beautiful.bg_normal
     }
-elseif s.index == 3 then
+elseif s.index == 2 then
         s.top_bar = awful.wibar(
         {
             position    =   'left',
@@ -131,6 +131,7 @@ elseif s.index == 3 then
     {
         position = 'top',
         screen = s ,
+        visible = true,
         height = awful.screen.focused().geometry.height * 0.02,
         width = awful.screen.focused().geometry.width * 1.0,
         bg  =   '#0000',

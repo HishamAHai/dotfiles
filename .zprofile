@@ -8,6 +8,7 @@ export XDG_STATE_HOME="$HOME/.local/state"
 export XDG_DATA_DIRS="/usr/local/share:/usr/share:/var/lib/flatpak/exports/share:$HOME/.local/share/flatpak/exports/share"
 export XDG_CONFIG_DIRES="/etc/xdg"
 export ZDOTDIR=$HOME/.config/zsh
+export STARSHIP_CONFIG=~/.config/starship/starship.toml
 #
 ## Applications
 export BASH_COMPLETION_USER_FILE="$XDG_CONFIG_HOME"/bash-completion/bash_completion
@@ -36,25 +37,27 @@ export _JAVA_OPTIONS=-Djava.util.prefs.userRoot="$XDG_CONFIG_HOME"/java
 export INPUTRC="$XDG_CONFIG_HOME"/readline/inputrc
 
 #Add .local/bin to the environment variables path
-export PATH=$HOME/.local/bin:$HOME/.local/share/flatpak/exports/bin:/var/lib/flatpak/exports/bin:$HOME/Applications:$PATH
+export PATH=$HOME/.local/bin:$HOME/.local/share/flatpak/exports/bin:/var/lib/flatpak/exports/bin:$HOME/Applications:/opt/resolve/bin:$PATH
 
 # Unify the gtk and qt5 themes
 export QT_QPA_PLATFORMTHEME="qt6ct"
 #export QT_STYLE_OVERRIDE=kvantum
-export QT_SCALE_FACTOR=1.1
+export QT_SCALE_FACTOR=1
 export QT_AUTO_SCREEN_SCALE_FACTOR=0
 
 # Default applications
-#export BROWSER="chromium-freeworld --force-dark-mode --enable-features=WebUIDarkMode"
-export WM="awesome"
+#export WM="awesome"
 export EDITOR="nvim"
 export TERMINAL="kitty"
 export IMAGE="sxiv"
 export VIDEO="mpv"
 
 export MOZ_GTK_TITLEBAR_DECORATION=client
+if [ "$XDG_SESSION_TYPE" = "wayland" ]; then
+    export MOZ_ENABLE_WAYLAND=1
+fi
 
-## Autostart useful programs
+# Autostart useful programs
 dbus-update-activation-environment --systemd DBUS_SESSION_BUS_ADDRESS DISPLAY XAUTHORITY &
 xrdb merge ~/.Xresources &
 /usr/lib/polkit-gnome/polkit-gnome-authentication-agent-1 &
@@ -63,8 +66,8 @@ picom &
 solaar -w hide &
 flameshot &
 udiskie --tray &
-com.nextcloud.desktopclient.nextcloud &
-###tint2 &
+nextcloud &
+#tint2 &
 ~/.local/bin/wacomConfig.sh &
-#emacs --daemon &
-##exec awesome
+emacs --daemon &
+#exec awesome

@@ -1,9 +1,14 @@
 #!/bin/sh
 
-# The famous "get a menu of emojis to copy" script.
-
+if [[ "$XDG_SESSION_TYPE" == "wayland" ]]; then
+    menu="fuzzel -d -l 30 -w 15 -p Emoji"
+    copy="wl-copy --primary"
+else
+    menu="dmenu -p "Emoji:" -i -bw 2 -x 960 -y 48 -z 1920 -l 15 -g 5"
+    copy="xclip -selection clipboard"
+fi
 # Get user selection via dmenu from emoji file.
-chosen=$(cut -d ';' -f1 ~/.local/share/emojis | dmenu -p "Emoji:" -i -bw 2 -x 960 -y 2 -z 1920 -l 15 -g 5 | sed 's/ .*//')
+chosen=$(cat ~/.local/share/emojis | $menu | sed 's/ .*//')
 
 # Exit if none chosen.
 [ -z "$chosen" ] && exit
@@ -13,6 +18,6 @@ chosen=$(cut -d ';' -f1 ~/.local/share/emojis | dmenu -p "Emoji:" -i -bw 2 -x 96
 if [ -n "$1" ]; then
 	xdotool type "$chosen"
 else
-	echo "$chosen" | tr -d '\n' | xclip -selection clipboard
+	echo "$chosen" | tr -d '\n' | $copy
 	notify-send "'$chosen' copied to clipboard." &
 fi
