@@ -113,7 +113,7 @@ WEATHER_WIDGET_BIG = wibox.widget {
                 {
                     {
                         id = 'desc',
-                        font = 'Red Hat Display 14',
+                        font = 'Red Hat Display 13',
                         halign = 'left',
                         widget = wibox.widget.textbox
                     },
@@ -123,7 +123,7 @@ WEATHER_WIDGET_BIG = wibox.widget {
                 {
                     {
                         id = 'wind_cond',
-                        font = 'Red Hat Display 13',
+                        font = 'Red Hat Display 14',
                         halign = 'left',
                         widget = wibox.widget.textbox
                     },
@@ -185,10 +185,10 @@ local function update_widget(widget,stdout)
     datewidget:get_children_by_id('icon')[1]:set_image(clock_icon .. os.date('%H') .. icons_ext)
 
     WEATHER_WIDGET_BIG:get_children_by_id('icon')[1]:set_image(         icons_dir .. Icon .. icons_ext)
-    WEATHER_WIDGET_BIG:get_children_by_id('desc')[1]:set_markup(        'ℹ️\t' .. string.upper(Desc))
-    WEATHER_WIDGET_BIG:get_children_by_id('wind_cond')[1]:set_markup(   '💨\tViento:\t\t'   ..  Win .. ' km/h')
-    WEATHER_WIDGET_BIG:get_children_by_id('sunrise')[1]:set_markup(     '🌄\tAmanece:\t'    ..  os.date('%H:%M',sunrise_unix))
-    WEATHER_WIDGET_BIG:get_children_by_id('sunset')[1]:set_markup(      '🌇\tAtardece:\t\t' ..  os.date('%H:%M',sunset_unix))
+    WEATHER_WIDGET_BIG:get_children_by_id('desc')[1]:set_markup(        'ℹ️\t' .. Desc)
+    WEATHER_WIDGET_BIG:get_children_by_id('wind_cond')[1]:set_markup(   '💨\tViento:\t'      ..  Win .. ' km/h')
+    WEATHER_WIDGET_BIG:get_children_by_id('sunrise')[1]:set_markup(     '🌄\tAmanecer:\t'    ..  os.date('%H:%M',sunrise_unix))
+    WEATHER_WIDGET_BIG:get_children_by_id('sunset')[1]:set_markup(      '🌇\tAtardecer:\t' ..  os.date('%H:%M',sunset_unix))
 
     if Deg <= 10 then
         widget:get_children_by_id('deg')[1]:set_markup( '<span fgcolor="' .. beautiful.temp_cold .. '"> ' .. Deg .. ' °C</span>')
