@@ -20,7 +20,7 @@ if [[ ! -z $selected ]]; then
             Suspend) systemctl suspend ;;
             Logout) sudo killall Xorg ;;
             Reboot) systemctl reboot ;;
-            Shudown) shutdown -h now ;;
+            Shutdown) shutdown -h now ;;
             Firmware) systemctl reboot --firmware-setup ;;
         esac
     fi

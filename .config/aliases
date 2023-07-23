@@ -12,6 +12,7 @@ alias ls="exa -lag --color=always --group-directories-first --icons --color-scal
 #alias ls="lsd -lAh"
 alias diff="diff --color=always"
 alias v="nvim"
+alias rsync="rsync -rlpgto -h M --progress"
 #alias w="curl -H 'Accept-Language: es' wttr.in/bariloche"
 alias grep="grep --color=always"
 alias du="dust -r"
@@ -68,7 +69,7 @@ alias ga="gphoto2 -f /store_00010001/DCIM/101D7100 -L"
 alias gr="gphoto2 -f /store_00010001/DCIM/101D7100 -D"
 
 # lf with preivews
-alias lf="$HOME/.local/bin/lfpreview"
+#alias lf="$HOME/.local/bin/lfpreview"
 # simplify aria2 downloader
 alias ar="aria2c"
 

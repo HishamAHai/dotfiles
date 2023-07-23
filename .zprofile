@@ -3,13 +3,13 @@ export XDG_CONFIG_HOME="$HOME/.config"
 export XDG_CACHE_HOME="$HOME/.cache"
 export XDG_DATA_HOME="$HOME/.local/share"
 export XDG_STATE_HOME="$HOME/.local/state"
-#
+
 ##System directories
 export XDG_DATA_DIRS="/usr/local/share:/usr/share:/var/lib/flatpak/exports/share:$HOME/.local/share/flatpak/exports/share"
 export XDG_CONFIG_DIRES="/etc/xdg"
 export ZDOTDIR=$HOME/.config/zsh
 export STARSHIP_CONFIG=~/.config/starship/starship.toml
-#
+
 ## Applications
 export BASH_COMPLETION_USER_FILE="$XDG_CONFIG_HOME"/bash-completion/bash_completion
 export BUNDLE_USER_CONFIG="$XDG_CONFIG_HOME"/bundle
@@ -42,7 +42,7 @@ export PATH=$HOME/.local/bin:$HOME/.local/share/flatpak/exports/bin:/var/lib/fla
 # Unify the gtk and qt5 themes
 export QT_QPA_PLATFORMTHEME="qt6ct"
 #export QT_STYLE_OVERRIDE=kvantum
-export QT_SCALE_FACTOR=1
+export QT_SCALE_FACTOR=1.25
 export QT_AUTO_SCREEN_SCALE_FACTOR=0
 
 # Default applications
@@ -52,7 +52,12 @@ export TERMINAL="kitty"
 export IMAGE="sxiv"
 export VIDEO="mpv"
 
+# nvidia specific EV
+export NVD_BACKEND="direct"
+export LIBVA_DRIVER_NAME="nvidia"
+
 export MOZ_GTK_TITLEBAR_DECORATION=client
+export MOZ_X11_EGL=1
 if [ "$XDG_SESSION_TYPE" = "wayland" ]; then
     export MOZ_ENABLE_WAYLAND=1
 fi
@@ -63,11 +68,12 @@ xrdb merge ~/.Xresources &
 /usr/lib/polkit-gnome/polkit-gnome-authentication-agent-1 &
 picom &
 ~/.fehbg &
+nm-applet &
 solaar -w hide &
-flameshot &
+#flameshot &
+copyq &
 udiskie --tray &
-nextcloud &
+#nextcloud &
 #tint2 &
 ~/.local/bin/wacomConfig.sh &
 emacs --daemon &
-#exec awesome

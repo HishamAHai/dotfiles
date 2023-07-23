@@ -131,7 +131,7 @@ cmd paste &{{
     shift
     case "$mode" in
         copy)
-            rsync -av --ignore-existing --progress -- "$@" . |
+            rsync -av --ignore-existing -h M --progress -- "$@" . |
             stdbuf -i0 -o0 -e0 tr '\r' '\n' |
             while IFS= read -r line; do
                 lf -remote "send $id echo $line"

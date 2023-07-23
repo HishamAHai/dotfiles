@@ -1,6 +1,6 @@
 Xft.dpi:       144
-Xcursor.theme: Adwaita
-Xcursor.size:  32
+Xcursor.theme: macOS-Monterey
+Xcursor.size:  40
 Xft.antialias: 1
 Xft.hinting:   1
 Xft.autohint:  1
