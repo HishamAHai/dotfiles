@@ -18,6 +18,7 @@ for line in io.lines(colorschemes_dir .. 'Material_Dark' .. '.conf') do
     table.insert(ColorScheme, line)
 end
 
+theme.color1                      =   ColorScheme[2]
 theme.color2                      =   ColorScheme[7]
 theme.color3                      =   ColorScheme[9]
 theme.color4                      =   ColorScheme[11]
@@ -29,23 +30,21 @@ theme.color11                     =   ColorScheme[10]
 theme.color12                     =   ColorScheme[12]
 theme.color13                     =   ColorScheme[14]
 theme.color14                     =   ColorScheme[16]
+theme.color15                     =   ColorScheme[1]
 
-theme.bg_normal             =   ColorScheme[1] .. 'c0'
+theme.bg_normal             =   theme.color15 .. 'c0'
 theme.fg_normal             =   ColorScheme[2]
 theme.bg_empty              =   ColorScheme[18] .. '2f'
 theme.fg_urgent             =   ColorScheme[5]
 theme.fg_occupied           =   ColorScheme[14]
-theme.taglist_fg_occupied   =   ColorScheme[7]
-theme.taglist_bg_occupied   =   nil
-theme.taglist_bg_empty      =   nil
-theme.taglist_bg_focus      =   theme.fg_occupied
 theme.bg_systray            =   theme.bg_normal
 
 -- Border colors
 theme.useless_gap           =   dpi(2)
-theme.border_width          =   dpi(1)
+theme.border_width          =   dpi(2)
 theme.border_normal         =   theme.bg_normal
-theme.border_focus          =   theme.fg_occupied
+--theme.border_focus          =   theme.fg_occupied
+theme.border_focus          =   '#abd1f3'
 
 -- tooltip
 theme.tooltip_border_color  =   theme.border_focus
@@ -73,8 +72,6 @@ theme.hotkeys_description_font	=	theme.font
 theme.hotkeys_shape             =   function(cr, width, height) gears.shape.rounded_rect(cr, width, height, awful.screen.focused().geometry.width * 0.004) end
 
 -- tasklist
-theme.tasklist_fg_focus         =   theme.fg_normal
-theme.tasklist_bg_focus         =   ColorScheme[14] .. '7a'
 theme.tasklist_fg_normal        =   theme.bg_empty
 theme.tasklist_bg_normal        =   ColorScheme[18] .. '1a'
 theme.tasklist_disable_icon     =   false

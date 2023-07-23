@@ -42,7 +42,7 @@ WEATHER_WIDGET_DESC = wibox.widget {
                 resize = true,
                 widget = wibox.widget.imagebox
             },
-            margins = screen_width * 0.0005,
+            margins = screen_width * 0.0012,
             widget = wibox.container.margin
         },
         align = 'center',

@@ -38,7 +38,7 @@ awful.rules.rules = {
                 'slickpicker', 'Psensor', 'org.kde.fancontrol.gui', 'Nextcloud',
                 'Galculator','pavucontrol-qt','Nvidia-settings', 'Gddccontrol',
                 'SimpleScreenRecorder', 'Solaar', 'corectrl', 'openrgb', 'Fsearch',
-                'helvum', 'smile', 'livecaptions',
+                'helvum', 'smile', 'livecaptions', 'scrcpy',
             },
         role = {
             'GtkFileChooserDialog', 'pop-up'
@@ -265,7 +265,7 @@ end)
 
 -- Enable borders for focused windows
 client.connect_signal('focus', function(c)
-            if not awful.rules.match_any(c, {class = {'mpv', 'Nsxiv', 'Vlc', 'resolve', 'Blender', 'Double Commander'}}) then
+            if not awful.rules.match_any(c, {class = {'mpv', 'scrcpy', 'Nsxiv', 'Vlc', 'resolve', 'Blender', 'Double Commander'}}) then
                 c.border_width = beautiful.border_width
                 c.border_color = beautiful.border_focus
             end

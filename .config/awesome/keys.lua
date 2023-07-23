@@ -168,8 +168,10 @@ globalkeys = gears.table.join(
 
     awful.key({ modkey, altkey}, 'p', function () awesome.emit_signal("scratch::pulse") end,
               {description = 'Launch pulsemixer', group = 'hotkeys'}),
-    awful.key({ modkey            }, 'f',     function () awesome.emit_signal("scratch::lf") end,
-              {description = 'open lf with previews', group = 'launcher'}),
+    --awful.key({ modkey            }, 'f',     function () awesome.emit_signal("scratch::lf") end,
+    --          {description = 'open lf with previews', group = 'launcher'}),
+    awful.key({ modkey            }, 'f',     function () awful.spawn(apps.fmanager) end,
+              {description = 'open file manager', group = 'launcher'}),
 
     awful.key({modkey,     'Shift'}, 'a',function () awful.spawn('alacritty') end,
               {description = 'open alacritty terminal', group = 'launcher'}),
