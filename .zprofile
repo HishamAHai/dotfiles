@@ -42,9 +42,10 @@ export PATH=$HOME/.local/bin:$HOME/.local/share/flatpak/exports/bin:/var/lib/fla
 # Unify the gtk and qt5 themes
 export QT_QPA_PLATFORMTHEME="qt6ct"
 #export QT_STYLE_OVERRIDE=kvantum
-export QT_SCALE_FACTOR=1.25
+#export QT_SCALE_FACTOR=1.25
 export QT_AUTO_SCREEN_SCALE_FACTOR=0
-
+export QT_ENABLE_HIGHDPI_SCALING=1
+#export QT_QPA_PLATFORM=xcb 
 # Default applications
 #export WM="awesome"
 export EDITOR="nvim"
@@ -61,19 +62,3 @@ export MOZ_X11_EGL=1
 if [ "$XDG_SESSION_TYPE" = "wayland" ]; then
     export MOZ_ENABLE_WAYLAND=1
 fi
-
-# Autostart useful programs
-dbus-update-activation-environment --systemd DBUS_SESSION_BUS_ADDRESS DISPLAY XAUTHORITY &
-xrdb merge ~/.Xresources &
-/usr/lib/polkit-gnome/polkit-gnome-authentication-agent-1 &
-picom &
-~/.fehbg &
-nm-applet &
-solaar -w hide &
-#flameshot &
-copyq &
-udiskie --tray &
-#nextcloud &
-#tint2 &
-~/.local/bin/wacomConfig.sh &
-emacs --daemon &
