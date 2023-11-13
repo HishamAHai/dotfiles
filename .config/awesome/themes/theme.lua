@@ -32,9 +32,10 @@ theme.color13                     =   ColorScheme[14]
 theme.color14                     =   ColorScheme[16]
 theme.color15                     =   ColorScheme[1]
 
-theme.bg_normal             =   theme.color15 .. 'c0'
+theme.bg_normal             =   theme.color15 --.. 'c0'
 theme.fg_normal             =   ColorScheme[2]
-theme.bg_empty              =   ColorScheme[18] .. '2f'
+--theme.bg_empty              =   ColorScheme[18] --.. '2f'
+theme.bg_empty              =   ColorScheme[4] --.. '2f'
 theme.fg_urgent             =   ColorScheme[5]
 theme.fg_occupied           =   ColorScheme[14]
 theme.bg_systray            =   theme.bg_normal
@@ -43,8 +44,8 @@ theme.bg_systray            =   theme.bg_normal
 theme.useless_gap           =   dpi(2)
 theme.border_width          =   dpi(2)
 theme.border_normal         =   theme.bg_normal
---theme.border_focus          =   theme.fg_occupied
-theme.border_focus          =   '#abd1f3'
+theme.border_focus          =   theme.fg_occupied
+--theme.border_focus          =   '#abd1f3'
 
 -- tooltip
 theme.tooltip_border_color  =   theme.border_focus
@@ -73,12 +74,13 @@ theme.hotkeys_shape             =   function(cr, width, height) gears.shape.roun
 
 -- tasklist
 theme.tasklist_fg_normal        =   theme.bg_empty
-theme.tasklist_bg_normal        =   ColorScheme[18] .. '1a'
+--theme.tasklist_bg_normal        =   ColorScheme[18] --.. '1a'
+theme.tasklist_bg_normal        =   ColorScheme[4] --.. '1a'
 theme.tasklist_disable_icon     =   false
 theme.tasklist_plain_task_name  =   false
 theme.tasklist_font             =   theme.font
 theme.tasklist_align            =   'center'
-theme.icon_theme                =   '/usr/share/icons/Papirus-Dark/48x48/'
+theme.icon_theme                =   '/home/hisham/.local/share/icons/Reversal-red'
 
 theme.layout_fairh      = Themes_path..'layouts/fairhw.png'
 theme.layout_fairv      = Themes_path..'layouts/fairvw.png'

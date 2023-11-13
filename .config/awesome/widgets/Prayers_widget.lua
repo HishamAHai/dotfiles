@@ -122,10 +122,10 @@ corners = function(cr, width, height)
 
         Texts = {}
         for i=1,6 do
-            table.insert(Texts, ' ❂   ' .. Prayer_names[i] .. '\t\t\t' .. Times[i]     .. '   ❂ ')
+            table.insert(Texts, '❂  ' .. Prayer_names[i] .. '\t\t' .. Times[i]     .. ' ❂')
             widget:get_children_by_id(Prayer_bg_id[i])[1]:set_bg(beautiful.bg_empty)
             widget:get_children_by_id(Prayer_bg_id[i])[1]:set_shape(corners)
-            widget:get_children_by_id(Prayer_id[i])[1]:set_font('11')
+            widget:get_children_by_id(Prayer_id[i])[1]:set_font('Readex Pro 11')
         end
 
         if Current_time >= Times[1] and Current_time < Times[6] then
@@ -197,7 +197,7 @@ corners = function(cr, width, height)
             {
                 {
                     id      =   'Heading_widget',
-                    font    =   '11',
+                    font    =   'Readex Pro 11',
                     widget  =   wibox.widget.textbox
                 },
                 top = screen_width * 0.0020,

@@ -14,7 +14,7 @@ local spawn = require("awful.spawn")
 local naughty = require("naughty")
 local gfs = require("gears.filesystem")
 
-local PATH_TO_ICONS = "/usr/share/icons/Papirus/48x48/status/"
+local PATH_TO_ICONS = "/home/hisham/.local/share/icons/Reversal-red/status"
 local volume_icon_name="notification-audio-volume-high"
 local GET_VOLUME_CMD = 'amixer sget Master'
 

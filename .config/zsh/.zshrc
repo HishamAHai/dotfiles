@@ -8,8 +8,8 @@
 #  PS1="%F{magenta}%n%f%F{green}@%f%F{blue}%m%f%F{yellow}[took $elapsed%ss]%f%K{red}$(gitstatus -i)%k%F{red}%(3~|%-1~/…/%2~|%3~)%f "
 #}
 
-setopt autocd # Automaticaly cd into typed directory.
-
+#setopt autocd # Automaticaly cd into typed directory.
+#
 # Colored man pages
 function man() {
 	env \
@@ -27,14 +27,14 @@ function man() {
 
 # The following lines were added by compinstall
 zstyle ':completion:*' completer _menu _expand _complete _correct _approximate
-zstyle ':completion:*' completions 0
-zstyle ':completion:*' glob 0
+zstyle ':completion:*' completions 1
+zstyle ':completion:*' glob 1
 zstyle ':completion:*' matcher-list 'm:{[:lower:][:upper:]}={[:upper:][:lower:]}' 'm:{[:lower:][:upper:]}={[:upper:][:lower:]}' 'm:{[:lower:][:upper:]}={[:upper:][:lower:]}' 'm:{[:lower:][:upper:]}={[:upper:][:lower:]}'
 zstyle ':completion:*' max-errors 10
 zstyle ':completion:*' special-dirs true
 zstyle ':completion:*' substitute 1
 zstyle :compinstall filename '/home/hisham/.config/zsh/.zshrc'
-
+#
 autoload -Uz compinit
 compinit
 # End of lines added by compinstall
@@ -55,7 +55,7 @@ setopt EXTENDED_HISTORY
 setopt HIST_FIND_NO_DUPS
 
 # Set the machine hostname
-HOSTNAME=$HOST
+#HOSTNAME=$HOST
 
 # Use vi-mode
 bindkey -v
@@ -81,7 +81,7 @@ export LF_ICONS
 
 # Startup commands
 #color_test.sh
-shuf -n 1 /home/hisham/.local/share/quotes | lolcat
+shuf -n 1 /home/hisham/.local/share/quotes #| lolcat
 #shuf -n 1 /home/hisham/.local/share/quotes | fribidi --nobreak | lolcat
 date +%A\ %d\ %B\ %Y\ %H:%M 
 uname -nrm
@@ -90,18 +90,18 @@ uptime -p | sed "s/up\s/Elapsed Time: /;s/hours,\s/hs:/g;s/minutes/min/"
 # Autosuggestion and syntax highlighting
 source /usr/share/zsh/plugins/zsh-syntax-highlighting/zsh-syntax-highlighting.plugin.zsh
 source /usr/share/zsh/plugins/zsh-autosuggestions/zsh-autosuggestions.zsh
-source /usr/share/zsh/plugins/zsh-history-substring-search/zsh-history-substring-search.zsh
-bindkey '^[[A' history-substring-search-up
-bindkey '^[[B' history-substring-search-down
-bindkey -M emacs '^P' history-substring-search-up
-bindkey -M emacs '^N' history-substring-search-down
-bindkey -M vicmd 'k' history-substring-search-up
-bindkey -M vicmd 'j' history-substring-search-down
+#source /usr/share/zsh/plugins/zsh-history-substring-search/zsh-history-substring-search.zsh
+#bindkey '^[[A' history-substring-search-up
+#bindkey '^[[B' history-substring-search-down
+#bindkey -M emacs '^P' history-substring-search-up
+#bindkey -M emacs '^N' history-substring-search-down
+#bindkey -M vicmd 'k' history-substring-search-up
+#bindkey -M vicmd 'j' history-substring-search-down
 
 # clone the gitstatus repo
 # git clone "https://github.com/xylous/gitstatus.git" gitstatus
 #
-source $HOME/.config/zsh/gitstatus/gitstatus.plugin.zsh
+#source $HOME/.config/zsh/gitstatus/gitstatus.plugin.zsh
 
 # zoxide
 eval "$(zoxide init zsh)"

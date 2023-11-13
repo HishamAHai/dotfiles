@@ -38,7 +38,7 @@ awful.rules.rules = {
                 'slickpicker', 'Psensor', 'org.kde.fancontrol.gui', 'Nextcloud',
                 'Galculator','pavucontrol-qt','Nvidia-settings', 'Gddccontrol',
                 'SimpleScreenRecorder', 'Solaar', 'corectrl', 'openrgb', 'Fsearch',
-                'helvum', 'smile', 'livecaptions', 'scrcpy',
+                'helvum', 'smile', 'livecaptions', 'scrcpy', 'Authenticator',
             },
         role = {
             'GtkFileChooserDialog', 'pop-up'
@@ -86,6 +86,7 @@ awful.rules.rules = {
         tag = screen[1].tags[5],
         titlebars_enabled = false, 
         floating = true,
+        size_hints_honor = false,
         switchtotag = true
     }
 },
@@ -97,6 +98,7 @@ awful.rules.rules = {
     properties = {
         tag = screen[1].tags[5],
         titlebars_enabled = false,
+        floating = true,
         switchtotag = true
     }
 },
@@ -127,17 +129,17 @@ awful.rules.rules = {
         switchtotag = true
     }
 },
-
-{
-    rule_any = {
-        class = {
-            'Gimp',
-        },
-    },
-    properties = {
-        screen = 2,
-    }
-},
+--
+--{
+--    rule_any = {
+--        class = {
+--            'Gimp',
+--        },
+--    },
+--    properties = {
+--        screen = 2,
+--    }
+--},
 
 {
     rule_any = {
@@ -159,7 +161,7 @@ awful.rules.rules = {
     properties = {
         --titlebars_enabled = true,
         tag = screen[1].tags[3],
-        floating = false,
+        floating = true,
         switchtotag = true
     }
 },
@@ -187,17 +189,6 @@ awful.rules.rules = {
         switchtotag = true,
         floating = true,
         border_width = 0
-    }
-},
-
-{
-    rule_any = {
-        class = {
-            'obs'
-        }
-    },
-    properties = {
-        screen = 3,
     }
 },
 
@@ -272,7 +263,7 @@ client.connect_signal('focus', function(c)
 end)
 client.connect_signal('unfocus', function(c)
     c.border_width = 0
-    c.border_color = beautiful.border_normal
+    c.border_color = beautiful.fg_normal
 end)
 
 -- Enable mouse bindings to move and resize clients

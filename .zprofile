@@ -34,31 +34,47 @@ export TERMINFO_DIRS="$XDG_DATA_HOME"/terminfo:/usr/share/terminfo
 export WGETRC="$XDG_CONFIG_HOME/wgetrc"
 export HISTFILE="$XDG_CACHE_HOME"/zsh/history
 export _JAVA_OPTIONS=-Djava.util.prefs.userRoot="$XDG_CONFIG_HOME"/java
-export INPUTRC="$XDG_CONFIG_HOME"/readline/inputrc
+#export INPUTRC="$XDG_CONFIG_HOME"/readline/inputrc
 
 #Add .local/bin to the environment variables path
-export PATH=$HOME/.local/bin:$HOME/.local/share/flatpak/exports/bin:/var/lib/flatpak/exports/bin:$HOME/Applications:/opt/resolve/bin:$PATH
+export PATH=$HOME/.local/bin:$HOME/.local/share/flatpak/exports/bin:/var/lib/flatpak/exports/bin:$HOME/Applications:/opt/resolve/bin:$HOME/.local/share/cargo/bin/:/usr/sbin:$PATH
 
 # Unify the gtk and qt5 themes
 export QT_QPA_PLATFORMTHEME="qt6ct"
 #export QT_STYLE_OVERRIDE=kvantum
 #export QT_SCALE_FACTOR=1.25
-export QT_AUTO_SCREEN_SCALE_FACTOR=0
-export QT_ENABLE_HIGHDPI_SCALING=1
-#export QT_QPA_PLATFORM=xcb 
+#export QT_AUTO_SCREEN_SCALE_FACTOR=0
+export WLR_RENDERER_ALLOW_SOFTWARE=1
+
 # Default applications
 #export WM="awesome"
 export EDITOR="nvim"
-export TERMINAL="kitty"
-export IMAGE="sxiv"
+#export TERMINAL="kitty"
+#export IMAGE="sxiv"
 export VIDEO="mpv"
 
 # nvidia specific EV
-export NVD_BACKEND="direct"
-export LIBVA_DRIVER_NAME="nvidia"
+#export NVD_BACKEND="direct"
+#export LIBVA_DRIVER_NAME="nvidia"
 
-export MOZ_GTK_TITLEBAR_DECORATION=client
-export MOZ_X11_EGL=1
+#export MOZ_GTK_TITLEBAR_DECORATION=client
+#export MOZ_X11_EGL=1
 if [ "$XDG_SESSION_TYPE" = "wayland" ]; then
     export MOZ_ENABLE_WAYLAND=1
 fi
+
+# Autostart useful programs
+#dbus-update-activation-environment --systemd DBUS_SESSION_BUS_ADDRESS DISPLAY XAUTHORITY &
+#xrdb merge ~/.Xresources &
+#/usr/lib/polkit-gnome/polkit-gnome-authentication-agent-1 &
+#picom &
+#~/.fehbg &
+#nm-applet &
+#solaar -w hide &
+##flameshot &
+#QT_QPA_PLATFORM=xcb copyq &
+#udiskie -t &
+##nextcloud &
+##tint2 &
+#~/.local/bin/wacomConfig.sh &
+#emacs --daemon &

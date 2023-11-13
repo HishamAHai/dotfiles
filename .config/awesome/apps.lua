@@ -3,8 +3,7 @@ local awful = require('awful')
 local apps = {
     browser = 'chromium-freeworld',
 	editor	= os.getenv('EDITOR') or 'nvim',
-	--fmanager = 'pcmanfm',
-	fmanager = 'peony',
+	fmanager = 'pcmanfm',
 	geditor	= 'geany',
 	launcher = 'dmenu_run -i -l 5 -g 10 -p "Run:"',
 	rofi = 'rofi -show drun',
@@ -29,9 +28,22 @@ end
 do
   local startup_apps=
   {
-      --'nitrogen --restore',
-      --'picom --experimental-backends',
-      --'lxsession',
+'dbus-update-activation-environment --systemd DBUS_SESSION_BUS_ADDRESS DISPLAY XAUTHORITY',
+'xrandr --output DP-4 --primary --right-of DP-2',
+'xrdb merge ~/.Xresources',
+'setxkbmap -model pc104 -layout latam,ara -variant deadtilde, -option grp:ctrl_space_toggle',
+'/usr/lib/polkit-gnome/polkit-gnome-authentication-agent-1',
+'picom',
+'~/.fehbg',
+'nm-applet',
+'solaar -w hide',
+--'flameshot &',
+'copyq',
+'udiskie -t',
+--'nextcloud &',
+--'tint2 &',
+'~/.local/bin/wacomConfig.sh',
+'emacs --daemon',
   }
 
   for _,apps in pairs(startup_apps) do

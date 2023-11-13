@@ -143,7 +143,7 @@ awful.screen.connect_for_each_screen(function(s)
             --end,
             shape_border_width  = dpi(1),
             shape_border_color  = beautiful.border_focus,
-            bg                  = beautiful.bg_normal .. '00',
+            bg                  = beautiful.bg_normal --.. '00',
         }
     end
 end)

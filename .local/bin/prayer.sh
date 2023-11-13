@@ -1,46 +1,46 @@
-#!/bin/sh
+#!/bin/bash
 
-nextprayer=""
-prayers="$HOME/.local/share/prayers.json"
+prayers="/mnt/nasbkup/prayers.json"
+currenttime=$(date +%s)  # Use timestamp instead of explicit time
 
-# Parsing the data for the five salawat
-fajr=$(jq ".data.timings.Fajr" $prayers | bc | awk '{$1=$1};1')
-dhuhr=$(jq ".data.timings.Dhuhr" $prayers | bc | awk '{$1=$1};1')
-asr=$(jq ".data.timings.Asr" $prayers | bc | awk '{$1=$1};1')
-maghrib=$(jq ".data.timings.Maghrib" $prayers | bc | awk '{$1=$1};1')
-isha=$(jq ".data.timings.Isha" $prayers | bc | awk '{$1=$1};1')
+# Function to calculate remaining time
+calculate_remain() {
+    local next_time=$1
+    date -u -d @$((next_time - currenttime)) "+%H:%M"
+}
 
-# Get the current time
-currenttime=$(date +%H:%M)
+# Function to get prayer time
+get_prayer_time() {
+    local prayer=$1
+    case $prayer in
+        "Fajr") echo "الفجر" ;;
+        "Sunrise") echo "الشروق" ;;
+        "Dhuhr") echo "الظهر" ;;
+        "Asr") echo "العصر" ;;
+        "Maghrib") echo "المغرب" ;;
+        "Isha") echo "العشاء" ;;
+    esac
+}
 
-# For each prayer, two variables are used, one to be printed as the name of the prayer (nextprayer), 
-# and the other variable (time) to be used in the calculation of the remaining time (nextTime)
-if [ $currenttime > $fajr ] && [ $currenttime < $dhuhr ]; then
-    nextprayer=$(echo "الظهر")
-    nextTime=$dhuhr
+# Array of prayers
+prayer_names=("Fajr" "Sunrise" "Dhuhr" "Asr" "Maghrib" "Isha")
 
-elif [ $currenttime > $dhuhr ] && [ $currenttime < $asr ]; then
-    nextprayer=$(echo "العصر")
-    nextTime=$asr
+# Loop through prayers
+for i in {0..5}; do
+    current_prayer="${prayer_names[i]}"
+    current_prayer_time=$(jq ".data.timings.$current_prayer" $prayers | bc | awk '{$1=$1};1')
+    current_prayer_timestamp=$(date -d "$current_prayer_time" +%s)
 
-elif [ $currenttime > $asr ] && [ $currenttime < $maghrib ]; then
-    nextprayer=$(echo "المغرب")
-    nextTime=$maghrib
+    next_prayer_index=$(( (i + 1) % 6 ))
+    next_prayer="${prayer_names[next_prayer_index]}"
+    next_prayer_time=$(jq ".data.timings.$next_prayer" $prayers | bc | awk '{$1=$1};1')
+    next_prayer_timestamp=$(date -d "$next_prayer_time" +%s)
 
-elif [ $currenttime > $maghrib ] && [ $currenttime < $isha ]; then
-    nextprayer=$(echo "العشاء")
-    nextTime=$isha
+    if [[ $currenttime -ge $current_prayer_timestamp ]] && [[ $currenttime -lt $next_prayer_timestamp ]]; then
+        break
+    fi
+done
 
-elif [ $currenttime > $isha ] || [ $currenttime < $fajr ]; then
-    nextprayer=$(echo "الفجر")
-    nextTime=$fajr
-fi
+remain=$(calculate_remain $next_prayer_timestamp)
 
-# Calculate the remaining time to the next prayer (or iftar in ramadan and the fast duration is ramadan)
-remain=$(date -u -d @$(($(date -d "$nextTime" "+%s") - $(date -d "$currenttime" "+%s"))) "+%H:%M")
-fast=$(date -u -d @$(($(date -d "$maghrib" '+%s') - $(date -d "$fajr" '+%s'))) '+%H:%M')
-Tofast=$(date -u -d @$(($(date -d "$maghrib" '+%s') - $(date -d "$currenttime" '+%s'))) '+%H:%M')
-
-# Sending the salawat to the stdout
-printf "🕌 الصلاة القادمة ۩ $nextprayer ۩ $nextTime (الوقت المتبقي $remain)"
-#printf "🕌 الصلاة القادمة ۩ $nextprayer ۩ $nextTime (الوقت المتبقي $remain)\nمدة الصوم $fast\nالوقت المتبقي حتى الإفطار $Tofast"
+printf '{"text": "%s"}\n' "🕌 الصلاة القادمة ۩ $(get_prayer_time $next_prayer) ۩ $next_prayer_time (الوقت المتبقي $remain)"

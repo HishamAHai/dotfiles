@@ -133,7 +133,7 @@ local rec_shape     =   function(cr, width, height)
                 --shape               =   function(cr,width,height)
                 --    gears.shape.partially_rounded_rect(cr,width,height,false,true,true,false,screen_width * 0.0031)
                 --end,
-                bg = beautiful.bg_normal .. '00'
+                bg = beautiful.bg_normal --.. '00'
             }
         else
             -- Create the wibox
@@ -206,7 +206,7 @@ local rec_shape     =   function(cr, width, height)
                 shape               =   bar_wdt_shape,
                 shape_border_width  =   dpi(1),
                 shape_border_color  =   beautiful.border_focus,
-                bg                  =   beautiful.bg_normal .. '00'
+                bg                  =   beautiful.bg_normal --.. '00'
             }
 
         end
