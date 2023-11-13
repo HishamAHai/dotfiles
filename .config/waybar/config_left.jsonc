@@ -1,0 +1,65 @@
+{
+    "layer": "top", // Waybar at top layer
+    "position": "top",
+    "output": "DP-2",
+    //"height": 30, // Waybar height (to be removed for auto height)
+    "spacing": 4, // Gaps between modules (4px)
+    "modules-left": ["hyprland/workspaces", "hyprland/window"],
+    "modules-center": ["clock"],
+    "modules-right": [ "custom/prayers", "custom/uptime", "custom/kernel"],
+    
+    // Modules configuration
+    "hyprland/workspaces": {
+    "persistent-workspaces": {
+    "DP-3": [1, 2, 3, 4],
+    "DP-2": [5, 6, 7, 8],
+    },
+        "disable-scroll": false,
+        "all-outputs": false,
+        "warp-on-scroll": false,
+        "format": "{name}",
+        "format-icons": {
+        "1":"JARVIS",
+        "2":"TARS",
+        "3":"MOTHER",
+        "4":"HAL",
+        "5":"SKYNET",
+        "6":"FRIDAY",
+        "7":"VOYAGER",
+        "8":"R2D2",
+        },
+        "active": "",
+        "default": "",
+    },
+
+    "hyprland/window": {  
+    "format": "{}",
+    "rewrite": {
+        "(.*) — Mozilla Firefox": "🌎 $1",
+        "(.*) - YouTube — Mozilla Firefox": "▶️  $1",
+        "(.*) - mpv": "▶️  $1",
+        "(.*) - Nextcloud — Mozilla Firefox": "☁️  $1",
+        "~(.*)": "🏠️ $1",
+        "man(.*)": "🗒️ $1",
+    },
+    "separate-outputs": true,
+    },
+    "clock": {
+        "tooltip-format": "<big>{:%Y %B}</big>\n<tt><small>{calendar}</small></tt>",
+        "format": "{:🕛️ %H:%M}",
+        //"format-alt": "{:%Y-%m-%d}"
+    },
+    "custom/kernel": {
+        "format": "🐧 {}",
+        "exec": "uname -r",
+    },
+    "custom/prayers": {
+        "exec": "~/.local/bin/prayer.sh",
+        "return-type": "json",
+        "interval": 60,
+    },
+    "custom/uptime": {
+        "exec": "~/.local/bin/uptime.sh",
+        "interval": 60,
+    }
+}

@@ -1,0 +1,111 @@
+{
+    "layer": "top", // Waybar at top layer
+    "position": "top",
+    "output": "DP-3",
+    //"height": 30, // Waybar height (to be removed for auto height)
+    "spacing": 4, // Gaps between modules (4px)
+    "modules-left": ["hyprland/workspaces", "hyprland/window", "hyprland/mode", "hyprland/scratchpad"],
+    "modules-center": ["clock"],
+    "modules-right": [ "custom/packages", "cpu", "memory", "disk", "custom/gpu", "temperature", "wireplumber", "hyprland/language", "tray"],
+    // Modules configuration
+    "hyprland/workspaces": {
+    "persistent-workspaces": {
+    "DP-3": [1, 2, 3, 4],
+    "DP-2": [5, 6, 7, 8],
+    },
+        "disable-scroll": false,
+        "all-outputs": false,
+        "warp-on-scroll": false,
+        "format": "{name}",
+        "format-icons": {
+        "1":"JARVIS",
+        "2":"TARS",
+        "3":"MOTHER",
+        "4":"HAL",
+        "5":"SKYNET",
+        "6":"FRIDAY",
+        "7":"VOYAGER",
+        "8":"R2D2",
+        },
+        "active": "",
+        "default": "",
+    },
+    "hyprland/window": {  
+    "format": "{}",
+    "rewrite": {
+        "(.*) — Mozilla Firefox": "🌎 $1",
+        "(.*) - YouTube — Mozilla Firefox": "▶️  $1",
+        "(.*) - mpv": "▶️  $1",
+        "(.*) - Nextcloud — Mozilla Firefox": "☁️  $1",
+        "~(.*)": "🏠️ $1",
+        "man(.*)": "🗒️ $1",
+    },
+    "separate-outputs": true,
+    },
+    "hyprland/language": {  
+    "format": "{short}",
+    },
+    "tray": {
+        "icon-size": 24,
+        "spacing": 10
+    },
+    "clock": {
+        "tooltip-format": "<big>{:%Y %B}</big>\n<tt><small>{calendar}</small></tt>",
+        "format": "{:📅 %a-%d-%m 🕛️ %H:%M}",
+        //"format-alt": "{:%Y-%m-%d}"
+    },
+    "cpu": {
+        "format": "🖥️ {usage}%",
+        "tooltip": false
+    },
+    "memory": {
+        "format": "🧠 {used} ({percentage}%)"
+    },
+    "disk": {
+    "path": "/",
+    "format": "💾 {used} ({percentage_used}%)",
+    },
+    "temperature": {
+        "thermal-zone": 1,
+        "hwmon-path": "/sys/class/hwmon/hwmon5/temp1_input",
+        "interval": 5,
+        "critical-threshold": 80,
+        // "format-critical": "{temperatureC}°C {icon}",
+        "format": "{icon} {temperatureC}°C",
+        "format-icons": ["🌡️", "🌡️", "🌡️"]
+    },
+    "wireplumber": {
+        "scroll-step": 5, // %, can be a float
+        "format": "{icon}  {volume}%",
+        "format-icons": {
+            "default": ["🔈️", "🔉", "🔊"]
+        },
+    },
+    "custom/media": {
+        "format": "{icon} {}",
+        "return-type": "json",
+        "max-length": 40,
+        "format-icons": {
+            "spotify": "",
+            "default": "🎜"
+        },
+        "escape": true,
+        "exec": "$HOME/.config/waybar/mediaplayer.py 2> /dev/null" // Script in resources folder
+        // "exec": "$HOME/.config/waybar/mediaplayer.py --player spotify 2> /dev/null" // Filter player based on name
+    },
+
+    "custom/packages": {
+        "format": "{}",
+        "escape": true,
+        "return-type": "json",
+        "interval": 3600,
+        "exec": "~/.local/bin/packages.sh",
+        "signal": "8",
+    },
+    "custom/gpu": {
+        "format": "{}",
+        "exec": "gpu_temp.sh",
+        "return-type": "json",
+        "interval": 10,
+    }
+}

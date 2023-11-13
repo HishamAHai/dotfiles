@@ -1,0 +1,14 @@
+font=Red Hat Display Regular
+background-color=#212121c8
+width=500
+margin=10
+padding=2
+border-size=2
+border-color=#a94dbb
+border-radius=8
+icons=1
+max-icon-size=96
+icon-path=/home/hisham/.local/share/icons/Reversal-purple-dark
+icon-location=left
+markup=1
+default-timeout=10000
