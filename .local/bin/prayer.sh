@@ -48,4 +48,4 @@ done
 
 remain=$(calculate_remain $next_prayer_timestamp)
 
-printf '{"text": "%s"}\n' "🕌 $day $month $year ☪️الصلاة القادمة ۩ $(get_prayer_time $next_prayer) ۩ $next_prayer_time ☪️ الوقت المتبقي $remain 🕌"
+printf '{"text": "%s", "tooltip": "%s"}\n' "🕌 الصلاة القادمة ۩ $(get_prayer_time $next_prayer) ۩ $next_prayer_time ☪️ الوقت المتبقي $remain☪️ " "$day $month $year"
