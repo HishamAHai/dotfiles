@@ -6,51 +6,47 @@
 
 /* global settings and color variables */
 * {
-   maincolor:        #bd93f9;
-   highlight:        bold #bd93f9;
-   urgentcolor:      #e53714;
-
-   fgwhite:          #f8f8f2;
-   blackdarkest:     #1a111080;
-   blackwidget:      #26262680;
-   blackentry:       #29292980;
-   blackselect:      #30303080;
-   darkgray:         #848484;
-   scrollbarcolor:   #50505080;
-   font: "Inter 16";
+   maincolor:        #B63776;
+   highlight:        bold #B63776;
+   urgentcolor:      #bd93f9;
+   fgwhite:          #e9e9e9;
+   blackdarkest:     #282828c8;
+   blackwidget:      #282828c8;
+   blackentry:       #323232c8;
+   blackselect:      #484848c8;
+   darkgray:         #848484c8;
+   scrollbarcolor:   #505050c8;
    background-color: transparent;
    transparency: "real";
+   font: "Red Hat Display Medium 12";
+   algin-vertical: center;
 }
 
 window {
-    transparency: "real";
-   background-color: @blackdarkest;
-   anchor: north;
-   location: north;
-   y-offset: 35%;
+   transparency: "real";
+   background-color: @blackwidget;
+   border-radius: 8px;
+   border-color: @maincolor;
 }
 
 mainbox {
-   background-color: @blackdarkest;
+   background-color: transparent;
    spacing:0px;
-   children: [inputbar, message, mode-switcher, listview];
-}
-
-message {
-   padding: 6px 10px;
-   background-color:@blackwidget;
+   /*children: [inputbar, message, mode-switcher, listview];*/
+   children: [inputbar, listview];
 }
 
 textbox {
-   text-color:@darkgray;
-   background-color:@blackwidget;
+   text-color:@fgwhite;
+   border-radius: 4px;
+   background-color:transparent;
 }
 
 listview {
    fixed-height: false;
    dynamic: true;
    scrollbar: false;
-   spacing: 0px;
+   spacing: 2px;
    padding: 1px 0px 0px 0px;
    margin: 0px 0px 1px 0px;
    background: @blackdarkest;
@@ -59,6 +55,7 @@ listview {
 element {
    padding: 2px 15px;
    background-color: transparent;
+   border-radius: 4px;
 }
 
 element normal.normal {
@@ -127,24 +124,26 @@ button selected {
 }
 
 inputbar {
-   background-color: @blackdarkest;
+   background-color: transparent;
+   border-radius: 4px;
    spacing: 0px;
 }
 
 prompt {
-   padding:6px 9px;
+   padding:2px 2px;
    background-color: @maincolor;
+   border-radius: 4px;
    text-color:@blackwidget;
 }
 
 entry {
-   padding:6px 10px;
+   padding:0px 0px;
    background-color:@blackwidget;
    text-color:@fgwhite;
 }
 
 case-indicator {
-   padding:6px 10px;
+   padding:0px 0px;
    text-color:@maincolor;
    background-color:@blackwidget;
 }

@@ -6,13 +6,14 @@
     "spacing": 4, // Gaps between modules (4px)
     "modules-left": ["hyprland/workspaces", "hyprland/window"],
     "modules-center": ["clock"],
-    "modules-right": [ "custom/prayers", "custom/uptime", "custom/kernel"],
+    "modules-right": [ "custom/weather", "custom/prayers", "custom/uptime", "custom/kernel"],
     
     // Modules configuration
     "hyprland/workspaces": {
     "persistent-workspaces": {
     "DP-3": [1, 2, 3, 4],
     "DP-2": [5, 6, 7, 8],
+    "HDMI-A-1": [9],
     },
         "disable-scroll": false,
         "all-outputs": false,
@@ -54,12 +55,19 @@
         "exec": "uname -r",
     },
     "custom/prayers": {
-        "exec": "~/times/times3.py",
+        "exec": "~/.local/bin/prayer_waybar.py",
         "return-type": "json",
         "interval": 60,
     },
     "custom/uptime": {
         "exec": "~/.local/bin/uptime.sh",
         "interval": 60,
-    }
+    },
+    "custom/weather": {
+    "exec": "python ~/.local/bin/weather.py",
+    "interval": 300,
+    "return-type": "json",
+    //"on-click": "xdg-open https://weather.com/en-IN/weather/today/l/$(location_id)"
+    // "format-alt": "{alt}",
+},
 }

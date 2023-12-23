@@ -19,7 +19,6 @@ def read_prayer_times(latitude, longitude, method, adjustment):
         data = response.json()
         return data["data"]["timings"]
     else:
-        print(f"Failed to fetch data from the URL. Status code: {response.status_code}")
         return None
 
 # Check if the current time is one of the specified prayer times
@@ -29,14 +28,13 @@ def check_prayer_time(prayer_times):
     specified_prayers = ["Fajr", "Sunrise", "Dhuhr", "Asr", "Maghrib", "Isha"]
 
     for prayer in specified_prayers:
-        if current_time == prayer_times.get(prayer, "") and not played_flags[prayer]:
+        if current_time == prayer_times.get(prayer, ""):
             if prayer == "Fajr":
                 play_sound(os.path.expanduser('~/.local/share/Azan_fajr.webm'))
             elif prayer == "Sunrise":
                 play_sound(os.path.expanduser('~/.local/share/Nature.mp3'))
             else:
                 play_sound(os.path.expanduser('~/.local/share/Azan.webm'))
-            played_flags[prayer] = True  # Set the flag to True after playing the sound
 
 # Define your variables
 latitude = -41.124877  # Replace with your actual latitude
@@ -48,10 +46,7 @@ adjustment = -1  # Replace with your desired time adjustment
 while True:
     # Read prayer times from the URL
     prayer_times = read_prayer_times(latitude, longitude, method, adjustment)
-
-    if prayer_times is not None:
-        played_flags = {prayer: False for prayer in ["Fajr", "Sunrise", "Dhuhr", "Asr", "Maghrib", "Isha"]}
-        check_prayer_time(prayer_times)
+    check_prayer_time(prayer_times)
 
     # Check every minute
     time.sleep(60)

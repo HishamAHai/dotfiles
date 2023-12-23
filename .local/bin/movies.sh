@@ -42,8 +42,9 @@ runtime=$(awk '/<runtime>/ {print}' $info | grep -oP '(?<=\>).*?(?=\<)')
 mintime=$(convertmin $runtime)
 
 # Join the information of the movie and send a notification
-sum=$(printf "▶️ <span size=\'large'><b>$title</b></span>\n($year)\n$mintime h\n<i>$tag</i>")
-notify-send "$sum" -i $thumb
+#sum=$(printf "▶️ <span size=\'large'><b>$title</b></span>\n($year)\n$mintime h\n<i>$tag</i>")
+sum=$(echo -e "▶️ $title\n($year)\n$mintime h\n$tag")
+dunstify "$sum" -i $thumb
 
 # Join the title, year and artwork of the movie and send a notification
 #notify-send "$title ($year)" -i $thumb

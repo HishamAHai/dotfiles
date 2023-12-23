@@ -12,6 +12,7 @@
     "persistent-workspaces": {
     "DP-3": [1, 2, 3, 4],
     "DP-2": [5, 6, 7, 8],
+    "HDMI-A-1": [9],
     },
         "disable-scroll": false,
         "all-outputs": false,
@@ -51,7 +52,7 @@
     },
     "clock": {
         "tooltip-format": "<big>{:%Y %B}</big>\n<tt><small>{calendar}</small></tt>",
-        "format": "{:📅 %a-%d-%m 🕛️ %H:%M}",
+        "format": "{:📅 %a %d-%m 🕛️ %H:%M}",
         //"format-alt": "{:%Y-%m-%d}"
     },
     "cpu": {

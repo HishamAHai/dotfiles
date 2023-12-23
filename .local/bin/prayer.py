@@ -14,19 +14,24 @@ def read_prayer_times(file_path):
         data = json.load(file)
         return data["data"]["timings"]
 
-# Check if the current time is one of the prayer times
+# ...
+
+# Check if the current time is one of the specified prayer times
 def check_prayer_time(prayer_times):
     current_time = datetime.datetime.now().strftime("%H:%M")
 
-    for prayer, time_str in prayer_times.items():
-        if current_time == time_str:
-            print(f"It's {prayer} time!")
+    specified_prayers = ["Fajr", "Sunrise", "Dhuhr", "Asr", "Maghrib", "Isha"]
+
+    for prayer in specified_prayers:
+        if current_time == prayer_times.get(prayer, ""):
             if prayer == "Fajr":
                 play_sound(os.path.expanduser('~/.local/share/Azan_fajr.webm'))
             elif prayer == "Sunrise":
                 play_sound(os.path.expanduser('~/.local/share/Nature.mp3'))
             else:
                 play_sound(os.path.expanduser('~/.local/share/Azan.webm'))
+
+# ...
 
 # Replace 'path/to/prayers.json' with the actual path to your prayers JSON file
 prayer_times_file_path = '/mnt/nasbkup/prayers.json'
