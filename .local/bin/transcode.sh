@@ -49,5 +49,5 @@ elif [[ -f $1 ]]; then
     # Else, use the name of the original file and change the extension
 	file=$(basename -s .mov $1)
     fi
-    ffmpeg -hide_banner-y -hwaccel cuda -hwaccel_output_format cuda -i $1 -map 0:v -map 0:a -c:a aac -c:v hevc_nvenc -profile main -b:v 10M -tune hq -tier high -pix_fmt yuv420p -movflags +faststart -write_tmcd 0 $(dirname $1)/../finalized/$file.mp4
+    ffmpeg -hide_banner -y -hwaccel cuda -hwaccel_output_format cuda -i $1 -map 0:v -map 0:a -c:a aac -c:v hevc_nvenc -profile main -b:v 10M -tune hq -tier high -pix_fmt yuv420p -movflags +faststart -write_tmcd 0 $(dirname $1)/../finalized/$file.mp4
 fi
