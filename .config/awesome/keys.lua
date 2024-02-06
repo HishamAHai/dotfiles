@@ -227,16 +227,16 @@ awful.key({ modkey, 'Shift' }, 'u', function () awful.spawn.with_shell('kill -9 
 
     -- ================= Hotkeys (using multimedia keys) ===========================
     
-awful.key({}, 'XF86AudioRaiseVolume', volume_widget.raise,
---awful.key({}, 'XF86AudioRaiseVolume', function() awful.spawn('wpctl set-volume @DEFAULT_AUDIO_SINK@ 5%+') end ,
+--awful.key({}, 'XF86AudioRaiseVolume', volume_widget.raise,
+awful.key({}, 'XF86AudioRaiseVolume', function() awful.spawn('wpctl set-volume @DEFAULT_AUDIO_SINK@ 5%+') end ,
  {description = "Volume increase", group = "hotkeys"}),
 
-awful.key({},'XF86AudioLowerVolume', volume_widget.lower,
---awful.key({}, 'XF86AudioLowerVolume', function() awful.spawn('wpctl set-volume @DEFAULT_AUDIO_SINK@ 5%-') end,
+--awful.key({},'XF86AudioLowerVolume', volume_widget.lower,
+awful.key({}, 'XF86AudioLowerVolume', function() awful.spawn('wpctl set-volume @DEFAULT_AUDIO_SINK@ 5%-') end,
  {description = "Volume decrease", group = "hotkeys"}),
 
-awful.key({},'XF86AudioMute', volume_widget.toggle,
---awful.key({}, 'XF86AudioMute', function() awful.spawn('wpctl set-mute @DEFAULT_AUDIO_SINK@ toggle') end,
+--awful.key({},'XF86AudioMute', volume_widget.toggle,
+awful.key({}, 'XF86AudioMute', function() awful.spawn('wpctl set-mute @DEFAULT_AUDIO_SINK@ toggle') end,
  {description = "Volume mute", group = "hotkeys"}),
 
 --awful.key({altkey}, 'x', volume_widget.raise,
