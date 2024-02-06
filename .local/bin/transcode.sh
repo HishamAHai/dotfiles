@@ -37,7 +37,7 @@ if [[ -d $1 ]]; then
     # pcm_s16le is the audio codec supported by Davinci Resolve Free
     # yuv422p10 is the pixel format
     # The new file name will be the original file name but with a different extension
-    ffmpeg -hide_banner -loglevel quiet -stats -i $i -map 0:v -map 0:a -c:v dnxhd -vf "scale=1920:1080,format=yuv422p" -b:v 120M -c:a pcm_s16le transcoded/$output.mov
+    ffmpeg -hide_banner -loglevel quiet -stats -i $i -map 0:v -map 0:a -c:v dnxhd -vf "scale=1920:1080,format=yuv422p" -b:v 100M -c:a pcm_s16le transcoded/$output.mov
     done
     ##
     # If the argument is a file, then, we want to transcode the file to h265 codec
@@ -49,5 +49,5 @@ elif [[ -f $1 ]]; then
     # Else, use the name of the original file and change the extension
 	file=$(basename -s .mov $1)
     fi
-    ffmpeg -hide_banner -loglevel quiet -stats -y -hwaccel cuda -hwaccel_output_format cuda -i $1 -c:a aac -c:v hevc_nvenc -b:v 8M -pix_fmt yuv420p -fps_mode passthrough $(dirname $1)/../finalized/$file.mp4
+    ffmpeg -hide_banner-y -hwaccel cuda -hwaccel_output_format cuda -i $1 -map 0:v -map 0:a -c:a aac -c:v hevc_nvenc -profile main -b:v 10M -tune hq -tier high -pix_fmt yuv420p -movflags +faststart -write_tmcd 0 $(dirname $1)/../finalized/$file.mp4
 fi
