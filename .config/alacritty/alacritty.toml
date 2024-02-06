@@ -1,0 +1,63 @@
+[colors.bright]
+black = "#424242"
+blue = "#53a4f3"
+cyan = "#26bad1"
+green = "#7aba39"
+magenta = "#a94dbb"
+red = "#e83a3f"
+white = "#d8d8d8"
+yellow = "#fee92e"
+
+[colors.dim]
+black = "#131415"
+blue = "#556a7d"
+cyan = "#5b7d78"
+green = "#777c44"
+magenta = "#75617b"
+red = "#864343"
+white = "#828482"
+yellow = "#9e824c"
+
+[colors.normal]
+black = "#212121"
+blue = "#134eb2"
+cyan = "#0e707c"
+green = "#457b23"
+magenta = "#550087"
+red = "#b7141e"
+white = "#eeeeee"
+yellow = "#f5971d"
+
+[colors.primary]
+background = "#212121"
+foreground = "#e4e4e4"
+
+[colors.selection]
+background = "CellForeground"
+text = "CellBackground"
+
+[font]
+size = 16.0
+
+[font.bold]
+family = "FantasqueSansM Nerd Font"
+style = "Bold"
+
+[font.bold_italic]
+family = "FantasqueSansM Nerd Font"
+style = "Bold Italic"
+
+[font.italic]
+family = "FantasqueSansM Nerd Font"
+style = "Italic"
+
+[font.normal]
+family = "FantasqueSansM Nerd Font"
+style = "Regular"
+
+[window]
+dynamic_padding = false
+
+[window.padding]
+x = 10
+y = 10
