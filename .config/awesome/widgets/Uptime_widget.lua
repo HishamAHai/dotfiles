@@ -14,7 +14,7 @@ uptime_wdt = wibox.widget {
         {
             {
                 id = 'icon',
-                image = '/usr/share/icons/Papirus/64x64/apps/com.github.sgpthomas.hourglass.svg',
+                image = '/home/hisham/.local/share/icons/Reversal-purple-dark/actions/symbolic/timer-symbolic.svg',
                 widget = wibox.widget.imagebox,
                 resize = true
             },

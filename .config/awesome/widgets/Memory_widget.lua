@@ -22,7 +22,7 @@ mem_widget = wibox.widget {
                         resize = true,
                         forced_height = screen_width * 0.01,
                         forced_width = screen_width * 0.01,
-                        image = '/usr/share/icons/Papirus/48x48/devices/gnome-dev-memory.svg',
+                        image = '/home/hisham/.local/share/icons/Reversal-purple-dark/devices/symbolic/media-memory-sembolic.svg',
                         widget = wibox.widget.imagebox
                     },
                     margins = screen_width * 0.0005,widget = wibox.container.margin

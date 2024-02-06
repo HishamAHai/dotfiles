@@ -19,7 +19,7 @@ disk_widget = wibox.widget {
                         resize = true,
                         forced_width = screen_width * 0.01,
                         forced_height = screen_width * 0.01,
-                        image = '/usr/share/icons/Papirus/48x48/devices/drive-harddisk.svg',
+                        image = '/home/hisham/.local/share/icons/Reversal-purple/devices/scalable/drive-harddisk.svg',
                         widget = wibox.widget.imagebox
                     },
                     margins = screen_width * 0.0005,
