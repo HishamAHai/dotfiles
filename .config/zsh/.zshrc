@@ -80,9 +80,7 @@ LF_ICONS=${LF_ICONS//$'\n'/:}
 export LF_ICONS
 
 # Startup commands
-#color_test.sh
 shuf -n 1 /home/hisham/.local/share/quotes #| lolcat
-#shuf -n 1 /home/hisham/.local/share/quotes | fribidi --nobreak | lolcat
 date +%A\ %d\ %B\ %Y\ %H:%M 
 uname -nrm
 uptime -p | sed "s/up\s/Elapsed Time: /;s/hours,\s/hs:/g;s/minutes/min/"
@@ -90,13 +88,13 @@ uptime -p | sed "s/up\s/Elapsed Time: /;s/hours,\s/hs:/g;s/minutes/min/"
 # Autosuggestion and syntax highlighting
 source /usr/share/zsh/plugins/zsh-syntax-highlighting/zsh-syntax-highlighting.plugin.zsh
 source /usr/share/zsh/plugins/zsh-autosuggestions/zsh-autosuggestions.zsh
-#source /usr/share/zsh/plugins/zsh-history-substring-search/zsh-history-substring-search.zsh
-#bindkey '^[[A' history-substring-search-up
-#bindkey '^[[B' history-substring-search-down
-#bindkey -M emacs '^P' history-substring-search-up
-#bindkey -M emacs '^N' history-substring-search-down
-#bindkey -M vicmd 'k' history-substring-search-up
-#bindkey -M vicmd 'j' history-substring-search-down
+source /usr/share/zsh/plugins/zsh-history-substring-search/zsh-history-substring-search.zsh
+bindkey '^[[A' history-substring-search-up
+bindkey '^[[B' history-substring-search-down
+bindkey -M emacs '^P' history-substring-search-up
+bindkey -M emacs '^N' history-substring-search-down
+bindkey -M vicmd 'k' history-substring-search-up
+bindkey -M vicmd 'j' history-substring-search-down
 
 # clone the gitstatus repo
 # git clone "https://github.com/xylous/gitstatus.git" gitstatus
