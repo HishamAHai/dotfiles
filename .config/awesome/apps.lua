@@ -33,7 +33,7 @@ do
 'xrdb merge ~/.Xresources',
 'setxkbmap -model pc104 -layout latam,ara -variant deadtilde, -option grp:ctrl_space_toggle',
 '/usr/lib/polkit-gnome/polkit-gnome-authentication-agent-1',
-'picom',
+'compfy',
 '~/.fehbg',
 'nm-applet',
 'solaar -w hide',
