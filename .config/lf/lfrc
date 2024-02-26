@@ -21,8 +21,8 @@ set hidden
 set icons
 
 # image perview
-set previewer ~/.config/lf/previewer.sh
-set cleaner ~/.config/lf/cleaner.sh
+set previewer ~/.config/lf/preview
+set cleaner ~/.config/lf/cleaner
 
 # line numbers
 set number

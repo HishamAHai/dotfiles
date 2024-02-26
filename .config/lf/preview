@@ -1,93 +1,65 @@
 #!/bin/sh
 
-# Clear the last preview (if any)
-$HOME/.config/lf/clear_img.sh
+image() {
+    FILE_PATH="$1"
+    X=$4
+    Y=$5
+    MW=$(($2 - 1))
+    MH=$3
+    ueberzugpp cmd -s "$UB_SOCKET" -a add -i PREVIEW -x "$X" -y "$Y" --max-width "$MW" --max-height "$MH" -f "$FILE_PATH"
+    exit 1
+}
 
-# Calculate where the image should be placed on the screen.
-num=$(printf "%0.f\n" "`echo "$(tput cols) / 2" | bc`")
-numb=$(printf "%0.f\n" "`echo "$(tput cols) - $num - 1" | bc`")
-numc=$(printf "%0.f\n" "`echo "$(tput lines) - 2" | bc`")
+batorcat() {
+    file="$1"
+    shift
+    if command -v bat >/dev/null 2>&1; then
+        bat --color=always --style=plain --pager=never "$file" "$@"
+    else
+        cat "$file"
+    fi
+}
 
-case "$1" in
-	*.tgz|*.tar.gz) tar tzf "$1";;
-	*.tar.bz2|*.tbz2) tar tjf "$1";;
-	*.tar.txz|*.txz) xz --list "$1";;
-	*.tar) tar tf "$1";;
-	*.zip|*.jar|*.war|*.ear|*.oxt) unzip -l "$1";;
-	*.rar) unrar l "$1";;
-	*.7z) 7z l "$1";;
-	*.[1-8]) man "$1" | col -b ;;
-	*.o) nm "$1" | less ;;
-	*.torrent) transmission-show "$1";;
-	*.iso) iso-info --no-header -l "$1";;
-	*odt,*.ods,*.odp,*.sxw) odt2txt "$1";;
-	*.doc) catdoc "$1" ;;
-	*.docx) docx2txt "$1" - ;;
-	*.csv) cat "$1" | sed s/,/\\n/g ;;
-	*.pdf)
-		CACHE=$(mktemp /tmp/thumbcache.XXXXX)
-		pdftoppm -png -f 1 -singlefile "$1" "$CACHE"
-		$HOME/.config/lf/image draw "$CACHE.png" $num 1 $numb $numc
-		;;
-	*.epub)
-		CACHE=$(mktemp /tmp/thumbcache.XXXXX)
-		epub-thumbnailer "$1" "$CACHE" 1024
-		$HOME/.config/lf/image draw "$CACHE" $num 1 $numb $numc
-		;;
-	*.bmp|*.jpg|*.jpeg|*.png|*.xpm)
-		$HOME/.config/lf/image draw "$1" $num 1 $numb $numc
-		;;
-	*.wav|*.mp3|*.flac|*.m4a|*.wma|*.ape|*.ac3|*.og[agx]|*.spx|*.opus|*.as[fx]|*.flac) exiftool "$1";;
-	*.avi|*.mp4|*.wmv|*.dat|*.3gp|*.ogv|*.mkv|*.mpg|*.mpeg|*.vob|*.fl[icv]|*.m2v|*.mov|*.webm|*.ts|*.mts|*.m4v|*.r[am]|*.qt|*.divx)
-		CACHE=$(mktemp /tmp/thumbcache.XXXXX)
-		ffmpegthumbnailer -i "$1" -o "$CACHE" -s 0
-		$HOME/.config/lf/image draw "$CACHE" $num 1 $numb $numc
-		;;
-	#*) highlight --out-format ansi "$1" || cat "$1";;
-	*) bat --terminal-width "$4" -f "$1"
+CACHE="$HOME/.cache/lf/thumbnail.$(stat --printf '%n\0%i\0%F\0%s\0%W\0%Y' -- "$(readlink -f "$1")" | sha256sum | awk '{print $1}'))"
+
+case "$(printf "%s\n" "$(readlink -f "$1")" | tr '[:upper:]' '[:lower:]')" in
+    *.tgz | *.tar.gz) tar tzf "$1" ;;
+    *.tar.bz2 | *.tbz2) tar tjf "$1" ;;
+    *.tar.txz | *.txz) xz --list "$1" ;;
+    *.tar) tar tf "$1" ;;
+    *.zip | *.jar | *.war | *.ear | *.oxt) unzip -l "$1" ;;
+    *.rar) unrar l "$1" ;;
+    *.7z) 7z l "$1" ;;
+    *.[1-8]) man "$1" | col -b ;;
+    *.o) nm "$1" ;;
+    *.torrent) transmission-show "$1" ;;
+    *.iso) iso-info --no-header -l "$1" ;;
+    *.odt | *.ods | *.odp | *.sxw) odt2txt "$1" ;;
+    *.doc) catdoc "$1" ;;
+    *.docx) docx2txt "$1" - ;;
+    *.xls | *.xlsx)
+        ssconvert --export-type=Gnumeric_stf:stf_csv "$1" "fd://1" | batorcat --language=csv
+        ;;
+    *.wav | *.mp3 | *.flac | *.m4a | *.wma | *.ape | *.ac3 | *.og[agx] | *.spx | *.opus | *.as[fx] | *.mka)
+        exiftool "$1"
+        ;;
+    *.pdf)
+        [ ! -f "${CACHE}.jpg" ] && pdftoppm -jpeg -f 1 -singlefile "$1" "$CACHE"
+        image "${CACHE}.jpg" "$2" "$3" "$4" "$5"
+        ;;
+    *.avi | *.mp4 | *.wmv | *.dat | *.3gp | *.ogv | *.mkv | *.mpg | *.mpeg | *.vob | *.fl[icv] | *.m2v | *.mov | *.webm | *.ts | *.mts | *.m4v | *.r[am] | *.qt | *.divx)
+        [ ! -f "${CACHE}.jpg" ] && ffmpegthumbnailer -i "$1" -o "${CACHE}.jpg" -s 0 -q 5
+        image "${CACHE}.jpg" "$2" "$3" "$4" "$5"
+        ;;
+    *.bmp | *.jpg | *.jpeg | *.png | *.xpm | *.webp | *.gif | *.jfif)
+        image "$1" "$2" "$3" "$4" "$5"
+        ;;
+    *.svg)
+        [ ! -f "${CACHE}.jpg" ] && convert "$1" "${CACHE}.jpg"
+        image "${CACHE}.jpg" "$2" "$3" "$4" "$5"
+        ;;
+    *)
+        batorcat "$1"
+        ;;
 esac
-
-
-draw() {
-  ~/.config/lf/draw_img.sh "$@"
-  exit 1
-}
-
-hash() {
-  printf '%s/.cache/lf/%s' "$HOME" \
-    "$(stat --printf '%n\0%i\0%F\0%s\0%W\0%Y' -- "$(readlink -f "$1")" | sha256sum | awk '{print $1}')"
-}
-
-cache() {
-  if [ -f "$1" ]; then
-    draw "$@"
-  fi
-}
-
-file="$1"
-shift
-
-if [ -n "$FIFO_UEBERZUG" ]; then
-  case "$(file -Lb --mime-type -- "$file")" in
-    image/*)
-      orientation="$(identify -format '%[EXIF:Orientation]\n' -- "$file")"
-      if [ -n "$orientation" ] && [ "$orientation" != 1 ]; then
-        cache="$(hash "$file").jpg"
-        cache "$cache" "$@"
-        convert -- "$file" -auto-orient "$cache"
-        draw "$cache" "$@"
-      else
-        draw "$file" "$@"
-      fi
-      ;;
-    video/*)
-      cache="$(hash "$file").jpg"
-      cache "$cache" "$@"
-      ffmpegthumbnailer -i "$file" -o "$cache" -s 0
-      draw "$cache" "$@"
-      ;;
-  esac
-fi
-
-file -Lb -- "$1" | fold -s -w "$width"
 exit 0
