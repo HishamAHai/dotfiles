@@ -37,7 +37,7 @@ if [[ -d $1 ]]; then
     # pcm_s16le is the audio codec supported by Davinci Resolve Free
     # yuv422p10 is the pixel format
     # The new file name will be the original file name but with a different extension
-    ffmpeg -hide_banner -loglevel quiet -stats -i $i -map 0:v -map 0:a -c:v dnxhd -vf "scale=1920:1080,format=yuv422p" -b:v 100M -c:a pcm_s16le transcoded/$output.mov
+    ffmpeg -hide_banner -loglevel quiet -stats -i $i -map 0:v -map 0:a -c:v dnxhd -profile:v dnxhr_hq -b:v 10M -c:a pcm_s16le transcoded/$output.mov
     done
     ##
     # If the argument is a file, then, we want to transcode the file to h265 codec
