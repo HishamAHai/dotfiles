@@ -8,7 +8,7 @@
 #  PS1="%F{magenta}%n%f%F{green}@%f%F{blue}%m%f%F{yellow}[took $elapsed%ss]%f%K{red}$(gitstatus -i)%k%F{red}%(3~|%-1~/…/%2~|%3~)%f "
 #}
 
-#setopt autocd # Automaticaly cd into typed directory.
+setopt autocd # Automaticaly cd into typed directory.
 #
 # Colored man pages
 function man() {
@@ -24,16 +24,26 @@ function man() {
 		man "$@"
 }
 
-
 # The following lines were added by compinstall
-zstyle ':completion:*' completer _menu _expand _complete _correct _approximate
-zstyle ':completion:*' completions 1
-zstyle ':completion:*' glob 1
-zstyle ':completion:*' matcher-list 'm:{[:lower:][:upper:]}={[:upper:][:lower:]}' 'm:{[:lower:][:upper:]}={[:upper:][:lower:]}' 'm:{[:lower:][:upper:]}={[:upper:][:lower:]}' 'm:{[:lower:][:upper:]}={[:upper:][:lower:]}'
-zstyle ':completion:*' max-errors 10
-zstyle ':completion:*' special-dirs true
-zstyle ':completion:*' substitute 1
-zstyle :compinstall filename '/home/hisham/.config/zsh/.zshrc'
+zstyle ':completion:*' completer _expand _complete _correct _approximate _extensions
+zstyle ':completion:*' use-cache on
+zstyle ':completion:*' cache-path "$XDG_CACHE_HOME/zsh/.zcompcache"
+zstyle ':completion:*:default' list-colors ${(s.:.)LS_COLORS}
+zstyle ':completion:*' matcher-list 'm:{[:lower:][:upper:]}={[:upper:][:lower:]}'
+zstyle ':completion:*' menu select
+zmodload zsh/complist
+# use the vi navigation keys in menu completion
+bindkey -M menuselect 'h' vi-backward-char
+bindkey -M menuselect 'k' vi-up-line-or-history
+bindkey -M menuselect 'l' vi-forward-char
+bindkey -M menuselect 'j' vi-down-line-or-history
+#zstyle ':completion:*' completions 1
+#zstyle ':completion:*' glob 1
+#zstyle ':completion:*' matcher-list 'm:{[:lower:][:upper:]}={[:upper:][:lower:]}' 'm:{[:lower:][:upper:]}={[:upper:][:lower:]}' 'm:{[:lower:][:upper:]}={[:upper:][:lower:]}' 'm:{[:lower:][:upper:]}={[:upper:][:lower:]}'
+#zstyle ':completion:*' max-errors 10
+#zstyle ':completion:*' special-dirs true
+#zstyle ':completion:*' substitute 1
+#zstyle :compinstall filename '/home/hisham/.config/zsh/.zshrc'
 #
 autoload -Uz compinit
 compinit
